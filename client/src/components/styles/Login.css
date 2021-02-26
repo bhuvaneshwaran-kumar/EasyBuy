@@ -1,0 +1,54 @@
+.login {
+  width: 100%;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+}
+.login .left {
+  width: 60%;
+}
+.login .right {
+  width: 40%;
+}
+.login .right .row {
+  width: 100%;
+}
+
+.login .right .row input {
+  width: 400px;
+  margin: auto;
+}
+.login .right .row {
+  width: 400px;
+  margin: auto;
+}
+.login .right .row .message {
+  color: green;
+  font-weight: 600;
+}
+
+.login .right .row .red {
+  color: red;
+  font-weight: 600;
+}
+.loader {
+  border: 3px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 3px solid #3498db;
+  width: 20px;
+  height: 20px;
+  /* display: inline-block; */
+  margin-top: 5px;
+  margin-left: 22px;
+  position: relative;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
