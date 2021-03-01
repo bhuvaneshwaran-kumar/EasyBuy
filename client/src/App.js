@@ -9,15 +9,17 @@ import {
 import Signup from './components/Signup.js'
 import Profile from './components/Profile.js'
 import AddProduct from './components/seller/AddProduct'
+import MyProduct from './components/seller/MyProduct'
+
 import useAuth from '../src/hooks/useAuth' 
 import { useEffect, useState } from 'react';
 import {useUserValue} from '../src/contexts/UserProvider'
-
-
+import {useProductValue} from './contexts/ProductProvider'
 
 function App() {
   const [loader,setLoader] = useState(true)
   const [user,dispatch] = useUserValue()
+  const [product,pDispatch] = useUserValue()
   const {checkLoggedIn} = useAuth() 
   
   console.log(user)
@@ -35,7 +37,7 @@ function App() {
   
   
   return (
-   
+    
     <div className="App">
     { !loader ?
     <>
@@ -65,7 +67,7 @@ function App() {
         <Route exact path='/myproduct'>
         {
           user.isSeller ? 
-            <AddProduct/>  :
+            <MyProduct/>  :
             <Redirect to="/"/>
         }
         </Route>
@@ -89,7 +91,6 @@ function App() {
     </div>
     }
     </div>
- 
  );
 }
 

@@ -3,19 +3,20 @@ const Product = require('../model/Product')
 const cloudinary = require("../utils/cloudinary.js")
 
 
-/*router.get('/', async (req, res) => {
+Router.get('/', async (req, res) => {
     if (req.session.isAuth) {
         try {
+            console.log("user getting post")
             const skip = parseInt(req.query.skip) || 0
             const perPage = 5
-            const totalCount = await Post.countDocuments()
-            const posts = await Post.find().sort('-timestamp')
+            const totalCount = await Product.countDocuments()
+            const product = await Product.find({sellerId : req.session._id}).sort('-timestamp')
                 .limit(perPage).skip(skip)
                 .exec()
 
-            const hasMore = ((skip + perPage) < totalCount) ? true : false
+            const hasMore = ((skip + perPage) <= totalCount) ? true : false
 
-            res.json({ message: "Post sent to Frontend", report: true, posts: posts, hasMore: hasMore })
+            res.json({ message: "Post sent to Frontend", report: true, product: product, hasMore: hasMore })
         } catch (error) {
             console.log(error)
             res.status(500).json({ message: "Server Error", report: false })
@@ -25,31 +26,29 @@ const cloudinary = require("../utils/cloudinary.js")
         res.status(401).json({ message: "Unauthorized Access", report: false })
     }
 })
-*/
+
+
+
+/**  Handles Adding Products  Routes functionality */ 
 
 Router.post('/add',async (req, res) => {
-    const { pName , pDescription, pImageDetials } = req.body
-    // console.log(req.body)
-    // console.log(pName,pDescription,pImageDetials.length)
-
-    const uploadImage = async (imageString)=>{
-        try{
-            const result = await cloudinary.uploader.upload(imageString)
-            console.log("result",result)
-            return  result.secure_url
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-
+    console.log(`seller adding a product ....:-)`)
+    const { pcategory, pitem,
+            plabel, pbrand,
+            pmodelno, pwarrantyspan, 
+            pdescription, pstock,
+            pcost, pImageDetails 
+            }   = req.body
+    
+    // checks seller is authenticated... 
     if (req.session.isAuth) {
     
         let uploadedImages = []
-        for(let image of pImageDetials){
+    // upload all the imageString to cloudinary.  
+        for(let image of pImageDetails){
             try{
                 const result = await cloudinary.uploader.upload(image.data)
-                console.log("result",result)
+                // console.log("result",result)
                  
                 uploadedImages.push({
                     name : image.name,
@@ -60,8 +59,32 @@ Router.post('/add',async (req, res) => {
             }
         }
 
-        console.log("result->processed image",uploadedImages)
-        res.json({message:"GOt IMage"})
+    // Store the product detials in mongoDb
+        try{
+            const product =await new Product({
+                pcategory : pcategory,
+                pitem : pitem,
+                plabel : plabel,
+                pbrand : pbrand,
+                pmodelno : pmodelno,
+                pwarrantyspan : pwarrantyspan,
+                pdescription : pdescription,
+                pstock : pstock,
+                pcost : pcost,
+                pImageDetails : uploadedImages,
+                timestamp:Date.now(),
+                date:new Date(),
+                sellerId : req.session._id
+            })
+            await product.save()
+            res.status = 200
+            console.log("User product detials",product)
+            res.json({message:"GOt IMage",product : product})
+        }catch(err){
+            console.log("error while we save the data of product ",err)
+        }
+      
+
     }
     else {
         res.status(401).json({ message: "Unauthorized Access", report: false })
@@ -70,8 +93,3 @@ Router.post('/add',async (req, res) => {
 
 module.exports = Router
 
-
-        // const newPost = await new Post(post)
-        // newPost.save()
-        // console.log(`${newPost.authorName} has uploaded a New Post`)
-        // res.status(201).json({ message: "post created", report: true, post: newPost })

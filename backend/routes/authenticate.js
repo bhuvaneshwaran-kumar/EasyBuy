@@ -109,7 +109,7 @@ Router.post("/islogged",async (req,res)=>{
   
   if(req.session.isAuth === true){
     const user = await User.findById(req.session._id)
-    console.log(`${user.User.name} has logged In`)
+    console.log(`${user.User.name} -> ${req.session._id} has logged In`)
  
     res.statusCode = 201
     res.json({

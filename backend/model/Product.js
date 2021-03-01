@@ -1,16 +1,26 @@
 const Schema = require('mongoose').Schema
 
 const Product = new Schema({
-    pName: String,
-    pDescription: String,
-    pImageDetials: [ {
+    pcategory : String,
+    pitem : String,
+    plabel : String,
+    pbrand : String,
+    pmodelno : String,
+    pwarrantyspan : Number,
+    pdescription : String,
+    pstock : Number,
+    pcost : Number,
+    pImageDetails : [ {
         imageName: String,
         imageUrl: String
     } ],
-    publicId : String,
     timestamp: {
         type: String
     },
+    date:{
+        type : Date
+    },
+    sellerId : String
 })
 
 module.exports = require('mongoose').model("Product", Product)
