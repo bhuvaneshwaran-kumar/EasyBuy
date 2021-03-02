@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom'
 import './styles/Nav.css'
 import {useUserValue} from '../contexts/UserProvider'
+import {useProductValue} from '../contexts/ProductProvider'
 import { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth'
 
@@ -8,6 +9,7 @@ import useAuth from '../hooks/useAuth'
 function Nav() {
     const {logout} = useAuth()
     const [value,dispatch] = useUserValue()
+    const [product,pDispatch] = useProductValue()
 
     const Logout = async()=>{
         let res = await logout()
@@ -17,6 +19,10 @@ function Nav() {
                 payload : {
                     loggedStatus : false
                 }
+            })
+            pDispatch({
+                type : "SET_PRODUCT",
+                payload : []
             })
         }
     }

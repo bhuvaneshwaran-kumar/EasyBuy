@@ -3,6 +3,7 @@ import './MyProduct.css'
 
 import {useProductValue} from '../../contexts/ProductProvider'
 import {useUserValue} from '../../contexts/UserProvider'
+import { Edit } from '@material-ui/icons'
 
 function MyProduct(){
     const [products,pDispatch] = useProductValue()
@@ -11,7 +12,8 @@ function MyProduct(){
     const [loader,setLoader] = useState(true)
     const [hasMore,setHasMore] = useState(false)
     const observer = useRef(null)
-
+    const [edit,setEdit] = useState(false)
+    const input = useRef()
 
     const lastPostRefCallback = useCallback(node => {
       console.log("hii",node)
@@ -35,7 +37,7 @@ function MyProduct(){
       if(user.isSeller){
 
             
-              const response = await fetch('http://localhost:8080/product/?'+ new URLSearchParams({
+            const response = await fetch('http://localhost:8080/product/?'+ new URLSearchParams({
               skip : skip 
             }),{
               credentials : "include"
@@ -43,11 +45,12 @@ function MyProduct(){
       
             const data = await response.json()
             console.log(data)
+            console.log("->product : ",products)
             setHasMore(data.hasMore)
 
             pDispatch({
               type : "UPDATE_PRODUCT",
-              payload : data.product
+              payload : [...data.product]
             })
       
            
@@ -56,9 +59,14 @@ function MyProduct(){
       setLoader(false)
     },[skip])
 
+    const editProduct = (index)=>{
+      input.current.plabel[index].removeAttribute("disabled")
+      // input.current.setAttribute("disabled", "");
+    }
 
     return(
         <div className="my-product">
+            <form ref={input} action="">
             {
               products.map((product,index)=>(
                 (index === products.length-1) ? (
@@ -67,7 +75,46 @@ function MyProduct(){
                     <img src={product.pImageDetails[0].imageUrl} alt=""/>
                   </div>
                   <div className="right">
-                    <h3>{product.plabel}</h3>
+                  <div className="row">
+                        <input name="plabel" style={{width : "100%"}} type="text" 
+                        onChange={
+                          (e,i = index)=>{
+                              pDispatch({
+                                type : "UPDATE_ELEMENT",
+                                payload : {
+                                  index : i,
+                                  name : 'plabel',
+                                  value : e.target.value
+                                }
+                              })                  
+                          }
+                        }
+                        className="input-2" 
+                        value={product.plabel} disabled/>
+                      </div>
+                      <div className="row">
+                      <textarea rows="5" name="pdescription" style={{width : "100%"}} type="text" className="input-2" value={product.pdescription} disabled/>
+                      </div>
+                      <div className="row">
+                      <p>
+                       <strong>Warranty Span :</strong> {product.pwarrantyspan}
+                      </p>
+                      </div>
+                      <div className="row">
+                      <p style={{color :(product.pstock <= 0)?"red":"blue"}}>
+                       {
+                         (product.pstock <= 0) ? "Out of Stock" : "only few left  hurry up"
+                       }
+                      </p>
+                      </div>
+                      <div className="row bottom btn">
+                        <div className="edit" onClick={()=>{editProduct(index)}}>
+                        <Edit className="edit-icon"/>
+                        <h3>Edit</h3>
+                        </div>
+                       
+                      </div>
+                   
                   </div>
               </div>
                 ):
@@ -76,10 +123,32 @@ function MyProduct(){
                       <img src={product.pImageDetails[0].imageUrl} alt=""/>
                     </div>
                     <div className="right">
-                      <h3>{product.plabel}</h3>
-                      <small>
-                        {product.pdescription}
-                      </small>
+                      <div className="row">
+                        <input name="plabel" style={{width : "100%"}} type="text" className="input-2" value={product.plabel} disabled/>
+                      </div>
+                      <div className="row">
+                      <textarea rows="5" name="pdescription" style={{width : "100%"}} type="text" className="input-2" value={product.pdescription} disabled/>
+                      </div>
+                      <div className="row">
+                      <p>
+                       <strong>Warranty Span :</strong> {product.pwarrantyspan}
+                      </p>
+                      </div>
+                      <div className="row">
+                      <p style={{color :(product.pstock <= 0)?"red":"blue"}}>
+                       {
+                         (product.pstock <= 0) ? "Out of Stock" : "only few left  hurry up"
+                       }
+                      </p>
+                      </div>
+                      <div className="row bottom btn">
+                        <div className="edit" onClick={()=>{editProduct(index)}}>
+                        <Edit className="edit-icon"/>
+                        <h3>Edit</h3>
+                        </div>
+                       
+                      </div>
+                   
                     </div>
                 </div>
               ))
@@ -89,6 +158,7 @@ function MyProduct(){
                   <div className="loader"></div>
               </div>
             }
+            </form>
         </div>
     )
 

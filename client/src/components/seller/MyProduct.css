@@ -33,7 +33,30 @@
 .my-product .prodact .right {
   flex: 1;
   min-height: 250px;
+  display: flex;
+  flex-direction: column;
   /* border: 1px solid teal; */
+}
+.my-product .prodact .right .row {
+  padding: 10px 0px;
+}
+.my-product .prodact .right .bottom {
+  text-align: right;
+  margin-right: 30px;
+  color: teal;
+  background-color: white;
+  box-shadow: none;
+}
+.my-product .prodact .right .bottom .edit:hover {
+  color: red;
+}
+.my-product .prodact .right .bottom .edit .edit-icon,
+h3 {
+  display: inline;
+}
+.my-product .prodact .right .bottom .edit .edit-icon {
+  position: relative;
+  top: 4px;
 }
 
 .loader {
