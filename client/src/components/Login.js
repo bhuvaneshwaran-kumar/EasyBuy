@@ -2,13 +2,13 @@ import React,{useEffect, useState, useRef} from 'react'
 import "./styles/Login.css"
 import useAuth from '../hooks/useAuth'
 import {useUserValue} from '../contexts/UserProvider'
-import {useHistory} from 'react-router-dom'
+import {useHistory,Redirect} from 'react-router-dom'
 
 function Login({loggedIn,setLoggedIn}) {
     const {login} = useAuth()
     const formRef = useRef()
     const [value,dispatch] = useUserValue()
-
+    const [redirectToLogin,setRedirectToLogin] = useState(false)
     const [email,setEmail] = useState(() => localStorage.getItem('EMAIL') || '')
     const [loader,setLoader] = useState(false)
     const [message,setMessage] = useState('')
@@ -26,17 +26,15 @@ function Login({loggedIn,setLoggedIn}) {
         }
         const response = await login(user)
         setLoader(false)
-        console.log("login :->",response)
         if(response.loggedStatus){
-            dispatch({
-                type : "UPDATE_USER",
+            await dispatch({
+                type : "SET_USER",
                 payload : response
             })
-            console.log("-->login",value)
             setError(false)
             setMessage(response.message)
             localStorage.setItem("email",response.email)
-            history.push('/')
+            setRedirectToLogin(true)
         }else{
             setMessage(response.message)
             setError(true)
@@ -51,7 +49,9 @@ function Login({loggedIn,setLoggedIn}) {
     return (
         <div className="login">
             <div className="left">
-                    
+                 {
+                     redirectToLogin && <Redirect to= '/' />
+                 }   
             </div>
             <div className="right">
                 <form ref={formRef} onSubmit={onSubmit}>

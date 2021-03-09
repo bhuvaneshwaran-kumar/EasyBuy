@@ -27,7 +27,7 @@ function Signup() {
               localStorage.setItem("EMAIL",formRef.current.email.value)
               setInterval(()=>{
                 setLoader(false)
-                history.replace('/login')
+                history.push('/login')
               },800)
           }else{
               setError(true)

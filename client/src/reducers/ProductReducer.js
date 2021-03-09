@@ -18,6 +18,14 @@ export const productReducer = (state = productInitialState,action) => {
             let value = action.payload.value
             state[index][name]= value
             return [...state]
+        
+        case 'POST_EDIT_STATUS' : 
+            let i = action.payload.index
+            let status = action.payload.status
+            state[i].EditStatus = status
+            console.log( state[i] )
+            return [...state]
+
         default : 
             return state
     }

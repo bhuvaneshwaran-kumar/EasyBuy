@@ -8,21 +8,19 @@ import {
 } from 'react-router-dom'
 import Signup from './components/Signup.js'
 import Profile from './components/Profile.js'
+import Home from './components/Home.js'
 import AddProduct from './components/seller/AddProduct'
 import MyProduct from './components/seller/MyProduct'
 
 import useAuth from '../src/hooks/useAuth' 
 import { useEffect, useState } from 'react';
 import {useUserValue} from '../src/contexts/UserProvider'
-import {useProductValue} from './contexts/ProductProvider'
 
 function App() {
   const [loader,setLoader] = useState(true)
   const [user,dispatch] = useUserValue()
-  const [product,pDispatch] = useUserValue()
   const {checkLoggedIn} = useAuth() 
   
-  console.log(user)
   
   useEffect(async ()=>{
     let res = await checkLoggedIn()
@@ -32,10 +30,10 @@ function App() {
     })
     setTimeout(() => {
       setLoader(false)
-    }, 1000);
+    }, 100);
   },[])
   
-  
+
   return (
     
     <div className="App">
@@ -77,7 +75,7 @@ function App() {
         }
         </Route>
         <Route exact path='/'>
-          <h2>Welcome to Home page</h2>
+          <Home/>  
         </Route>
         <Route path='/*'>
           <Redirect to='/login'/>

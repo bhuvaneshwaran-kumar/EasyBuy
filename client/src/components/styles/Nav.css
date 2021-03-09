@@ -18,6 +18,12 @@
   font-weight: 600;
 }
 
+.nav-bar .left .active,
+.nav-bar .right .active {
+  color: black;
+  text-decoration: underline;
+}
+
 .nav-bar .left li:hover,
 .nav-bar .right li:hover {
   display: inline-block;

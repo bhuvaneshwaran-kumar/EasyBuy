@@ -7,6 +7,9 @@ import useAuth from '../hooks/useAuth'
 
 
 function Nav() {
+
+
+    const [active,setActive] = useState(window.location.pathname)
     const {logout} = useAuth()
     const [value,dispatch] = useUserValue()
     const [product,pDispatch] = useProductValue()
@@ -25,6 +28,7 @@ function Nav() {
                 payload : []
             })
         }
+        setActive("/")
     }
 
     return (
@@ -32,16 +36,24 @@ function Nav() {
             <div className="nav-bar">
                 <div className="left">
                    <Link to='/'>
-                       <li>Home</li>
+                       <li className={(active === "/")?"active":""}
+                       onClick= {()=>setActive("/")} 
+                        >Home</li>
                    </Link>
                    {
                        value.isSeller && 
                        <>
                        <Link to='/addproduct'>
-                            <li>Add-Product</li>
+                            <li
+                            className={(active === "/addproduct")?"active":""}
+                            onClick= {()=>setActive("/addproduct")}  
+                            >Add-Product</li>
                         </Link>
                         <Link to='/myproduct'>
-                            <li>My-Product</li>
+                            <li
+                            className={(active === "/myproduct")?"active":""}
+                            onClick= {()=>setActive("/myproduct")}
+                            >My-Product</li>
                         </Link>
                        
                        </> 
@@ -56,21 +68,31 @@ function Nav() {
                     { !value.loggedStatus ?
                     <>
                     <Link to='/login'>
-                        <li>Login</li>
+                        <li
+                         className={(active === "/login")?"active":""}
+                         onClick= {()=>setActive("/login")}
+                        >Login</li>
                     </Link>
                         <li>/</li>
                     <Link to='/signup'>
-                        <li>Signup</li>
+                        <li
+                        className={(active === "/signup")?"active":""}
+                        onClick= {()=>setActive("/signup")}
+                        >Signup</li>
                     </Link>
                     </> :
                     <>
                      { value.loggedStatus &&
                     <Link to='/profile'>
-                       <li>Profile</li>
+                       <li
+                       className={(active === "/profile")?"active":""}
+                       onClick= {()=>setActive("/profile")}
+                       >Profile</li>
                     </Link>
                     }
                     <Link>
-                        <li onClick={Logout}>Logout</li>
+                        <li onClick={Logout}
+                        >Logout</li>
                     </Link>
                     </>
                     }

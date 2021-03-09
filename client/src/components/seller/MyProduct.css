@@ -9,8 +9,11 @@
   width: 100%;
   min-height: 400px;
   min-height: 300px;
-  border: 1px solid black;
+  border: 1px solid lightgray;
+  box-shadow: 0 8px 6px -6px rgba(0, 0, 0, 0.233);
   margin: 2px;
+  margin-bottom: 1rem;
+  border-radius: 4px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -37,8 +40,10 @@
   flex-direction: column;
   /* border: 1px solid teal; */
 }
-.my-product .prodact .right .row {
-  padding: 10px 0px;
+.my-product .prodact .right .row label {
+  /* padding: 10px 0px; */
+  color: teal;
+  font-weight: 500;
 }
 .my-product .prodact .right .bottom {
   text-align: right;
@@ -55,6 +60,10 @@ h3 {
   display: inline;
 }
 .my-product .prodact .right .bottom .edit .edit-icon {
+  position: relative;
+  top: 4px;
+}
+.my-product .prodact .right .bottom .submit .check-circle {
   position: relative;
   top: 4px;
 }

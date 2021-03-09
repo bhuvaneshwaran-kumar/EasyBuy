@@ -97,7 +97,6 @@ function useAuth() {
                 body : JSON.stringify(user)        
             })
             let data = await response.json()   
-            console.log("--->you try's to login",data)        
             return data
         }
         catch(err){
@@ -120,7 +119,6 @@ function useAuth() {
             credentials : "include"
         })
         let data = await res.json() 
-        console.log("-->from useAuth",data.value)
         return data.value
     }
     
