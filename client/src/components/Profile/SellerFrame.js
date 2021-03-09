@@ -27,7 +27,10 @@ function SellerFrame() {
     return (
         <div className="container">
             <div className="top">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis quas unde voluptate reprehenderit voluptatibus magni accusamus ipsa nemo, itaque perspiciatis quaerat cupiditate repellendus, quidem iste! Fuga molestiae labore explicabo obcaecati?</p>
+                <li>We provide Easybuy fulfilment services through which you can ensure faster delivery of your items, quality check by our experts and a delightful packaging. Combine these with the fastest payments in the industry and you get an excellent seller portal. No wonder Easybuy is India’s favourite place to sell online </li>
+                <li>Selling on easybuy.com is easy and absolutely free. All you need is to register, list your catalog and start selling your products.
+                </li>
+                <li>Easybuy seller membership are subjected to market risks please read all scheme related documents carefully before signing</li>
             </div>
             <div className="bottom">
                 <form onSubmit={onSubmitForm}>

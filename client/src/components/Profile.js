@@ -75,7 +75,7 @@ function Profile() {
           <div className="right">
           {
             display === "sellerframe" &&
-            <SellerFrame setDisplay={setDisplay} />
+            <SellerFrame/>
           }
           </div>
         </div>
