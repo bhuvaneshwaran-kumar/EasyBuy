@@ -8,12 +8,12 @@ import { Edit, CheckCircleOutline} from '@material-ui/icons'
 function MyProduct(){
     
     const [products,pDispatch] = useProductValue()
-    const [user,uDispatch] = useUserValue()
+    const [user] = useUserValue()
     const [skip,setSkip] = useState(products.length)
     const [loader,setLoader] = useState(true)
     const [hasMore,setHasMore] = useState(false)
     const observer = useRef(null)
-    const [edit,setEdit] = useState(false)
+    // const [edit,setEdit] = useState(false)
     const input = useRef()
    
 
@@ -66,24 +66,26 @@ function MyProduct(){
     }, [loader,hasMore,products.length])   
     
     // Fetch product from server when ever the State Skip change the value.
-    useEffect(async ()=>{
-      setLoader(true)  
-      if(user.isSeller){            
-            const response = await fetch('http://localhost:8080/product/?'+ new URLSearchParams({
-              skip : skip 
-            }),{
-              credentials : "include"
-            })      
-            const data = await response.json()
-            setHasMore(data.hasMore)
-
-            pDispatch({
-              type : "UPDATE_PRODUCT",
-              payload : [...data.product]
-            })
-      }
+    useEffect(()=>{
+      setLoader(true)
+      const getUserPost = async ()=>{  
+        if(user.isSeller){            
+              const response = await fetch('http://localhost:8080/product/?'+ new URLSearchParams({
+                skip : skip 
+              }),{
+                credentials : "include"
+              })      
+              const data = await response.json()
+              setHasMore(data.hasMore)
+              pDispatch({
+                type : "UPDATE_PRODUCT",
+                payload : [...data.product]
+              })
+        }
+    }
+      getUserPost()
       setLoader(false)
-    },[skip])
+    },[skip,pDispatch,user.isSeller])
     
     // Handels Edit post. 
     const setDisableUserInput = (index,flagOneProductBug = false,turnOff = false)=>{

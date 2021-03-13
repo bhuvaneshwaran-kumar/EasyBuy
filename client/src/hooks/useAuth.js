@@ -1,6 +1,3 @@
-import { useUserValue } from "../contexts/UserProvider";
-
-
 const BASE_URL = 'http://localhost:8080'
 
 function useAuth() {
@@ -113,12 +110,13 @@ function useAuth() {
         return data
     }
 
-    const logout = async ()=> {
+    const logout = async (email)=> {
         let res = await fetch(`${BASE_URL}/authenticate/logout`,{
             method : "post",
             credentials : "include"
         })
-        let data = await res.json() 
+        let data = await res.json()
+        localStorage.setItem("EMAIL",email) 
         return data.value
     }
     
@@ -130,7 +128,33 @@ function useAuth() {
         const data = await response.json()
         return data
     }
-    return { signup, login, checkLoggedIn, logout, verifyOtp, switchToSellerAccount }
+
+    const forgotPassword = async (email)=> {
+        const res = await fetch(`${BASE_URL}/authenticate/forgotpwd`,{
+            method : "post",
+            credentials : "include",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body : JSON.stringify({email : email})
+        })
+        return res
+    }
+
+    const resetPassword = async (user)=>{
+        const res = await fetch(`${BASE_URL}/authenticate/resetpwd`,{
+            method : "post",
+            credentials : "include",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body : JSON.stringify(user)
+        })
+        return res
+    }
+    return { signup, login, checkLoggedIn, logout, verifyOtp, switchToSellerAccount,forgotPassword ,resetPassword}
 }
 
 export default useAuth

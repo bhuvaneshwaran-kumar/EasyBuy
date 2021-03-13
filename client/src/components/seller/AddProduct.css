@@ -1,6 +1,8 @@
 .addproduct {
-  width: 70%;
-  margin: auto;
+  width: 500px;
+  float: right;
+  margin-right: 30px;
+  /* margin: auto; */
   margin-bottom: 10px;
   /* max-width: 100vh; */
   /* border: 1px solid teal; */

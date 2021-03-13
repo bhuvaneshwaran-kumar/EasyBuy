@@ -6,7 +6,9 @@ import './styles/Home.css'
 function Home() {
 
     const scrollTo = (element)=>{
-        element.current.scrollIntoView()
+        // const y = window.pageYOffset + 20;
+        // element.current.scrollIntoView({ behavior: 'smooth',  block: "start" })
+        element.current.scrollTop -= 10;
     }
 
 
@@ -40,10 +42,10 @@ function Home() {
           }, [loader,hasMore,products.length])   
 
         // Fetch product from server when ever the State Skip change the value.
-        useEffect(async ()=>{
+        useEffect(()=>{
             setLoader(true)  
-                     
-                  const response = await fetch('http://localhost:8080/product/home/?'+ new URLSearchParams({
+            const productDetials = async ()=>{
+                const response = await fetch('http://localhost:8080/product/home/?'+ new URLSearchParams({
                     skip : skip 
                   }),{
                     credentials : "include"
@@ -54,6 +56,8 @@ function Home() {
                   })
                 setHasMore(data.hasMore)
                 setLoader(false)
+                }   
+            productDetials()
           },[skip])
     return (
         <div ref={top} className="home-container">

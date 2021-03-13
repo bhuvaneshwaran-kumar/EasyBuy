@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import './styles/Profile.css'
 import {useUserValue} from "../contexts/UserProvider"
 import useAuth from '../hooks/useAuth'
-import {LocalMall,ArrowForwardIos,Person,SettingsPower,Business} from '@material-ui/icons'
+import {LocalMall,Person,SettingsPower,Business} from '@material-ui/icons'
 import SellerFrame from "./Profile/SellerFrame"
 
 
@@ -32,7 +32,7 @@ function Profile() {
           <div className="left">
           <div className="top">
             <div className=" row">
-              <img className="image" height="50px" width="50px" src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/profile-pic-male_4811a1.svg"/>
+              <img className="image" height="50px" width="50px" src="//img1a.flixcart.com/www/linchpin/fk-cp-zion/img/profile-pic-male_4811a1.svg" alt="profile"/>
               <div className="greating">
                 <div><p>Hello,</p></div>
                 <div>

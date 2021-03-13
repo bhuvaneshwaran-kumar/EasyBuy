@@ -1,22 +1,65 @@
 .login {
-  width: 100%;
+  width: 800px;
+  margin: auto;
+  margin-top: 10px;
   min-height: 90vh;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  /* border: 1px solid saddlebrown; */
 }
 .login .left {
-  width: 60%;
+  width: 600px;
+  min-height: 90vh;
+  background-color: teal;
+  color: white;
+  padding: 20px;
+  font-weight: 600;
+  /* border: 1px solid black; */
 }
 .login .right {
-  width: 40%;
+  width: 400px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* border: 1px solid #3498db; */
 }
-.login .right .row {
-  width: 100%;
+.login .right .row p span {
+  color: teal;
+  font-weight: 600;
+  /* margin-left: 25px; */
+}
+.login .right .row p span:nth-child(2) {
+  color: teal;
+  font-weight: 600;
+  margin-left: 25px;
 }
 
-.login .right .row input {
-  width: 400px;
+.login .right .row p {
+  width: 350px;
   margin: auto;
+  color: #878787;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.login .right .fgpwd {
+  display: inline;
+  float: right;
+  margin-right: 25px;
+  /* border: 1px solid; */
+  width: auto;
+  text-align: right;
+  color: teal;
+  font-weight: 600;
+  background-color: white;
+  cursor: pointer;
+}
+.login .right .row input,
+.login .right .row button {
+  width: 350px;
+  margin: auto;
+  /* margin-top: 25px; */
 }
 .login .right .row {
   width: 400px;
@@ -25,11 +68,32 @@
 .login .right .row .message {
   color: green;
   font-weight: 600;
+  margin-left: 25px;
 }
 
 .login .right .row .red {
   color: red;
   font-weight: 600;
+  margin-left: 25px;
+}
+.login .right .bottom {
+  width: 350px;
+  margin: auto;
+}
+.login .right .bottom p:nth-child(2) {
+  width: 350px;
+  color: black;
+  font-weight: 500;
+  text-align: center;
+  margin: auto;
+}
+.login .right .bottom p {
+  width: 350px;
+  color: teal;
+  font-weight: 600;
+  text-align: center;
+  margin: auto;
+  cursor: pointer;
 }
 .loader {
   border: 3px solid #f3f3f3;

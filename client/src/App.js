@@ -22,16 +22,22 @@ function App() {
   const {checkLoggedIn} = useAuth() 
   
   
-  useEffect(async ()=>{
-    let res = await checkLoggedIn()
-    dispatch({
-      type : "SET_USER",
-      payload : res
-    })
-    setTimeout(() => {
+  useEffect(()=>{
+    
+    const makeReq = async ()=>{
+      let res = await checkLoggedIn()
+      dispatch({
+        type : "SET_USER",
+        payload : res
+      })
+    }
+    makeReq()
+    const timer = setTimeout(() => {
       setLoader(false)
+      clearTimeout(timer)
     }, 100);
-  },[])
+    // return ()=>clearTimeout(timer)
+  },[dispatch])
   
 
   return (

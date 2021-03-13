@@ -9,7 +9,7 @@ function AddProduct() {
     const [error,setError] = useState(false)
     const [message,setMessage] = useState('')
     const form = useRef()    
-    const [product,pDispatch] = useProductValue()
+    const [,pDispatch] = useProductValue()
     const submitFrom = async (e)=>{
         e.preventDefault()
         setLoader(true)
@@ -97,8 +97,7 @@ function AddProduct() {
         setError(false)
         setMessage('')
         if(e.target.files){
-            const fileArray = Array.from(e.target.files).map((file) => {
-                        
+            Array.from(e.target.files).forEach((file) => {            
                 const reader = new FileReader()
                 reader.readAsDataURL(file)
                 reader.onloadend = () => (
@@ -227,7 +226,7 @@ function AddProduct() {
                     {
                         selectedImage.map((elm,id)=>(
                             <div key={id} className="product-img">
-                            <img className="image"src={elm.data}/>
+                            <img className="image" src={elm.data} alt="selected"/>
                             <div className="middle">
                                 <div className="text">
                                     {elm.name}

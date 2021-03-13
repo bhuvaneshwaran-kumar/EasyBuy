@@ -10,8 +10,7 @@ function SellerFrame() {
     const {switchToSellerAccount} = useAuth()
     const onSubmitForm = async (event)=>{
         event.preventDefault()
-        const data = await switchToSellerAccount()
-        // console.log(data)
+        await switchToSellerAccount()
         let updateValue = {
             isSeller :true
         }

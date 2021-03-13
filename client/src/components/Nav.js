@@ -1,9 +1,10 @@
-import {Link} from 'react-router-dom'
 import './styles/Nav.css'
 import {useUserValue} from '../contexts/UserProvider'
 import {useProductValue} from '../contexts/ProductProvider'
-import { useEffect, useState } from 'react'
+import {useState,useEffect } from 'react'
 import useAuth from '../hooks/useAuth'
+import { Link, useHistory, useLocation } from "react-router-dom"
+
 
 
 function Nav() {
@@ -12,10 +13,23 @@ function Nav() {
     const [active,setActive] = useState(window.location.pathname)
     const {logout} = useAuth()
     const [value,dispatch] = useUserValue()
-    const [product,pDispatch] = useProductValue()
+    const [,pDispatch] = useProductValue()
+    const histroy = useHistory()
+    const location = useLocation()
+
+    useEffect(() => {
+        setActive(location.pathname)
+    }, [location.pathname])
+
+    useEffect(() => {
+        let unlisten = histroy.listen((location, action) => {
+            setActive(location.pathname)
+        })
+        return unlisten
+    }, [histroy])
 
     const Logout = async()=>{
-        let res = await logout()
+        let res = await logout(value.email)
         if(res){
             dispatch({
                 type : "SET_USER",

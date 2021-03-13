@@ -5,12 +5,12 @@ import useAuth from '../hooks/useAuth'
 function Signup() {
     const formRef = useRef()
     const {verifyOtp, signup} = useAuth()
-    const history = useHistory()
     const [otp,setOtp] = useState(false)
     const [message,setMessage] = useState('')
     const [error,setError] = useState(false)
     const [loader,setLoader] = useState(false)
-    
+    const history = useHistory()
+
     async function submitForm(event){
         event.preventDefault()
 
@@ -23,11 +23,14 @@ function Signup() {
             }
           const response =await verifyOtp(userData)
           if(response.status){
-              setMessage(response.message)
+              setMessage(response.message +` 
+              \nNow you can navigate to login page.`)
               localStorage.setItem("EMAIL",formRef.current.email.value)
+              formRef.current.email.value = ""
+              formRef.current.otp.value = ""
+              
               setInterval(()=>{
                 setLoader(false)
-                history.push('/login')
               },800)
           }else{
               setError(true)
@@ -36,7 +39,6 @@ function Signup() {
           }
 
         }else{
-
             const userData = {
                 name : event.target.name.value,
                 email : event.target.email.value,
@@ -47,12 +49,13 @@ function Signup() {
             if(response.status){
                 setError(false)
                 setOtp(true)
+                setMessage(response.message)
             }else{
                 setError(true)
+                setMessage(response.message)
             }
             setLoader(false)
-            setMessage(response.message)    
-           
+                   
         }
 
     }
@@ -62,11 +65,14 @@ function Signup() {
  
     return (
         <div className="signup">
-                 <div className="left">
-                    
-                    </div>
+                <div className="left">   
+                    <h1>Signup</h1>
+                    <p>Get access to your Orders,</p>
+                    <p>WishList and Recommendations.</p>
+                </div>
                     <div className="right">
-                        <form action="authenticate/signup" onSubmit={submitForm} ref={formRef}>
+                        <div className="top">
+                            <form action="authenticate/signup" onSubmit={submitForm} ref={formRef}>
                            { !otp && <div className="row form-group">
                                 <input type="text" placeholder="UserName" 
                                 name="name"
@@ -96,7 +102,8 @@ function Signup() {
                             }
                             {
                                !otp && <div className="row">
-                                <button type="submit" className="btn btn-blue">
+                                <button type="submit"
+                                id="btnc" className="btn btn-blue">
                                     SignUp
                                 </button>
                                 {
@@ -107,7 +114,9 @@ function Signup() {
                             }
                             {
                                otp && <div className="row">
-                                <button type="submit" className="btn btn-blue">
+                                <button type="submit" 
+                                id="btnc"
+                                className="btn  btn-blue">
                                     Verify OTP
                                 </button>
                                 <br/><br/>
@@ -117,9 +126,18 @@ function Signup() {
                             </div>
                             }
                             <div className="row form-group">
-                                <span className={!error?"message":"red"}>{message}</span>
+                                <span className={!error?"message":"red"}> <pre>{message}</pre> </span>
                             </div>
-                        </form>
+                         </form>
+                        </div>
+                        <div className="bottom">
+                            <hr/>
+                            <p>OR</p>
+                            <p onClick={()=>{
+                                history.push('/login')
+                            }} 
+                            >Already have an accout? Click here to login</p>
+                        </div>
                     </div>
 
              
