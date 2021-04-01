@@ -1,6 +1,8 @@
 import React,{useRef,useCallback,useEffect} from 'react'
 import { useState } from 'react'
 import './styles/Home.css'
+import { useHistory,Link } from 'react-router-dom';
+
 
 
 function Home() {
@@ -11,7 +13,6 @@ function Home() {
         element.current.scrollTop -= 10;
     }
 
-
     const productsDiv = useRef()
     const top = useRef()
     const [hasMore,setHasMore] = useState(false)
@@ -20,8 +21,14 @@ function Home() {
     const [products, setProducts] = useState([]) 
     const [loader,setLoader] = useState(false)
 
-   
+    
+    const openNewTab = async(id)=>{
+        // console.log("open New tab ..... :-)"+id)
+        // localStorage.setItem("productID",id)
 
+        window.open(`http://localhost:3000/product/id:${id}`, "_blank") //to open new page
+
+    }
 
 
 
@@ -59,6 +66,8 @@ function Home() {
                 }   
             productDetials()
           },[skip])
+
+          console.log(products)
     return (
         <div ref={top} className="home-container">
              <div className="home-row home-top-nav">
@@ -74,26 +83,33 @@ function Home() {
                 {
                     products.map((product,index)=>(
                         (index === products.length-1) ? (
-                        <div className="product-outer" ref={lastPostRefCallback} key={index}>
+                        <div className="product-outer" ref={lastPostRefCallback} key={product._id}
+                        onClick = {()=>openNewTab(product._id)}
+                        >
                             <div className="left">
                             <img src={product.pImageDetails[0].imageUrl} alt=""/>
                             </div>
                             <div className="right">
                                 <h4>{product.plabel}</h4>
-                                <p>{product.pdescription}</p>
-                                <p style={{color : "green"}}>avaiable</p>
+                                <p>10 % Offer</p>
+                                <p style={{color : "green"}}>available</p>
                             </div>
                         </div>):(
-                        <div key={index} className="product-outer">
+                        <Link to={`/product/${product._id}`} target="_blank" className="product-outer">
+                        <div key={product._id}  
+                        // onClick = {()=>openNewTab(product._id)}
+                        >
                              <div className="left">
                              <img src={product.pImageDetails[0].imageUrl} alt=""/>
                              </div>
                              <div className="right">
                                  <h4>{product.plabel}</h4>
-                                 <p>{product.pdescription}</p>
-                                 <p style={{color : "green"}}>avaiable</p>
+                                
+                                 <p>10 % Offer</p>
+                                 <p style={{color : "green"}}>available</p>
                              </div>
                         </div>
+                        </Link>
                         )
                 
                     ))

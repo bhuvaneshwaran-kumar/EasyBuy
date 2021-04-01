@@ -107,6 +107,7 @@ function useAuth() {
             credentials : "include"
         })
         const data = await res.json()
+        console.log(data,"islogged");
         return data
     }
 

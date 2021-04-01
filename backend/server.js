@@ -13,6 +13,7 @@ const MongoStore = require('connect-mongodb-session')(session)
 // Developer module import section
 const authenticate = require("./routes/authenticate.js")
 const product = require('./routes/product')
+const user = require('./routes/user')
         /* Module Importing Section End */
 
 /* ------------------------------------------------------------------------------------------ */
@@ -72,6 +73,7 @@ app.use(session({
 // Developer middleware
 app.use('/authenticate',authenticate)
 app.use('/product',product)
+app.use('/user',user)
 app.get("/",(req,res)=>{
         console.log("geting req...")
 })

@@ -4,12 +4,15 @@ import {useUserValue} from "../contexts/UserProvider"
 import useAuth from '../hooks/useAuth'
 import {LocalMall,Person,SettingsPower,Business} from '@material-ui/icons'
 import SellerFrame from "./Profile/SellerFrame"
+import ProfileInformation from "./Profile/ProfileInformation"
+import ManageAddress from "./Profile/ManageAddress"
 
 
 function Profile() {
   const [display,setDisplay] = useState('my orders')
   const {logout} = useAuth()
   const [value,dispatch] = useUserValue()
+
 
   const Logout = async()=>{
       let res = await logout()
@@ -22,10 +25,6 @@ function Profile() {
           })
       }
   }
-
-  useEffect(() => {
-    setDisplay('my orders')
-  }, [value])
 
     return (
         <div className="about">
@@ -52,8 +51,8 @@ function Profile() {
             <Person style={{ color: "teal" }}/>
             <h3 className="head" onClick={()=>setDisplay('profile information')}>ACCOUNT SETTINGS</h3>
             <div>
-              <div class="list" onClick={()=>setDisplay('profile information')}>Profile Information</div>
-              <div class="list" onClick={()=>setDisplay('manage addresses')}>Manage Addresses</div>
+              <div className="list" onClick={()=>setDisplay('ProfileInformation')}>Profile Information</div>
+              <div className="list" onClick={()=>setDisplay('ManageAddress')}>Manage Addresses</div>
             </div>
 
             </div>
@@ -74,8 +73,16 @@ function Profile() {
           </div>
           <div className="right">
           {
+            display === "ProfileInformation" &&
+            <ProfileInformation/>
+          }
+          {
             display === "sellerframe" &&
             <SellerFrame/>
+          }
+          {
+            display === "ManageAddress" &&
+            <ManageAddress/>
           }
           </div>
         </div>

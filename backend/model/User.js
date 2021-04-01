@@ -13,11 +13,16 @@ const User = new Schema({
         }
         ,
         "isSeller":Boolean,
-        "address" : {
-            "street":String,
-            "city":String,
-            "zipcode":Number
-        }
+        "address" : [
+            {
+                "uName":String,             "uMobNum":String,               "uPinNum":String,               "uLocality":String,
+                "uAddress":String,                "uRegional":String,
+                "uAlMobNum":String,
+                "uState":String,              "uLandmark":String,
+                "uAddType":String,       
+            }
+        ]
+
     }
 })
 

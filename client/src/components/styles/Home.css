@@ -39,23 +39,31 @@
 }
 .home-container .products {
   height: auto;
-  width: 900px;
+  width: 95%;
+
+  /* border: 1px solid black; */
   margin: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: flex-start;
 }
 
+.home-container .products .product-outer:hover {
+  cursor: pointer;
+  box-shadow: 7px 7px 10px -5px rgba(0, 0, 0, 0.46);
+}
 .home-container .products .product-outer {
-  width: 400px;
+  width: 33%;
+  float: left;
   height: auto;
   display: flex;
   flex-direction: row;
   box-shadow: 0 1px 1px 0 rgb(0 0 0 / 16%);
-  margin: 2px;
-  margin: 20px auto;
+  margin: 20px 2px;
+  padding: 3px;
+  color: black;
 }
 .home-container .products .product-outer .left {
   width: 100px;

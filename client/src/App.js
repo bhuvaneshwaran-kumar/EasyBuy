@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 import Signup from './components/Signup.js'
 import Profile from './components/Profile.js'
+import Product from './components/Product.js'
 import Home from './components/Home.js'
 import AddProduct from './components/seller/AddProduct'
 import MyProduct from './components/seller/MyProduct'
@@ -60,6 +61,13 @@ function App() {
             <Signup/>  :
             <Redirect to="/"/>
           }
+        </Route>
+        <Route path='/product/:id'>
+        {
+          !user.loggedStatus ? 
+            <Signup/>  :
+            <Product/>   
+        }
         </Route>
         <Route exact path='/addproduct'>
         {

@@ -17,13 +17,15 @@ a {
   height: 90vh;
   /* border: 1px solid black; */
   display: flex;
+  position: sticky;
+  top: 10vh;
   flex-direction: column;
   justify-content: center;
 }
 .about .right {
   max-width: 900px;
   width: 900px;
-  height: 90vh;
+  min-height: 90vh;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
 }
 

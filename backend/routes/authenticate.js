@@ -110,13 +110,14 @@ Router.post("/islogged", async (req, res) => {
   if (req.session.isAuth === true) {
     const user = await User.findById(req.session._id)
     console.log(`${user.User.name} -> ${req.session._id} has logged In`)
-
+    // console.log(user.User)
     res.statusCode = 201
     res.json({
       name: user.User.name,
       email: user.User.email,
       loggedStatus: true,
       isSeller: user.User.isSeller || false,
+      address:user.User.address,
       message: "you're already signed in"
     })
   } else {
@@ -147,7 +148,8 @@ Router.post("/login", async (req, res) => {
         name: user.User.name,
         email: user.User.email,
         loggedStatus: true,
-        isSeller: user.User.isSeller || false,
+        isSeller: user.User.isSeller || false, 
+        address:user.User.address || false,
         message: "Sucessfully Logged in..."
       })
       console.log(`${user.User.name} has logged In`)

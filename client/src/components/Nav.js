@@ -104,7 +104,7 @@ function Nav() {
                        >Profile</li>
                     </Link>
                     }
-                    <Link>
+                    <Link to="">
                         <li onClick={Logout}
                         >Logout</li>
                     </Link>
