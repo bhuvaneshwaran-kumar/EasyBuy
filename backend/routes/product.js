@@ -26,6 +26,23 @@ Router.get('/', async (req, res) => {
         res.status(401).json({ message: "Unauthorized Access", report: false })
     }
 })
+
+Router.get('/getproductdata', async (req, res) => {
+        try {    
+            const id = req.query.id
+            
+            const product = await Product.findById(id)
+
+            console.log(product)
+
+            res.json({ message: "Post sent to Frontend", result : product})
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ message: "Server Error", report: false })
+        }
+})
+
+
 Router.get('/home', async (req, res) => {
         try {
             console.log("user getting post")

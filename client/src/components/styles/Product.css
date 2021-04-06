@@ -1,0 +1,73 @@
+.mono-product-outer {
+  /* border: 1px solid black; */
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  margin-top: 3px;
+}
+
+.mono-product-image {
+  max-width: 550px;
+  height: 600px;
+  width: 550px;
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  position: sticky;
+  top: 0px;
+}
+.mono-Pimage-left {
+  width: 70px;
+  /* height: 70px; */
+  /* border: 1px solid #f0f0f0; */
+  display: flex;
+  flex-direction: column;
+}
+.mono-Pimage-right {
+  flex: 1;
+  /* border: 1px solid #cecdcd; */
+}
+#p-sample-image {
+  height: 70px;
+  width: 100%;
+  object-fit: contain;
+  border: 1px solid #cecdcd;
+  margin-top: 2px;
+}
+#p-sample-image:hover {
+  padding-bottom: 2px;
+  border-bottom: 2px solid teal;
+}
+#p-main-image {
+  width: 80%;
+  height: 90%;
+  margin-left: 10%;
+  object-fit: contain;
+
+  border: 1px solid #cecdcd;
+}
+/* .mono-Pimage-right {
+} */
+
+.mono-product-detials {
+  flex: 1;
+  border: 1px solid #cecdcd;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mono-product-detials .col {
+  margin-left: 10px;
+  margin-bottom: 8px;
+}
+.mono-product-detials #plabel {
+  color: black;
+}
+.mono-product-detials #price {
+  color: #212121;
+  font-size: 19px;
+  font-weight: 500;
+}

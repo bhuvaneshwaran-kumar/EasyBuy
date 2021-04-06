@@ -29,9 +29,9 @@ function Signup() {
               formRef.current.email.value = ""
               formRef.current.otp.value = ""
               
-              setInterval(()=>{
+            //   setInterval(()=>{
                 setLoader(false)
-              },800)
+            //   },800)
           }else{
               setError(true)
               setLoader(false)

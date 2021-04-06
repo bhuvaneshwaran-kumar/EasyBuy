@@ -2,11 +2,12 @@ import React from 'react'
 import './styles/style.css'
 import useAuth from '../../hooks/useAuth'
 import {useUserValue} from '../../contexts/UserProvider'
+import { useHistory } from 'react-router'
 
 function SellerFrame() {
     
     const [value,dispatch] = useUserValue()
-
+    let history = useHistory()
     const {switchToSellerAccount} = useAuth()
     const onSubmitForm = async (event)=>{
         event.preventDefault()
@@ -19,7 +20,7 @@ function SellerFrame() {
             type : "UPDATE_USER",
             payload : updateValue
         })
-        
+        history.push("/profile")
     }
 
 
