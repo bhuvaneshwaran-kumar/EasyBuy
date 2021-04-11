@@ -1,7 +1,8 @@
 import React,{useRef,useCallback,useEffect} from 'react'
 import { useState } from 'react'
-import './styles/Home.css'
+import './homeStyles/Home.css'
 import { useHistory,Link } from 'react-router-dom';
+import Slider from './Slider.js'
 
 
 
@@ -22,13 +23,7 @@ function Home() {
     const [loader,setLoader] = useState(false)
 
     
-    const openNewTab = async(id)=>{
-        // console.log("open New tab ..... :-)"+id)
-        // localStorage.setItem("productID",id)
-
-        window.open(`http://localhost:3000/product/id:${id}`, "_blank") //to open new page
-
-    }
+  
 
 
 
@@ -72,20 +67,35 @@ function Home() {
         <div ref={top} className="home-container">
              <div className="home-row home-top-nav">
                  <div onClick={()=>scrollTo(productsDiv)} className="btn top-nav-list ">
-                 <img src="https://rukminim1.flixcart.com/flap/128/128/image/22fddf3c7da4c4f4.png?q=100" alt=""/>
+                 <img src="/Nav-img/Top offer.png" alt=""/>
+                 <li>Top Offers</li>
+                 </div>
+                 <div onClick={()=>scrollTo(productsDiv)} className="btn top-nav-list ">
+                 <img src="/Nav-img/Mobile.png" alt=""/>
                  <li>Mobiles</li>
+                 </div>
+                 <div onClick={()=>scrollTo(productsDiv)} className="btn top-nav-list ">
+                 <img src="/Nav-img/Grocery.png" alt=""/>
+                 <li>Grocery</li>
+                 </div>
+                 <div onClick={()=>scrollTo(productsDiv)} className="btn top-nav-list ">
+                 <img src="/Nav-img/Fashion.png" alt=""/>
+                 <li>Fashion</li>
+                 </div>
+                 <div onClick={()=>scrollTo(productsDiv)} className="btn top-nav-list ">
+                 <img src="/Nav-img/Electronincs.png" alt=""/>
+                 <li>Electronics</li>
                  </div>
              </div>  
              <div className="home-row slider">
-                 
+                 <Slider/>
              </div> 
              <div ref={productsDiv} className="home-row products">
                 {
                     products.map((product,index)=>(
                         (index === products.length-1) ? (
-                        <div className="product-outer" ref={lastPostRefCallback} key={product._id}
-                        onClick = {()=>openNewTab(product._id)}
-                        >
+                        <Link to={`/product/${product._id}`} target="_blank" className="product-outer">
+                        <div ref={lastPostRefCallback} key={product._id} id="outer">
                             <div className="left">
                             <img src={product.pImageDetails[0].imageUrl} alt=""/>
                             </div>
@@ -94,11 +104,10 @@ function Home() {
                                 <p>10 % Offer</p>
                                 <p style={{color : "green"}}>available</p>
                             </div>
-                        </div>):(
+                        </div>
+                        </Link>):(
                         <Link to={`/product/${product._id}`} target="_blank" className="product-outer">
-                        <div key={product._id}  
-                        // onClick = {()=>openNewTab(product._id)}
-                        >
+                        <div key={product._id} id="outer" >
                              <div className="left">
                              <img src={product.pImageDetails[0].imageUrl} alt=""/>
                              </div>

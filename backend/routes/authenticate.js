@@ -198,14 +198,21 @@ Router.post('/switchtoseller', async (req, res) => {
     const user = await User.findById(req.session._id)
     console.log("try to switch account", user.User.email)
     user.User.isSeller = true
+    user.User.address = [req.body]
+    // console.log(req.body)
     await user.save()
-    // console.log('User :',resMongoStatus)
+    console.log('After adding shop address User :',user)
+    res.statusCode = 200
+    res.json({
+      address : [...user.User.address],
+      isSeller : user.User.isSeller
+    })
   }
   catch (err) {
     console.log("error Caught->", err)
   }
 
-  res.json({ message: "Successfully executed query..." })
+  // res.json({ message: "Successfully executed query..." })
 })
 
 /**  Handles Forgot password Routes functionality */

@@ -38,7 +38,16 @@ function Product() {
                 </div>
                 <div className="mono-Pimage-right">
                     <img ref={image} id="p-main-image" src={ product.pImageDetails[0].imageUrl} alt=""/>
+                    <div className="mono-cart-buy">
+                        <button>Add To Cart</button>
+                        {
+                            product.pstock ? 
+                            <button>Buy Now</button> :
+                            <button>Remaind Me</button>
+                        }
+                    </div>
                 </div>
+                
             </div>
             <div className="mono-product-detials">
                 <div className="col" id=" plabel">
@@ -47,7 +56,22 @@ function Product() {
                     </h3>
                 </div>
                 <div className="col" id="price">
-                ₹{product.pcost}
+                <span>₹{product.pcost}</span>
+                <span>₹{product.pcost + product.pcost * 15/100}</span>
+                <span>15% off</span>
+                </div>
+                <div className="col" id="pdescription">
+                <span>About product :</span>
+                <pre>{product.pdescription}</pre>
+                </div>
+                <div className="col" id="pwarspan">
+                <span>Warranty period :</span>
+                <span>{product.pwarrantyspan}</span>
+                <span> months.</span>
+                </div>
+                <div className="col" id="pstatus">
+                <span>Stock status :</span>
+                <p>Only few left hurry up...!</p>
                 </div>
             </div>
         </div>

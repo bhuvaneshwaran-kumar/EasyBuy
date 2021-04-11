@@ -9,7 +9,7 @@ import {
 import Signup from './components/Signup.js'
 import Profile from './components/Profile.js'
 import Product from './components/Product.js'
-import Home from './components/Home.js'
+import Home from './components/home/Home.js'
 import AddProduct from './components/seller/AddProduct'
 import MyProduct from './components/seller/MyProduct'
 
@@ -36,7 +36,7 @@ function App() {
     const timer = setTimeout(() => {
       setLoader(false)
       clearTimeout(timer)
-    }, 100);
+    }, 50);
     // return ()=>clearTimeout(timer)
   },[dispatch])
   

@@ -8,8 +8,22 @@
 }
 .container .top {
   width: 800px;
-  margin-bottom: 20px;
+  margin: 20px auto;
 }
 .container .top li {
   margin-bottom: 10px;
+  border-left: 2px solid teal;
+  padding-left: 10px;
+  list-style: none;
+}
+.container .top li:nth-child(1),
+.container .top li:nth-child(5) {
+  font-weight: 500;
+}
+form .bottom {
+  width: 300px;
+  margin: 10px auto;
+}
+form .bottom input {
+  margin: 20px;
 }

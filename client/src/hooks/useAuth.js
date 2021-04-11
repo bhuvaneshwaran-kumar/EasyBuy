@@ -121,10 +121,15 @@ function useAuth() {
         return data.value
     }
     
-    const switchToSellerAccount = async () =>{
+    const switchToSellerAccount = async (shopAddressData) =>{
         const response = await fetch(BASE_URL+'/authenticate/switchtoseller',{
             credentials : "include",
-            method : "post"
+            method : "post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body : JSON.stringify(shopAddressData)
         })
         const data = await response.json()
         return data

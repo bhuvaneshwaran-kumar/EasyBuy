@@ -158,6 +158,7 @@ function ManageAddress() {
             {
                
                 address.map((addres)=>(
+                    addres.uAddType !== "Shop Address" ?
                 <div className="user-address" key={addres._id}>
                     <pre><strong>
                         {addres.uAddType}
@@ -167,7 +168,17 @@ function ManageAddress() {
                     {addres.uAddress}
                     </pre>
                     <DeleteSweepIcon id="Add-delete" onClick={()=>{deleteAddress(addres._id)}}/>
-                </div>
+                </div> :
+                <div className="user-address" key={addres._id}>
+                <pre><strong>
+                    {addres.uAddType}
+                    <br/><br/>
+                    </strong></pre>
+                <pre>
+                {addres.uAddress}
+                </pre>
+                
+            </div>
             ))        
             }
         </div>
