@@ -6,7 +6,7 @@ import './homeStyles/Slider.css'
 
 function Slider() {
     let slides = useRef([])
-    let dots = useRef([])
+    // let dots = useRef([])
 
     let slideIndex = 0;
     
@@ -37,6 +37,9 @@ function Slider() {
     }
 
     useEffect(() => {
+        for(let i=1;i<3;i++){
+            slides.current[i].style.display="none"
+        }
         let timer = setInterval(()=>{
             plusSlides(1);
         },3000)

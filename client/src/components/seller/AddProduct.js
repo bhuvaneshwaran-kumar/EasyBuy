@@ -1,8 +1,29 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useRef,useEffect} from 'react'
 import './AddProduct.css'
 import {Delete} from '@material-ui/icons'
 import {useProductValue} from '../../contexts/ProductProvider'
 function AddProduct() {
+    let slides = useRef([])
+    let slideIndex = 0;
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+    function showSlides(n) {
+        if (n > 2){
+            n = 0
+            slideIndex = 0 
+        } 
+        if(n < 0){
+            n = 2
+            slideIndex = 2 
+        } 
+        for(let i=0;i<3;i++){
+            slides.current[i].style.display="none"
+        }
+        slides.current[n].style.display="block"
+    }
+
     const [selectedImage, setSelectedImage] = useState([])
     const [uploadStatus,setUploadStatus] = useState(false)
     const [loader,setLoader] = useState(false)
@@ -10,6 +31,7 @@ function AddProduct() {
     const [message,setMessage] = useState('')
     const form = useRef()    
     const [,pDispatch] = useProductValue()
+
     const submitFrom = async (e)=>{
         e.preventDefault()
         setLoader(true)
@@ -123,9 +145,39 @@ function AddProduct() {
 
     // console.log(selectedImage[0])
 
+    useEffect(() => {
+        for(let i=1;i<3;i++){
+            slides.current[i].style.display="none"
+        }
+        let timer = setInterval(()=>{
+            plusSlides(1);
+        },3000)
+        console.log(slides.current[0])
+        return ()=>clearInterval(timer)
+    }, [])
 
     return (
-        <div className={uploadStatus ? "addproduct reduce-opacity" : "addproduct"}>
+        <div className="addproduct-outer">
+         
+            <div className="addproduct-left">
+               {
+                   [0,0,0].map((val,index)=>(
+                       <img src={`/addproduct/0${index+1}.png`} alt=""
+                       ref = {(ref)=>slides.current.push(ref)} />
+                   ))
+               }
+               <ul>
+                   <li>Perks of selling here :</li>
+                   <li>Lowest cost of doing business.</li>
+                   <li>Ease of doing business.</li>
+                   <li>Highest growth rate.</li>
+                   <li>Most approachable online marketplace.</li>
+                   <li>With more than 10 crore registered customers .</li>
+               </ul>
+            </div>
+            
+         
+            <div className={uploadStatus ? "addproduct reduce-opacity" : "addproduct"}>
             
             <form ref={form} onSubmit={submitFrom} >
 
@@ -136,7 +188,9 @@ function AddProduct() {
                     </label>
                     <select className="input-2" name="pcategory" id="ProductCat">
                             <option value="Electronics">Electronics</option>
+                            <option value="Fashion">Fashion</option>
                     </select>
+                    
                 </div>
                 
                 {/* Item pitem */}
@@ -147,6 +201,7 @@ function AddProduct() {
                     <select className="input-2" name="pitem" id="ProductItm">
                             <option value="Mobile">Mobile</option>
                             <option value="Keyboard and Mouse">Keyboard and Mouse</option>
+                            <option value="Men T-shirts">Men T-shirts</option>
                     </select>
                 </div>
                
@@ -226,10 +281,10 @@ function AddProduct() {
                     {
                         selectedImage.map((elm,id)=>(
                             <div key={id} className="product-img">
-                            <img className="image" src={elm.data} alt="selected"/>
+                            <img className="" src={elm.data} alt="selected"/>
                             <div className="middle">
                                 <div className="text">
-                                    {elm.name}
+                                    <p>{elm.name}</p>
                                 <span>
                                         <Delete
                                         onClick={()=>removeImage(id)}/>
@@ -266,6 +321,7 @@ function AddProduct() {
 
             </form>
             
+        </div>
         </div>
     )
 }
