@@ -149,21 +149,21 @@
 .mono-product-detials #pwarspan {
   display: flex;
   flex-direction: row;
+  /* border: 1px solid black; */
 }
 .mono-product-detials #pwarspan span {
   font-weight: 500;
   width: 150px;
   color: #878787;
 }
-.mono-product-detials #pwarspan span:nth-child(2) {
-  font-weight: 500;
-  width: auto;
+
+.mono-product-detials #pwarspan p {
   color: black;
-  margin-left: 15px;
+  font-family: inherit;
+  letter-spacing: 0;
+  /* font-weight: 500; */
 }
-.mono-product-detials #pwarspan span:nth-child(3) {
-  font-weight: 500;
-  width: auto;
-  color: black;
-  margin-left: 5px;
+.mono-product-detials #pwarspan .warspan-col {
+  display: flex;
+  flex-direction: column;
 }

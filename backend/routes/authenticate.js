@@ -115,6 +115,7 @@ Router.post("/islogged", async (req, res) => {
     res.json({
       name: user.User.name,
       email: user.User.email,
+      _id:req.session._id,
       loggedStatus: true,
       isSeller: user.User.isSeller || false,
       address:user.User.address,
@@ -148,6 +149,7 @@ Router.post("/login", async (req, res) => {
         name: user.User.name,
         email: user.User.email,
         loggedStatus: true,
+        _id:req.session._id,
         isSeller: user.User.isSeller || false, 
         address:user.User.address || false,
         message: "Sucessfully Logged in..."

@@ -151,7 +151,7 @@ function AddProduct() {
         }
         let timer = setInterval(()=>{
             plusSlides(1);
-        },3000)
+        },4000)
         console.log(slides.current[0])
         return ()=>clearInterval(timer)
     }, [])

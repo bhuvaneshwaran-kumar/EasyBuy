@@ -1,0 +1,23 @@
+#DisplayComment {
+  border: 1px solid rgb(226, 223, 223);
+  margin-top: 10px;
+  width: 400px;
+  max-height: 300px;
+  overflow-y: scroll;
+  padding: 20px;
+  color: black;
+}
+#DisplayComment p span {
+  margin-right: 10px;
+}
+#DisplayComment #individual-comment {
+  border-bottom: 1px solid rgb(216, 214, 214);
+  margin-bottom: 4px;
+}
+#DisplayComment p {
+  color: black;
+}
+h5 {
+  font-weight: 400;
+  font-size: inherit;
+}

@@ -1,6 +1,8 @@
 import React,{useEffect, useState, useRef} from 'react'
 import { useParams } from 'react-router-dom';
 import './styles/Product.css'
+import Comment from '../components/comment/Comment'
+import {Security,SportsKabaddi} from '@material-ui/icons';
 function Product() {
     const [product,setProduct] = useState(null)
     const {id} = useParams();
@@ -31,8 +33,8 @@ function Product() {
             <div className="mono-product-image">
                 <div className="mono-Pimage-left">
                 {
-                    product.pImageDetails.map((image)=>(
-                       <img src={image.imageUrl} onClick={()=>changeMainImage(image.imageUrl)}  id="p-sample-image" alt=""/>
+                    product.pImageDetails.map((image,index)=>(
+                       <img src={image.imageUrl} id={index} onClick={()=>changeMainImage(image.imageUrl)}  id="p-sample-image" alt=""/>
                     ))
                 }
                 </div>
@@ -65,13 +67,33 @@ function Product() {
                 <pre>{product.pdescription}</pre>
                 </div>
                 <div className="col" id="pwarspan">
-                <span>Warranty period :</span>
-                <span>{product.pwarrantyspan}</span>
-                <span> months.</span>
+                <span>Services :</span>
+                <div className="warspan-col">
+                <p>
+                &nbsp;&nbsp;&nbsp;{product.pwarrantyspan}
+                &nbsp; Months Warranty.<Security style={{fontSize:'large',position:'relative',top:'3px',left:'3px',color :'teal'}}/>
+                </p>
+                <p>
+                &nbsp;&nbsp;&nbsp;7
+                &nbsp;Days Replacement Policy.&nbsp;<span style={{fontSize:'large',position:'relative',top:'2px',left:'3px',color :'teal'}}>♻</span>
+                </p>
+                <p>
+                &nbsp;
+                &nbsp;Cash on Delivery available.&nbsp;<span style={{fontSize:'large',position:'relative',top:'2px',left:'3px',color :'teal'}}>₹</span>
+                </p>
+                </div>
                 </div>
                 <div className="col" id="pstatus">
                 <span>Stock status :</span>
                 <p>Only few left hurry up...!</p>
+                </div>
+                <div className="col" id="pstatus">
+                    <span>Question And Answers :</span>
+                <p>
+
+                        <Comment product={product}/>
+
+                </p>
                 </div>
             </div>
         </div>

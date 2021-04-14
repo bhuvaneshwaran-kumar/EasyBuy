@@ -14,7 +14,9 @@ const MongoStore = require('connect-mongodb-session')(session)
 const authenticate = require("./routes/authenticate.js")
 const product = require('./routes/product')
 const user = require('./routes/user')
-        /* Module Importing Section End */
+const comment = require('./routes/comment.js')
+
+/* Module Importing Section End */
 
 /* ------------------------------------------------------------------------------------------ */
 /* ------------------------------------------------------------------------------------------ */
@@ -74,8 +76,9 @@ app.use(session({
 app.use('/authenticate',authenticate)
 app.use('/product',product)
 app.use('/user',user)
+app.use('/comment',comment)
 app.get("/",(req,res)=>{
-        console.log("geting req...")
+        console.log("Everything's looks good to go..!")
 })
     
 
