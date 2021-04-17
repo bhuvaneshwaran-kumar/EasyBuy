@@ -6,7 +6,7 @@ const cloudinary = require("../utils/cloudinary.js")
 Router.get('/', async (req, res) => {
     if (req.session.isAuth) {
         try {
-            console.log("user getting post")
+            // console.log("user getting post")
             const skip = parseInt(req.query.skip) || 0
             const perPage = 5
             const totalCount = await Product.countDocuments()
@@ -33,7 +33,7 @@ Router.get('/getproductdata', async (req, res) => {
             
             const product = await Product.findById(id)
 
-            console.log(product)
+            // console.log(product)
 
             res.json({ message: "Post sent to Frontend", result : product})
         } catch (error) {
@@ -45,7 +45,7 @@ Router.get('/getproductdata', async (req, res) => {
 
 Router.get('/home', async (req, res) => {
         try {
-            console.log("user getting post")
+            // console.log("user getting post")
             const productToBeFetched = req.query.productToBeFetched
             const skip = parseInt(req.query.skip) || 0
             const perPage = 5
@@ -55,7 +55,7 @@ Router.get('/home', async (req, res) => {
                 let OfferProduct = await Product.find({ pofferspan : { $gt : 0 } }).sort('-pofferspan')
                 .limit(perPage).skip(skip)
                 .exec()
-                console.log("offer product",OfferProduct)
+                // console.log("offer product",OfferProduct)
                 const hasMore = ((skip + perPage) <= totalCount) ? true : false
                 return res.json({ message: "Post sent to Frontend", report: true, product: OfferProduct, hasMore: hasMore })
             }
@@ -65,7 +65,7 @@ Router.get('/home', async (req, res) => {
                 let OfferProduct = await Product.find({pcategory:'Fashion'}).sort('-timestamp')
                 .limit(perPage).skip(skip)
                 .exec()
-                console.log("offer product",OfferProduct)
+                // console.log("offer product",OfferProduct)
                 const hasMore = ((skip + perPage) <= totalCount) ? true : false
                 return res.json({ message: "Post sent to Frontend", report: true, product: OfferProduct, hasMore: hasMore })
             }
@@ -145,7 +145,7 @@ Router.post('/add',async (req, res) => {
             })
             await product.save()
             res.status = 200
-            console.log("User product detials",product)
+            // console.log("User product detials",product)
             res.json({message:"GOt IMage",product : product})
         }catch(err){
             console.log("error while we save the data of product ",err)
@@ -185,7 +185,7 @@ Router.post('/update',async (req, res) => {
 
             await product.save()
             res.status = 200
-            console.log("User updated product detials",product)
+            // console.log("User updated product detials",product)
             res.json({message:"updated product",product : product})
         }catch(err){
             console.log("error while we save the data of product ",err)
@@ -196,6 +196,49 @@ Router.post('/update',async (req, res) => {
     else {
         res.status(401).json({ message: "Unauthorized Access", report: false })
     }
+})
+
+
+Router.post('/checkwishlist',async(req,res)=>{
+    // console.log("form check wishlist ->",req.body)
+    const {productId,userId} = req.body
+    const product = await Product.findById(productId)
+    let {wishList} = product
+    let hasWishlist = wishList.filter((wish)=>{
+        return wish.userId === userId
+    })
+    // console.log(hasWishlist)
+
+    if(hasWishlist.length !== 0){
+        // console.log("yup")
+        res.statusCode = 200
+        res.json({message:"success"})
+    }else{
+        res.statusCode = 201
+        res.json({message:"nope"})
+    }
+})
+
+Router.post('/addwishlist',async(req,res)=>{
+    const {productId,userId} = req.body
+    const product = await Product.findById(productId)
+    product.wishList = [...product.wishList,req.body]
+    product.save()
+    // console.log(product)
+    res.statusCode = 200
+    res.json({message:"success"})
+})
+
+Router.post('/removewishlist',async(req,res)=>{
+    const {productId,userId} = req.body
+    const product = await Product.findById(productId)
+    const filteredPeople = product.wishList.filter((item) => item.userId !== userId);
+    product.wishList = filteredPeople
+    product.save()
+    // console.log('after removing',product)
+    res.statusCode = 200
+    res.json({message:"success"})
+
 })
 
 module.exports = Router

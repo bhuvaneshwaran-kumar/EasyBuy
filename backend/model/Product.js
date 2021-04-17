@@ -21,7 +21,13 @@ const Product = new Schema({
         type : Date
     },
     sellerId : String,
-    pofferspan: Number
+    pofferspan: Number,
+    wishList:[{
+        userId:String,
+        userEmail : String,
+        productId: String
+    }]
+    
 })
 
 module.exports = require('mongoose').model("Product", Product)

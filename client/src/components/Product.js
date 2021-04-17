@@ -1,20 +1,50 @@
 import React,{useEffect, useState, useRef} from 'react'
 import { useParams } from 'react-router-dom';
+import {IconButton,Button} from "@material-ui/core" 
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
 import './styles/Product.css'
 import Comment from '../components/comment/Comment'
 import {Security,SportsKabaddi} from '@material-ui/icons';
 import {useUserValue} from '../contexts/UserProvider'
+
 function Product() {
     const [product,setProduct] = useState(null)
     const [user] = useUserValue()
+    const [isLiked,setIsLiked] = useState(false)
     // console.log(user._id,product.sellerId)
+    
     const {id} = useParams();
     const image = useRef()
     const changeMainImage = (imageUrl)=>{
         image.current.src = imageUrl
     }
     useEffect(()=>{
-        
+        const checkWishlist = async(id)=>{
+            let wishlistData = {
+                productId : id,
+                userId : user._id,
+                userEmail : user.email,
+                
+            }
+            let  result  = await fetch('http://localhost:8080/product/checkwishlist',{
+                mode:"cors",
+                credentials : "include",
+                method : "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                body : JSON.stringify(wishlistData)        
+            })
+
+            if(result.status == 200){
+                setIsLiked(true)
+            }else{
+                setIsLiked(false)
+            }
+        }
         const getProductDetials = async (id)=>{
             const result = await fetch('http://localhost:8080/product/getproductdata/?'+ new URLSearchParams({
                 id : id 
@@ -24,11 +54,47 @@ function Product() {
             const data = await result.json()
             setProduct(data.result)
         }
-
+        checkWishlist(id)
         getProductDetials(id);
 
     },[])
-    console.log(product)
+    
+    const addRemoveWishlist = async ()=>{
+        console.log("add rome")
+        let result
+        let wishlistData = {
+            productId : id,
+            userId : user._id,
+            userEmail : user.email,
+        }
+        console.log(id,wishlistData)
+        if(isLiked){
+            result  = await fetch('http://localhost:8080/product/removewishlist',{
+                mode:"cors",
+                credentials : "include",
+                method : "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                body : JSON.stringify(wishlistData)        
+            })
+        }else{
+            result  = await fetch('http://localhost:8080/product/addwishlist',{
+                mode:"cors",
+                credentials : "include",
+                method : "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                body : JSON.stringify(wishlistData)        
+            })
+        }
+        if(result.status === 200){
+            setIsLiked((prev)=>!prev)
+        }
+    }
 
     return (
         product&&
@@ -105,6 +171,18 @@ function Product() {
 
                 </p>
                 </div>
+           
+           
+                <div className="product-addWishlist">
+                    
+                    <Button variant="contained" onClick={addRemoveWishlist}>
+                        { isLiked ? <FavoriteIcon style={{color:'red'}}/>: <FavoriteBorderIcon/>}
+                        + Add WishList
+                    </Button>
+
+
+                </div>
+           
             </div>
         </div>
     )
