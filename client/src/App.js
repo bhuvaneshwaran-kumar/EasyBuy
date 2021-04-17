@@ -1,5 +1,6 @@
 import './App.css';
 import Nav from './components/Nav.js'
+import Footer from './components/Footer/Footer.js'
 import Login from "./components/Login.js"
 import {
   Switch,
@@ -95,7 +96,7 @@ function App() {
           <Redirect to='/login'/>
         </Route>
       </Switch>
-          
+       <Footer/>   
     </>:
     // Loading Spinner
     <div className="container">

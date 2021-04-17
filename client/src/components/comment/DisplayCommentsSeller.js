@@ -37,7 +37,7 @@ function DisplayCommentsSeller({data,setComments,index}) {
             {
                 comment.comment.Answer === null ? 
                 <form ref={form} onSubmit={submitForm} style={{display:'inline-block',width:'250px',marginLeft:'10px'}} action="">
-                <input required name='Answer' style={{display:'inline-block',width:'250px'}} type="text" placeholder="Enter your fucking comment" className="input-2"/>
+                <input required name='Answer' style={{display:'inline-block',width:'250px'}} type="text" placeholder="Enter your comment" className="input-2"/>
                 <button type='submit' className="btn" style={{padding:'2px',backgroundColor : '#3f44e0',marginTop:'3px',float:'right'}}>Post</button>
                 </form> : <p  style={{color:'black',display:'inline-block'}}> { comment.comment.Answer } </p>  
             

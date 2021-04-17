@@ -46,8 +46,40 @@ Router.get('/getproductdata', async (req, res) => {
 Router.get('/home', async (req, res) => {
         try {
             console.log("user getting post")
+            const productToBeFetched = req.query.productToBeFetched
             const skip = parseInt(req.query.skip) || 0
             const perPage = 5
+
+            if(productToBeFetched === 'offer'){
+                let totalCount = await Product.find({ pofferspan : { $gt : 0 } }).count()
+                let OfferProduct = await Product.find({ pofferspan : { $gt : 0 } }).sort('-pofferspan')
+                .limit(perPage).skip(skip)
+                .exec()
+                console.log("offer product",OfferProduct)
+                const hasMore = ((skip + perPage) <= totalCount) ? true : false
+                return res.json({ message: "Post sent to Frontend", report: true, product: OfferProduct, hasMore: hasMore })
+            }
+
+            if(productToBeFetched === 'Fashion'){
+                let totalCount = await Product.find({pcategory:'Fashion'}).count()
+                let OfferProduct = await Product.find({pcategory:'Fashion'}).sort('-timestamp')
+                .limit(perPage).skip(skip)
+                .exec()
+                console.log("offer product",OfferProduct)
+                const hasMore = ((skip + perPage) <= totalCount) ? true : false
+                return res.json({ message: "Post sent to Frontend", report: true, product: OfferProduct, hasMore: hasMore })
+            }
+
+            if(productToBeFetched === 'mobiles'){
+                let totalCount = await Product.find({pitem:'Mobile'}).count()
+                let OfferProduct = await Product.find({pitem:'Mobile'}).sort('-timestamp')
+                .limit(perPage).skip(skip)
+                .exec()
+                console.log("offer product",OfferProduct)
+                const hasMore = ((skip + perPage) <= totalCount) ? true : false
+                return res.json({ message: "Post sent to Frontend", report: true, product: OfferProduct, hasMore: hasMore })
+            }
+            
             const totalCount = await Product.countDocuments()
             const product = await Product.find().sort('-timestamp')
                 .limit(perPage).skip(skip)
@@ -133,7 +165,7 @@ Router.post('/update',async (req, res) => {
             plabel, pbrand,
             pmodelno, pwarrantyspan, 
             pdescription, pstock,
-            pcost, pImageDetails 
+            pcost, pImageDetails ,pofferspan
             }   = req.body
     
     // checks seller is authenticated... 
@@ -148,6 +180,8 @@ Router.post('/update',async (req, res) => {
             product.pdescription = pdescription
             product.pstock = pstock
             product.pcost = pcost
+            product.pofferspan = pofferspan
+
 
             await product.save()
             res.status = 200

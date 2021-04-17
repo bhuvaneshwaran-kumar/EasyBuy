@@ -14,7 +14,7 @@ Router.get("/getcomments",async (req,res)=>{
             data : data            
         })
     }catch(e){
-
+        console.log("no comments")
     }
    
 })

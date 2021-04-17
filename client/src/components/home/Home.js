@@ -1,5 +1,5 @@
-import React,{useRef,useCallback,useEffect} from 'react'
-import { useState } from 'react'
+import React,{useRef,useCallback,useEffect,useState} from 'react'
+// import { useState } from 'react'
 import './homeStyles/Home.css'
 import { useHistory,Link } from 'react-router-dom';
 import Slider from './Slider.js'
@@ -8,6 +8,7 @@ import Slider from './Slider.js'
 
 function Home() {
 
+    const [productToBeFetched,setProductToBeFetched] = useState('')
     const scrollTo = (element)=>{
         // const y = window.pageYOffset + 20;
         // element.current.scrollIntoView({ behavior: 'smooth',  block: "start" })
@@ -43,46 +44,61 @@ function Home() {
                 observer.current.observe(node)
           }, [loader,hasMore,products.length])   
 
+
+          const productDetials = async (skip)=>{
+            const response = await fetch('http://localhost:8080/product/home/?'+ new URLSearchParams({
+                skip : skip ,
+                productToBeFetched : productToBeFetched
+              }),{
+                credentials : "include"
+              })      
+              const data = await response.json()
+              setProducts((prev)=>{
+                  return [...prev,...data.product]
+              })
+            setHasMore(data.hasMore)
+            setLoader(false)
+            }   
+
+        useEffect(()=>{
+            setProducts([])
+            setLoader(true)  
+            productDetials(0)
+        },[productToBeFetched])
+
+
         // Fetch product from server when ever the State Skip change the value.
         useEffect(()=>{
             setLoader(true)  
-            const productDetials = async ()=>{
-                const response = await fetch('http://localhost:8080/product/home/?'+ new URLSearchParams({
-                    skip : skip 
-                  }),{
-                    credentials : "include"
-                  })      
-                  const data = await response.json()
-                  setProducts((prev)=>{
-                      return [...prev,...data.product]
-                  })
-                setHasMore(data.hasMore)
-                setLoader(false)
-                }   
-            productDetials()
+            productDetials(products.length)
           },[skip])
+
 
           console.log(products)
     return (
-        <div ref={top} className="home-container">
-             <div className="home-row home-top-nav">
-                 <div onClick={()=>scrollTo(productsDiv)} className="btn top-nav-list ">
+        <div ref={top} className="home-container" style={{minHeight:'50vw'}}>
+             <div className="home-row home-top-nav" >
+                <div onClick={()=>setProductToBeFetched('') } className={productToBeFetched === "" ?"btn top-nav-list active":"btn top-nav-list "}>
+                 <img src="/Nav-img/Top offer.png" alt=""/>
+                 <li>All</li>
+                 </div>
+                 <div onClick={()=>setProductToBeFetched('offer') } className={productToBeFetched === "offer" ?"btn top-nav-list active":"btn top-nav-list "}>
                  <img src="/Nav-img/Top offer.png" alt=""/>
                  <li>Top Offers</li>
                  </div>
-                 <div onClick={()=>scrollTo(productsDiv)} className="btn top-nav-list ">
+                 <div onClick={()=>setProductToBeFetched('mobiles')} className={productToBeFetched === "mobiles" ?"btn top-nav-list active":"btn top-nav-list "}>
                  <img src="/Nav-img/Mobile.png" alt=""/>
                  <li>Mobiles</li>
                  </div>
-                 <div onClick={()=>scrollTo(productsDiv)} className="btn top-nav-list ">
+                 <div onClick={()=>setProductToBeFetched('Fashion')} className={productToBeFetched === "Grocery" ?"btn top-nav-list active":"btn top-nav-list "}>
                  <img src="/Nav-img/Grocery.png" alt=""/>
                  <li>Grocery</li>
                  </div>
-                 <div onClick={()=>scrollTo(productsDiv)} className="btn top-nav-list ">
+                 <div onClick={()=>setProductToBeFetched('Fashion')} className={productToBeFetched === "Fashion" ?"btn top-nav-list active":"btn top-nav-list "}>
                  <img src="/Nav-img/Fashion.png" alt=""/>
                  <li>Fashion</li>
                  </div>
-                 <div onClick={()=>scrollTo(productsDiv)} className="btn top-nav-list ">
+                 <div onClick={()=>setProductToBeFetched('Fashion')} className={productToBeFetched === "Electronics" ?"btn top-nav-list active":"btn top-nav-list "}>
                  <img src="/Nav-img/Electronincs.png" alt=""/>
                  <li>Electronics</li>
                  </div>
@@ -124,9 +140,7 @@ function Home() {
                     ))
                 }
             </div>
-             <button onClick={
-                 ()=>scrollTo(top)
-             } className="btn"> top </button>
+             
         </div>
     )
 }

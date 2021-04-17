@@ -3,8 +3,11 @@ import { useParams } from 'react-router-dom';
 import './styles/Product.css'
 import Comment from '../components/comment/Comment'
 import {Security,SportsKabaddi} from '@material-ui/icons';
+import {useUserValue} from '../contexts/UserProvider'
 function Product() {
     const [product,setProduct] = useState(null)
+    const [user] = useUserValue()
+    // console.log(user._id,product.sellerId)
     const {id} = useParams();
     const image = useRef()
     const changeMainImage = (imageUrl)=>{
@@ -30,7 +33,7 @@ function Product() {
     return (
         product&&
         <div className = "mono-product-outer">
-            <div className="mono-product-image">
+            <div className="mono-product-image" >
                 <div className="mono-Pimage-left">
                 {
                     product.pImageDetails.map((image,index)=>(
@@ -38,14 +41,21 @@ function Product() {
                     ))
                 }
                 </div>
-                <div className="mono-Pimage-right">
-                    <img ref={image} id="p-main-image" src={ product.pImageDetails[0].imageUrl} alt=""/>
+                <div className="mono-Pimage-right" >
+                    <img ref={image} id="p-main-image" src={ product.pImageDetails[0].imageUrl} alt="" style={{marginBottom : '10px',height:"500px"}}/>
                     <div className="mono-cart-buy">
-                        <button>Add To Cart</button>
                         {
-                            product.pstock ? 
+                            product.sellerId !== user._id &&
+                             ( 
+                                 <>
+                             <button>Add To Cart</button>
+                                {
+                                    product.pstock ? 
                             <button>Buy Now</button> :
                             <button>Remaind Me</button>
+                                }
+                                </>
+                             )
                         }
                     </div>
                 </div>

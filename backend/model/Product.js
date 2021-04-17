@@ -20,7 +20,8 @@ const Product = new Schema({
     date:{
         type : Date
     },
-    sellerId : String
+    sellerId : String,
+    pofferspan: Number
 })
 
 module.exports = require('mongoose').model("Product", Product)

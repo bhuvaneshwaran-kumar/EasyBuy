@@ -3,7 +3,15 @@ import './Style/Comment.css'
 import {useUserValue} from '../../contexts/UserProvider'
 import DisplayComment from './DisplayComment.js'
 import DisplayCommentsSeller from './DisplayCommentsSeller.js'
+import Rodal from 'rodal'
+import '../../../node_modules/rodal/lib/rodal.css';
+
+
 function Comment({product}) {
+    const [show,setShow] = useState(false)
+    // const [hide,setHide] = useState(true)
+
+
     const form = useRef()
     const [user] = useUserValue()
     const [comments,setComments] = useState([])
@@ -77,7 +85,8 @@ function Comment({product}) {
                 </form>
             }
             
-            <button id="show-comment" className='btn' style={{marginTop : '10px',backgroundColor:'#3f44e0'}}onClick={changeShowCommentState}>{showComments && comments.length != 0 ? 'Hide' : 'Show'} Queries : {comments.length}</button>
+            <button id="show-comment" className='btn' style={{marginTop : '10px',backgroundColor:'#3f44e0'}}onClick={()=>{changeShowCommentState();}}>{showComments && comments.length != 0 ? 'Hide' : 'Show'} Queries : {comments.length}</button>
+            
             <div >
                 {
                     product.sellerId !== user._id ?
@@ -97,9 +106,32 @@ function Comment({product}) {
                         </div>
                     )
                 }
+
+                
             </div>
+            <button onClick={()=>{
+                    setShow((prev)=>!prev)
+                }}>open</button>
+
+                <Rodal visible={show} showCloseButton={false} onClose={()=>{setShow((prev)=>!prev)}}>
+                    <div>Content
+                        <span onClick={()=>{setShow((prev)=>!prev)}}>X</span>
+                    </div>
+                </Rodal>
+
         </div>
     )
 }
 
 export default Comment
+/*
+<button onClick={()=>{
+                    setShow((prev)=>!prev)
+                }}>open</button>
+
+                <Rodal visible={show} showCloseButton={false} onClose={()=>{setShow((prev)=>!prev)}}>
+                    <div>Content
+                        <span onClick={()=>{setShow((prev)=>!prev)}}>X</span>
+                    </div>
+                </Rodal>
+ */

@@ -4,6 +4,7 @@ import './MyProduct.css'
 import {useProductValue} from '../../contexts/ProductProvider'
 import {useUserValue} from '../../contexts/UserProvider'
 import { Edit, CheckCircleOutline} from '@material-ui/icons'
+import {Link} from 'react-router-dom'
 
 function MyProduct(){
     
@@ -15,7 +16,7 @@ function MyProduct(){
     const observer = useRef(null)
     // const [edit,setEdit] = useState(false)
     const input = useRef()
-   
+   const slide = useRef()
 
     const turnOnAndOffEdit = (index,status)=> {
       console.log("hii",index)
@@ -97,6 +98,7 @@ function MyProduct(){
           input.current.pstock.setAttribute("disabled",'')
           input.current.pcost.setAttribute("disabled",'')
           input.current.pwarrantyspan.setAttribute("disabled",'')
+          input.current.pofferspan.setAttribute("disabled",'')
           return
         }else{
           input.current.plabel[index].setAttribute("disabled",'')
@@ -104,6 +106,7 @@ function MyProduct(){
           input.current.pstock[index].setAttribute("disabled",'')
           input.current.pcost[index].setAttribute("disabled",'')
           input.current.pwarrantyspan[index].setAttribute("disabled",'')
+          input.current.pofferspan[index].setAttribute("disabled",'')
           return 
         }
       }
@@ -115,6 +118,7 @@ function MyProduct(){
         input.current.pstock.removeAttribute("disabled")
         input.current.pcost.removeAttribute("disabled")
         input.current.pwarrantyspan.removeAttribute("disabled")
+        input.current.pofferspan.removeAttribute("disabled")
        
         return
       }else{
@@ -124,6 +128,7 @@ function MyProduct(){
         input.current.pstock[index].removeAttribute("disabled")
         input.current.pcost[index].removeAttribute("disabled")
         input.current.pwarrantyspan[index].removeAttribute("disabled")
+        input.current.pofferspan[index].removeAttribute("disabled")
       }
 
       // input.current.setAttribute("disabled", "");
@@ -141,10 +146,34 @@ function MyProduct(){
       }) 
     }
 
-    
+    useEffect(()=>{
+      let num = 1
+      const timer = setInterval(()=>{
+        if(num === 4)
+          num = 1
+        slide.current.src = `/addproduct/0${num}.png`
+        num+=1
+      },3000)
+      return ()=> clearInterval(timer) 
+    })
 
     return(
         <div className="my-product">
+            <div className="my-product-left">
+                       <img src={`/addproduct/0${1}.png`} alt=""
+                       ref = {slide}/>
+               <ul>
+                   <li>Perks of selling here :</li>
+                   <li>Lowest cost of doing business.</li>
+                   <li>Ease of doing business.</li>
+                   <li>Highest growth rate.</li>
+                   <li>Most approachable online marketplace.</li>
+                   <li>With more than 10 crore registered customers .</li>
+               </ul>
+            </div>
+ 
+
+            <div className="my-product-right">
             <form ref={input} action="">
             {
               products.map((product,index)=>(
@@ -205,6 +234,7 @@ function MyProduct(){
                         }/>
                       </div>
 
+                      
                       {/*  Warranty Period In pwarrantyspan */}
                       <div className="row form-group">
                           <label htmlFor="label">
@@ -216,6 +246,23 @@ function MyProduct(){
                         }/>
                       </div>
 
+                      {/*  special offer Period In pwarrantyspan */}
+                      <div className="row form-group">
+                          <label htmlFor="label">
+                              Offer in percentage : 
+                          </label>
+                          <input type="number" name="pofferspan" value={product.pofferspan} className="input-2"  disabled  onChange={(e,i = index)=>{
+                        handleProductValueChange(i,'pofferspan',e.target.value)
+                        }                        
+                        }/>
+                        
+                      </div>
+                      
+                      <Link to={`/product/${product._id}`} target="_blank" className="product-outer">
+                       <p className="btn"> click here to respose to your querry </p>
+                      </Link>
+                      
+                      
                       {/*  Edit button */}
                       <div className="row bottom btn">
 
@@ -310,6 +357,21 @@ function MyProduct(){
                         }/>
                       </div>
 
+                      {/*  special offer Period In pwarrantyspan */}
+                      <div className="row form-group">
+                          <label htmlFor="label">
+                              Offer in percentage : 
+                          </label>
+                          <input type="number" name="pofferspan" className="input-2"  value={product.pofferspan}  disabled  onChange={(e,i = index)=>{
+                        handleProductValueChange(i,'pofferspan',e.target.value)
+                        }                        
+                        }/>
+                      </div>
+
+                      <Link to={`/product/${product._id}`} target="_blank" className="product-outer">
+                       <p className="btn"> click here to respose to your querry </p>
+                      </Link>
+
                       {/* Edit Button */}
                       <div className="row bottom btn">
                         
@@ -346,6 +408,10 @@ function MyProduct(){
               </div>
             }
             </form>
+            </div>
+       
+       
+       
         </div>
     )
 
