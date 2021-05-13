@@ -12,7 +12,7 @@ function Slider() {
     
 
     function plusSlides(n) {
-        console.log("pressed",n)
+        // console.log("pressed",n)
     showSlides(slideIndex += n);
     
     }

@@ -15,10 +15,10 @@ const User = new Schema({
         "isSeller":Boolean,
         "address" : [
             {
-                "uName":String,             "uMobNum":String,               "uPinNum":String,               "uLocality":String,
-                "uAddress":String,                "uRegional":String,
+                "uName":String,"uMobNum":String,"uPinNum":String,"uLocality":String,
+                "uAddress":String,"uRegional":String,
                 "uAlMobNum":String,
-                "uState":String,              "uLandmark":String,
+                "uState":String,"uLandmark":String,
                 "uAddType":String,       
             }
         ]

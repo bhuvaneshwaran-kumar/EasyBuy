@@ -4,7 +4,7 @@ import {useProductValue} from '../contexts/ProductProvider'
 import {useState,useEffect } from 'react'
 import useAuth from '../hooks/useAuth'
 import { Link, useHistory, useLocation } from "react-router-dom"
-
+import Search from './search/Search'
 
 
 function Nav() {
@@ -77,6 +77,7 @@ function Nav() {
                             <li>My-Cart</li>
                         </Link>
                    }
+                   <Search/>
                 </div>
                 <div className="right">
                     { !value.loggedStatus ?

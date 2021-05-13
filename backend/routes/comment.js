@@ -36,6 +36,7 @@ Router.post("/addcomment",async(req,res)=>{
 
 
     }catch(e){
+        console.log(e)
 
     }
     res.json({})
@@ -64,7 +65,7 @@ Router.post("/update",async(req,res)=>{
         })
     }
     catch(e){
-
+        console.log(e)
     }
 })
 

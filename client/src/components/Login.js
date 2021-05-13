@@ -134,7 +134,7 @@ function Login() {
                     </div>
                     { (!otpStatus) && (!resetPwdStatus) &&
                     <div className="row form-group">
-                        <input type="password" placeholder="Password" className="input-2" required
+                        <input type="password" min={4} max={8} placeholder="Password" className="input-2" required
                         name="password"/>
                     </div> 
                     

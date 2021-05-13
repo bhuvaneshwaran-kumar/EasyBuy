@@ -1,6 +1,9 @@
 const Router = require('express').Router()
 const Product = require('../model/Product')
 const cloudinary = require("../utils/cloudinary.js")
+const Label = require('../model/Label.js')
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 
 Router.get('/', async (req, res) => {
@@ -8,7 +11,7 @@ Router.get('/', async (req, res) => {
         try {
             // console.log("user getting post")
             const skip = parseInt(req.query.skip) || 0
-            const perPage = 5
+            const perPage = 50
             const totalCount = await Product.countDocuments()
             const product = await Product.find({sellerId : req.session._id}).sort('-timestamp')
                 .limit(perPage).skip(skip)
@@ -27,10 +30,31 @@ Router.get('/', async (req, res) => {
     }
 })
 
+Router.get("/home/search",async (req,res)=>{
+    try{
+        console.log("get search request")
+
+        let Searchkeys = req.query.Searchkeys
+        
+        const product = await Product.find({'plabel':Searchkeys})
+
+        res.statusCode = 200
+        return res.json({
+            products : product
+        })
+
+
+
+    }
+    catch(err){
+        console.log(err)
+    }
+})
+
 Router.get('/getproductdata', async (req, res) => {
         try {    
             const id = req.query.id
-            
+            console.log(id,'--> need to be fetched.')
             const product = await Product.findById(id)
 
             // console.log(product)
@@ -95,6 +119,29 @@ Router.get('/home', async (req, res) => {
 })
 
 
+const sendMail = async(wishListData,id)=>{ 
+    console.log(wishListData);
+    if(wishListData.length > 0){
+        for(data in wishListData){
+            const email = {
+                to: wishListData[data].userEmail, // Change to your recipient
+                from: '"no-reply@Easy-buy.com"<bhuvaneshwarankumar2000@gmail.com >', // Change to your verified sender
+                subject: 'Easy-buy Online Shopping ',
+                text: `Your One Time Password is link`,
+                html: `<strong>Your wishList product in EasyBuy got a jaw dropping offer<a href="http://localhost:3000/product/${id}" target="_blank"> Click here to check</a></strong>`,
+              }
+
+            sgMail
+            .send(email)
+            .then(async () => {
+            console.log('Email sent')
+            })
+            .catch((error) => {
+            console.error(error)
+            })
+        }
+    }
+}
 
 /**  Handles Adding Products  Routes functionality */ 
 
@@ -180,8 +227,15 @@ Router.post('/update',async (req, res) => {
             product.pdescription = pdescription
             product.pstock = pstock
             product.pcost = pcost
+            let prevOffer = product.pofferspan
             product.pofferspan = pofferspan
 
+            if(prevOffer < product.pofferspan){
+                console.log("send mail")
+                setImmediate(()=>sendMail(product.wishList,product._id)
+                )
+                // sendMail(product.wishList,product._id)
+            }
 
             await product.save()
             res.status = 200
@@ -200,22 +254,27 @@ Router.post('/update',async (req, res) => {
 
 
 Router.post('/checkwishlist',async(req,res)=>{
-    // console.log("form check wishlist ->",req.body)
+
+    // d-structing data from req.
     const {productId,userId} = req.body
+
+    // fetch product data form product collection using productID
     const product = await Product.findById(productId)
+
+    //d-structing wishList data from product
     let {wishList} = product
+
+    // check whether user liked the product
     let hasWishlist = wishList.filter((wish)=>{
         return wish.userId === userId
     })
-    // console.log(hasWishlist)
 
     if(hasWishlist.length !== 0){
-        // console.log("yup")
         res.statusCode = 200
-        res.json({message:"success"})
+        res.json({message:"success user already liked the product"})
     }else{
         res.statusCode = 201
-        res.json({message:"nope"})
+        res.json({message:"nope user not liked the product"})
     }
 })
 
@@ -239,6 +298,18 @@ Router.post('/removewishlist',async(req,res)=>{
     res.statusCode = 200
     res.json({message:"success"})
 
+})
+
+Router.post('/searchproduct',async(req,res)=>{
+    try{
+        const labels = await Label.find()
+        res.json({
+            labelName : labels[0].labelName
+        }) 
+    }
+    catch(e){
+        console.log(e)
+    }        
 })
 
 module.exports = Router

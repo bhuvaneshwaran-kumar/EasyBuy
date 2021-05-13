@@ -2,6 +2,8 @@ const Router = require('express').Router()
 const sgMail = require('@sendgrid/mail')
 const bcrypt = require('bcrypt')
 const User = require('../model/User.js')
+const Label = require('../model/Label.js')
+const Product = require('../model/Product.js')
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
@@ -104,6 +106,19 @@ Router.post("/signup-otp", async (req, res) => {
 /**  Handles isLogged Routes functionality */
 
 Router.post("/islogged", async (req, res) => {
+  
+  // Run for only once to create a label collection
+  const CreateLabelCollection = async () =>{
+    const products = await Product.find()
+    console.log(products.length)
+    const productLabel = products.map((product)=>product.plabel)
+    const LabelInstance = await Label.insertMany({
+      labelName : productLabel
+    })
+    LabelInstance.save()
+  }
+  // CreateLabelCollection()  
+
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header('Access-Control-Allow-Credentials', 'true')
 

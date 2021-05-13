@@ -8,6 +8,10 @@
   top: 0;
   z-index: 100;
 }
+.nav-bar .left {
+  display: flex;
+  flex: 1;
+}
 .nav-bar .left li,
 .nav-bar .right li {
   display: inline-block;

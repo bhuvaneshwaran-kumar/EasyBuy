@@ -26,7 +26,6 @@ function Product() {
                 productId : id,
                 userId : user._id,
                 userEmail : user.email,
-                
             }
             let  result  = await fetch('http://localhost:8080/product/checkwishlist',{
                 mode:"cors",
@@ -96,6 +95,7 @@ function Product() {
         }
     }
 
+    console.log(product)
     return (
         product&&
         <div className = "mono-product-outer">
@@ -134,9 +134,19 @@ function Product() {
                     </h3>
                 </div>
                 <div className="col" id="price">
-                <span>₹{product.pcost}</span>
-                <span>₹{product.pcost + product.pcost * 15/100}</span>
-                <span>15% off</span>
+                {
+                    product.pofferspan ?
+                    <>
+                    <span>₹{product.pcost - (product.pcost * product.pofferspan/100)}</span>
+                    <span>₹{product.pcost}</span>
+                    <span>{product.pofferspan}% off</span>
+                    </> :
+                    <>
+                    <span>₹{product.pcost}</span>
+                    <span>₹{product.pcost + product.pcost * 15/100}</span>
+                    <span>15% off</span>
+                    </>
+                }
                 </div>
                 <div className="col" id="pdescription">
                 <span>About product :</span>
@@ -174,13 +184,12 @@ function Product() {
            
            
                 <div className="product-addWishlist">
-                    
+                  { user._id !== product.sellerId && 
                     <Button variant="contained" onClick={addRemoveWishlist}>
                         { isLiked ? <FavoriteIcon style={{color:'red'}}/>: <FavoriteBorderIcon/>}
                         + Add WishList
                     </Button>
-
-
+                 }
                 </div>
            
             </div>

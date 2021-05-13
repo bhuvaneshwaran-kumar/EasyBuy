@@ -13,6 +13,7 @@ import Product from './components/Product.js'
 import Home from './components/home/Home.js'
 import AddProduct from './components/seller/AddProduct'
 import MyProduct from './components/seller/MyProduct'
+import ShowSearchProducts from './components/search/ShowSearchProducts.js'
 
 import useAuth from '../src/hooks/useAuth' 
 import { useEffect, useState } from 'react';
@@ -37,7 +38,7 @@ function App() {
     const timer = setTimeout(() => {
       setLoader(false)
       clearTimeout(timer)
-    }, 50);
+    }, 500);
     // return ()=>clearTimeout(timer)
   },[dispatch])
   
@@ -47,11 +48,11 @@ function App() {
     <div className="App">
     { !loader ?
     <>
-      <Nav/>
+      <Nav/> 
       <Switch>
         <Route exact path='/login'>
           {
-          !user.loggedStatus ? 
+          !user.loggedStatus? 
             <Login/>  :
             <Redirect to="/"/>
           }
@@ -64,6 +65,7 @@ function App() {
           }
         </Route>
         <Route path='/product/:id'>
+
         {
           !user.loggedStatus ? 
             <Signup/>  :
@@ -89,12 +91,13 @@ function App() {
           user.loggedStatus ? <Profile/> : <Redirect to="/"/> 
         }
         </Route>
+        <Route path ='/search/:Searchkeys'>
+          <Home/> 
+        </Route>
         <Route exact path='/'>
           <Home/>  
         </Route>
-        <Route path='/*'>
-          <Redirect to='/login'/>
-        </Route>
+        
       </Switch>
        <Footer/>   
     </>:
