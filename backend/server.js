@@ -15,6 +15,7 @@ const authenticate = require("./routes/authenticate.js")
 const product = require('./routes/product')
 const user = require('./routes/user')
 const comment = require('./routes/comment.js')
+const cart = require('./routes/cart.js')
 
 /* Module Importing Section End */
 
@@ -77,6 +78,7 @@ app.use('/authenticate',authenticate)
 app.use('/product',product)
 app.use('/user',user)
 app.use('/comment',comment)
+app.use('/cart',cart)
 app.get("/",(req,res)=>{
         console.log("Everything's looks good to go..!")
 })

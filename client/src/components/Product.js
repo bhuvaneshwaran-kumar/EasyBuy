@@ -1,5 +1,5 @@
-import React,{useEffect, useState, useRef} from 'react'
-import { useParams } from 'react-router-dom';
+import React,{useEffect, useState, useRef, useContext} from 'react'
+import { Link, useParams } from 'react-router-dom';
 import {IconButton,Button} from "@material-ui/core" 
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -8,13 +8,17 @@ import './styles/Product.css'
 import Comment from '../components/comment/Comment'
 import {Security,SportsKabaddi} from '@material-ui/icons';
 import {useUserValue} from '../contexts/UserProvider'
+import {useCartValue} from '../contexts/CartProvider'
 
 function Product() {
     const [product,setProduct] = useState(null)
     const [user] = useUserValue()
     const [isLiked,setIsLiked] = useState(false)
+    const [cartExist,setCartExist] = useState(false)
     // console.log(user._id,product.sellerId)
     
+    const [cart,cartDispatch] = useCartValue()
+
     const {id} = useParams();
     const image = useRef()
     const changeMainImage = (imageUrl)=>{
@@ -51,13 +55,75 @@ function Product() {
                 credentials : "include"
               })
             const data = await result.json()
+            console.log(data)
             setProduct(data.result)
         }
+        const checkCartExist = async ()=>{
+            let result = await fetch(`http://localhost:8080/cart/check-cart-exist/?`+new URLSearchParams({
+               pid : id
+            }),{
+                method:'get',
+                credentials:'include'
+            })
+            if(result.status === 200){
+                setCartExist(true)
+            }
+        }
+      
         checkWishlist(id)
-        getProductDetials(id);
+        getProductDetials(id)
+        checkCartExist()
 
     },[])
     
+
+    
+
+    const addToCart =  async()=>{
+        console.log("calling add to cart --->")
+
+        const result = await fetch('http://localhost:8080/cart/add-cart/',{
+            mode:"cors",
+            credentials : "include",
+            method : "post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            body : JSON.stringify({
+                pid : product._id,
+                plabel : product.plabel,
+                pImageDetails : product.pImageDetails,
+                quantity : 1
+            })        
+        })
+
+        // if(result.status == 200){
+        //     const data = {
+        //         pid : product._id,
+        //         plabel : product.plabel,
+        //         pImageDetails : product.pImageDetails,
+        //         quantity : 1
+        //     }
+        //    if(cart){
+        //         cartDispatch({
+        //             type : 'PREPANDCART',
+        //             payload : data
+        //         })
+        //    }else{
+        //     cartDispatch({
+        //         type : 'SET_CART',
+        //         payload : data
+        //     })
+        //    }
+        // }
+        setCartExist(true)
+
+        const data = await result.json()
+        console.log(data)
+    }
+
+
     const addRemoveWishlist = async ()=>{
         console.log("add rome")
         let result
@@ -95,7 +161,7 @@ function Product() {
         }
     }
 
-    console.log(product)
+    // console.log(product)
     return (
         product&&
         <div className = "mono-product-outer">
@@ -114,7 +180,15 @@ function Product() {
                             product.sellerId !== user._id &&
                              ( 
                                  <>
-                             <button>Add To Cart</button>
+                            { !cartExist ? <button
+                             onClick = {addToCart}
+                             >Add To Cart</button>:
+                             <button>
+                                 <Link to="/my-cart" className="check-cart">
+                                 check cart
+                                 </Link>
+                             </button>
+                             }
                                 {
                                     product.pstock ? 
                             <button>Buy Now</button> :

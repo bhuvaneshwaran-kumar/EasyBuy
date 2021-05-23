@@ -9,7 +9,8 @@ import {initialState, reducer} from "./reducers/UserReducer"
 import ProductProvider
 from './contexts/ProductProvider.js'
 import {productInitialState,productReducer} from './reducers/ProductReducer'
-
+import CartProvider from "./contexts/CartProvider"
+import {cartInitialState, cartReducer} from "./reducers/CartReducer"
 
 
 ReactDOM.render(
@@ -17,7 +18,9 @@ ReactDOM.render(
     <Router>
     <ProductProvider initialState={productInitialState} reducer={productReducer}>  
       <UserProvider initialState={initialState} reducer={reducer}>
-        <App/>
+        <CartProvider initialState={cartInitialState} reducer={cartReducer}>
+          <App/>
+        </CartProvider>
       </UserProvider>
     </ProductProvider>
 

@@ -72,7 +72,7 @@ Router.get('/home', async (req, res) => {
             // console.log("user getting post")
             const productToBeFetched = req.query.productToBeFetched
             const skip = parseInt(req.query.skip) || 0
-            const perPage = 5
+            const perPage = 20
 
             if(productToBeFetched === 'offer'){
                 let totalCount = await Product.find({ pofferspan : { $gt : 0 } }).count()
@@ -104,14 +104,17 @@ Router.get('/home', async (req, res) => {
                 return res.json({ message: "Post sent to Frontend", report: true, product: OfferProduct, hasMore: hasMore })
             }
             
-            const totalCount = await Product.countDocuments()
-            const product = await Product.find().sort('-timestamp')
-                .limit(perPage).skip(skip)
-                .exec()
+            if(productToBeFetched === 'all'){
+                const totalCount = await Product.countDocuments()
+                const product = await Product.find().sort('-timestamp')
+                    .limit(perPage).skip(skip)
+                    .exec()
+    
+                const hasMore = ((skip + perPage) <= totalCount) ? true : false
+    
+                return res.json({ message: "Post sent to Frontend", report: true, product: product, hasMore: hasMore })
+            }
 
-            const hasMore = ((skip + perPage) <= totalCount) ? true : false
-
-            res.json({ message: "Post sent to Frontend", report: true, product: product, hasMore: hasMore })
         } catch (error) {
             console.log(error)
             res.status(500).json({ message: "Server Error", report: false })

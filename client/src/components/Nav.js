@@ -73,8 +73,8 @@ function Nav() {
                        </> 
                    }
                    {value.loggedStatus &&
-                        <Link to='/'>
-                            <li>My-Cart</li>
+                        <Link to='/my-cart'>
+                            <li className={(active === "/my-cart")?"active":""}>My-Cart</li>
                         </Link>
                    }
                    <Search/>

@@ -14,7 +14,7 @@ a {
 .about .left {
   max-width: 350px;
   width: 280px;
-  height: 90vh;
+  min-height: 90vh;
   /* border: 1px solid black; */
   display: flex;
   position: sticky;
@@ -26,9 +26,11 @@ a {
 }
 .about .right {
   max-width: 900px;
+  /* border: 1px solid black; */
+
   /* align-self: center; */
   width: 900px;
-  min-height: 90vh;
+  min-height: auto;
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%);
 }
 

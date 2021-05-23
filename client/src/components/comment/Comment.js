@@ -109,9 +109,9 @@ function Comment({product}) {
 
                 
             </div>
-            <button onClick={()=>{
+            {/* <button onClick={()=>{
                     setShow((prev)=>!prev)
-                }}>open</button>
+                }}>open</button> */}
 
                 <Rodal visible={show} showCloseButton={false} onClose={()=>{setShow((prev)=>!prev)}}>
                     <div>Content

@@ -11,7 +11,7 @@ function Home() {
 
     console.log(Searchkeys)
 
-    const [productToBeFetched,setProductToBeFetched] = useState('')
+    const [productToBeFetched,setProductToBeFetched] = useState('all')
     const scrollTo = (element)=>{
         // const y = window.pageYOffset + 20;
         // element.current.scrollIntoView({ behavior: 'smooth',  block: "start" })
@@ -103,7 +103,7 @@ function Home() {
     return (
         <div ref={top} className="home-container" style={{minHeight:'50vw'}}>
              <div className="home-row home-top-nav" >
-                <div onClick={()=>setProductToBeFetched('') } className={productToBeFetched === "" ?"btn top-nav-list active":"btn top-nav-list "}>
+                <div onClick={()=>setProductToBeFetched('all') } className={productToBeFetched === "all" ?"btn top-nav-list active":"btn top-nav-list "}>
                  <img src="/Nav-img/Top offer.png" alt=""/>
                  <li>All</li>
                  </div>
@@ -147,7 +147,7 @@ function Home() {
                             </div>
                         </div>
                         </Link>):(
-                        <Link to={`/product/${product._id}`} target="_blank" className="product-outer">
+                        <Link key={product._id} to={`/product/${product._id}`} target="_blank" className="product-outer">
                         <div key={product._id} id="outer" >
                              <div className="left">
                              <img src={product.pImageDetails[0].imageUrl} alt=""/>
@@ -165,7 +165,7 @@ function Home() {
                     )) : (
                         <div ref={productsDiv} className="home-row products">
                        { searchProducts.map((product)=>(
-                        <Link to={`/product/${product._id}`} target="_blank" className="product-outer">
+                        <Link key={product._id} to={`/product/${product._id}`} target="_blank" className="product-outer">
                         <div key={product._id} id="outer" >
                              <div className="left">
                              <img src={product.pImageDetails[0].imageUrl} alt=""/>

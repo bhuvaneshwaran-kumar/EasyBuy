@@ -14,14 +14,18 @@ import Home from './components/home/Home.js'
 import AddProduct from './components/seller/AddProduct'
 import MyProduct from './components/seller/MyProduct'
 import ShowSearchProducts from './components/search/ShowSearchProducts.js'
+import MyCart from './components/myCart/MyCart'
 
 import useAuth from '../src/hooks/useAuth' 
 import { useEffect, useState } from 'react';
 import {useUserValue} from '../src/contexts/UserProvider'
+import {useCartValue} from '../src/contexts/CartProvider'
+
 
 function App() {
   const [loader,setLoader] = useState(true)
   const [user,dispatch] = useUserValue()
+  const [,cartDispatch] = useCartValue()
   const {checkLoggedIn} = useAuth() 
   
   
@@ -38,10 +42,14 @@ function App() {
     const timer = setTimeout(() => {
       setLoader(false)
       clearTimeout(timer)
-    }, 500);
+    }, 600);
     // return ()=>clearTimeout(timer)
   },[dispatch])
   
+
+
+  // User has switched back to the tab
+
 
   return (
     
@@ -96,6 +104,13 @@ function App() {
         </Route>
         <Route exact path='/'>
           <Home/>  
+        </Route>
+        <Route exact path='/my-cart'>
+        {
+          !user.loggedStatus ? 
+            <Login/>  :
+            <MyCart/>
+          }
         </Route>
         
       </Switch>
