@@ -1,6 +1,7 @@
 const Router = require('express').Router()
 const Cartlist = require('../model/Cartlist')
 const Product = require('../model/Product')
+const User = require('../model/User')
 
 
 Router.post("/add-cart",async(req,res)=>{
@@ -68,6 +69,21 @@ Router.post("/add-cart",async(req,res)=>{
     return res.json({
         message:"Ok."
     })
+})
+
+Router.get("/get-user-address",async(req,res)=>{
+    console.log("getAddress")
+    if(req.session.isAuth){
+        let uid = req.session._id
+        const user = await User.findById(uid)
+        const Address = user.User.address
+        res.statusCode = 200
+        res.json({
+            address : Address
+        })
+
+    }
+
 })
 
 Router.get('/get-price-offer',async(req,res)=>{

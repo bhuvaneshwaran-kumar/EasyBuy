@@ -41,7 +41,14 @@ export const cartReducer = (state=cartInitialState,action)=>{
             }
 
             return {...state}
-        
+
+        case 'ADDPRICE':
+            state.productDetials[action.payload.index] = {...action.payload.data}
+            // console.log(state)
+            return {...state}
+
+
+
         default :
             return state
     }

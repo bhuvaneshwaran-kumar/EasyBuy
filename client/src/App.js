@@ -31,8 +31,21 @@ function App() {
   
   useEffect(()=>{
     
+// const checkLoggedIn = async ()=>{
+//       const res = await fetch(`${BASE_URL}/authenticate/islogged`,{
+//       method : "post",
+//       credentials : "include"
+//       })
+//       const data = await res.json()
+//       console.log(data,"islogged");
+//       return data
+// }
+
     const makeReq = async ()=>{
+      console.log("calling from app.js")
       let res = await checkLoggedIn()
+      
+      console.log("app",res)
       dispatch({
         type : "SET_USER",
         payload : res
@@ -41,10 +54,10 @@ function App() {
     makeReq()
     const timer = setTimeout(() => {
       setLoader(false)
-      clearTimeout(timer)
-    }, 600);
-    // return ()=>clearTimeout(timer)
-  },[dispatch])
+    }, 900);
+    return ()=>clearTimeout(timer)
+
+  },[])
   
 
 
@@ -60,14 +73,14 @@ function App() {
       <Switch>
         <Route exact path='/login'>
           {
-          !user.loggedStatus? 
+          !user?.loggedStatus? 
             <Login/>  :
             <Redirect to="/"/>
           }
         </Route>
         <Route exact path='/signup'>
         {
-          !user.loggedStatus ? 
+          !user?.loggedStatus ? 
             <Signup/>  :
             <Redirect to="/"/>
           }
@@ -75,28 +88,28 @@ function App() {
         <Route path='/product/:id'>
 
         {
-          !user.loggedStatus ? 
+          !user?.loggedStatus ? 
             <Signup/>  :
             <Product/>   
         }
         </Route>
         <Route exact path='/addproduct'>
         {
-          user.isSeller ? 
+          user?.isSeller ? 
             <AddProduct/>  :
             <Redirect to="/"/>
         }
         </Route>
         <Route exact path='/myproduct'>
         {
-          user.isSeller ? 
+          user?.isSeller ? 
             <MyProduct/>  :
             <Redirect to="/"/>
         }
         </Route>
         <Route exact path='/profile'>
         {
-          user.loggedStatus ? <Profile/> : <Redirect to="/"/> 
+          user?.loggedStatus ? <Profile/> : <Redirect to="/"/> 
         }
         </Route>
         <Route path ='/search/:Searchkeys'>
@@ -107,7 +120,7 @@ function App() {
         </Route>
         <Route exact path='/my-cart'>
         {
-          !user.loggedStatus ? 
+          !user?.loggedStatus ? 
             <Login/>  :
             <MyCart/>
           }

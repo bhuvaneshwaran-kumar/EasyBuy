@@ -78,10 +78,24 @@ function IndividualCart({data,index}) {
             console.log(result)
             setPrice(result.price)
             setOffer(result?.offer || 0)
+            
+            dispatch({
+                type : "ADDPRICE",
+                payload : {
+                    index : index,
+                    data : { 
+                        ...data,
+                        price : result.price,
+                        offer : result?.offer || 0
+                    }
+                }
+            })
         }
         
         getPriceAndOffer()
-    }, [data])
+    }, [])
+
+
 
     return (
         <div className="cart-outer">

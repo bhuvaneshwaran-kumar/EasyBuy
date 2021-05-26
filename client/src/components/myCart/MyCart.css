@@ -1,5 +1,7 @@
 .my-cart-outer {
   min-height: 90vh;
+  position: relative;
+  overflow: hidden;
 }
 .cart-grid {
   display: grid;
@@ -56,4 +58,202 @@ span {
 
 .linkcart {
   color: teal;
+}
+.no-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+}
+.no-cart p {
+  font-size: larger;
+  color: red;
+  font-weight: 600;
+}
+
+.Place-order {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  /* border: 1px solid black; */
+  float: right;
+  transform: translateX(180px);
+  transition: all 600ms ease-in-out;
+  animation: transformMe 2000ms ease-in-out;
+  position: static;
+}
+@keyframes transformMe {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(180px);
+  }
+}
+.Place-order:hover {
+  transform: translateX(0px);
+}
+.Place-order .place-order-btn {
+  width: 200px;
+  padding: 18px 8px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
+  background: #ff9f00;
+  color: #fff;
+  border: none;
+  font-family: monospace;
+  font-size: 18px;
+  display: inline-block;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: 0s all;
+}
+.Place-order .place-order-btn:hover {
+  transform: scale(1.01, 1.01);
+}
+.order-detials {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  max-width: 600px;
+  width: 600px;
+  min-height: 70vh;
+  max-height: 90vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  /* border: 0.01px solid teal; */
+  box-shadow: 0px 1px 1px 0 rgb(0 0 0 / 16%);
+  z-index: 1;
+  background-color: white;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: orderDetials 600ms ease-in-out;
+}
+@keyframes orderDetials {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.order-detials .top {
+  padding: 5px;
+  width: 100%;
+  background-color: teal;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: fixed;
+}
+.cancel-btn {
+  transition: all 500ms ease-in-out;
+}
+.cancel-btn:hover {
+  cursor: pointer;
+  transform: scale(1.1, 1.1);
+}
+.order-detials .bottom {
+  flex: 1;
+  /* border: 1px solid black; */
+}
+.order-detials .bottom .bottom-top li {
+  list-style: none;
+  font-weight: 500;
+  z-index: 10000;
+  margin-top: 35px;
+  /* border: 1px solid black; */
+  /* padding: 05px 10px; */
+  width: 150px;
+}
+.order-detials .bottom .bottom-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.order-iteam {
+  /* margin-top: 15px; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0px 1px 1px 0 rgb(0 0 0 / 16%);
+  margin-bottom: 5px;
+}
+.order-iteam img {
+  width: 90px;
+  height: 100px;
+  object-fit: contain;
+}
+.order-iteam .fuk-width {
+  width: 210px;
+}
+.order-iteam li {
+  width: 150px;
+  word-wrap: wrap;
+  list-style: none;
+}
+.selectAddress {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+.selectAddress p {
+  background-color: teal;
+  font-weight: 500;
+  padding: 5px;
+  color: white;
+}
+.select-address {
+  width: 80%;
+  margin: auto;
+  box-shadow: 0px 1px 1px 0 rgb(0 0 0 / 16%);
+  padding: 10px;
+}
+.total-price {
+  background-color: teal;
+  font-weight: 500;
+  padding: 5px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0px 1px 1px 0 rgb(0 0 0 / 16%);
+  margin-bottom: 5px;
+  justify-content: space-around;
+}
+.confirm-order {
+  width: 200px;
+  margin: 10px auto;
+  width: 200px;
+  /* margin-top: 5px; */
+  padding: 18px 8px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
+  background: #ff9f00;
+  color: #fff;
+  border: none;
+  font-family: monospace;
+  font-size: 18px;
+  display: inline-block;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition: 0s all;
+}
+.confirm-order:hover {
+  transform: scale(1.01, 1.01);
+}
+.success-order {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  z-index: 1000000;
+  color: green;
+  height: 70vh;
+  align-items: center;
 }

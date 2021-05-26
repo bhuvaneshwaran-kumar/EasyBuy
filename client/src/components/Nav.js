@@ -55,7 +55,7 @@ function Nav() {
                         >Home</li>
                    </Link>
                    {
-                       value.isSeller && 
+                       value?.isSeller && 
                        <>
                        <Link to='/addproduct'>
                             <li
@@ -72,7 +72,7 @@ function Nav() {
                        
                        </> 
                    }
-                   {value.loggedStatus &&
+                   {value?.loggedStatus &&
                         <Link to='/my-cart'>
                             <li className={(active === "/my-cart")?"active":""}>My-Cart</li>
                         </Link>
@@ -80,7 +80,7 @@ function Nav() {
                    <Search/>
                 </div>
                 <div className="right">
-                    { !value.loggedStatus ?
+                    { !value?.loggedStatus ?
                     <>
                     <Link to='/login'>
                         <li
@@ -97,7 +97,7 @@ function Nav() {
                     </Link>
                     </> :
                     <>
-                     { value.loggedStatus &&
+                     { value?.loggedStatus &&
                     <Link to='/profile'>
                        <li
                        className={(active === "/profile")?"active":""}

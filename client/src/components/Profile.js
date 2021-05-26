@@ -6,6 +6,7 @@ import {LocalMall,Person,SettingsPower,Business} from '@material-ui/icons'
 import SellerFrame from "./Profile/SellerFrame"
 import ProfileInformation from "./Profile/ProfileInformation"
 import ManageAddress from "./Profile/ManageAddress"
+import OrderDetials from "./Profile/OrderDetials"
 
 
 function Profile() {
@@ -45,15 +46,27 @@ function Profile() {
           <div className="bottom">
             <div className="row">
             <LocalMall style={{ color: "teal" }}/>
-            <h3 className="head" onClick={()=>setDisplay('my orders')}>MY ORDERS</h3>
+            <h3 className="head" onClick={()=>setDisplay('OrderDetials')}
+            style = {{
+              borderRight : display === "OrderDetials" ? '4px solid teal' : ''
+            }}
+            >MY ORDERS</h3>
             
             </div>
             <div className="row">
             <Person style={{ color: "teal" }}/>
-            <h3 className="head" onClick={()=>setDisplay('profile information')}>ACCOUNT SETTINGS</h3>
+            <h3 className="head" onClick={()=>setDisplay('ProfileInformation')} >ACCOUNT SETTINGS</h3>
             <div>
-              <div className="list" onClick={()=>setDisplay('ProfileInformation')}>Profile Information</div>
-              <div className="list" onClick={()=>setDisplay('ManageAddress')}>Manage Addresses</div>
+              <div className="list" onClick={()=>setDisplay('ProfileInformation')}
+              style = {{
+                borderRight : display === "ProfileInformation" ? '4px solid teal' : ''
+              }}
+              >Profile Information</div>
+              <div className="list" onClick={()=>setDisplay('ManageAddress')}
+              style = {{
+                borderRight : display === "ManageAddress" ? '4px solid teal' : ''
+              }}
+              >Manage Addresses</div>
             </div>
 
             </div>
@@ -85,6 +98,11 @@ function Profile() {
             display === "ManageAddress" &&
             <ManageAddress/>
           }
+          {
+            display === "OrderDetials" &&
+            <OrderDetials/>
+          }
+         
           </div>
         </div>
     )

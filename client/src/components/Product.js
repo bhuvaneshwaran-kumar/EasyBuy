@@ -180,7 +180,7 @@ function Product() {
                             product.sellerId !== user._id &&
                              ( 
                                  <>
-                            { !cartExist ? <button
+                           { product.pstock > 0 && ( !cartExist ? <button
                              onClick = {addToCart}
                              >Add To Cart</button>:
                              <button>
@@ -188,9 +188,10 @@ function Product() {
                                  check cart
                                  </Link>
                              </button>
-                             }
+                           )
+                           }
                                 {
-                                    product.pstock ? 
+                                    product.pstock > 0 ? 
                             <button>Buy Now</button> :
                             <button>Remaind Me</button>
                                 }

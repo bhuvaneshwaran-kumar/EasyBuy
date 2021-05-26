@@ -11,13 +11,13 @@ function Home() {
 
     console.log(Searchkeys)
 
-    const [productToBeFetched,setProductToBeFetched] = useState('all')
+    const [productToBeFetched,setProductToBeFetched] = useState('')
     const scrollTo = (element)=>{
         // const y = window.pageYOffset + 20;
         // element.current.scrollIntoView({ behavior: 'smooth',  block: "start" })
         element.current.scrollTop -= 10;
     }
-
+    
     const productsDiv = useRef()
     const top = useRef()
     const [hasMore,setHasMore] = useState(false)
@@ -28,8 +28,8 @@ function Home() {
     const [loader,setLoader] = useState(false)
 
     
-  
-
+ 
+    
 
 
         // Handels Adding Observer To The Last Product Element 
@@ -103,7 +103,7 @@ function Home() {
     return (
         <div ref={top} className="home-container" style={{minHeight:'50vw'}}>
              <div className="home-row home-top-nav" >
-                <div onClick={()=>setProductToBeFetched('all') } className={productToBeFetched === "all" ?"btn top-nav-list active":"btn top-nav-list "}>
+             <div onClick={()=>setProductToBeFetched('all') } className={productToBeFetched === "all" ?"btn top-nav-list active":"btn top-nav-list "}>    
                  <img src="/Nav-img/Top offer.png" alt=""/>
                  <li>All</li>
                  </div>

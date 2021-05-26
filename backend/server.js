@@ -16,6 +16,7 @@ const product = require('./routes/product')
 const user = require('./routes/user')
 const comment = require('./routes/comment.js')
 const cart = require('./routes/cart.js')
+const placeOrder = require('./routes/placeOrder.js')
 
 /* Module Importing Section End */
 
@@ -79,6 +80,7 @@ app.use('/product',product)
 app.use('/user',user)
 app.use('/comment',comment)
 app.use('/cart',cart)
+app.use('/place-order',placeOrder)
 app.get("/",(req,res)=>{
         console.log("Everything's looks good to go..!")
 })
