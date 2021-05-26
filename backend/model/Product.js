@@ -26,6 +26,11 @@ const Product = new Schema({
         userId:String,
         userEmail : String,
         productId: String
+    }],
+    remaindMe:[{
+        userId:String,
+        userEmail : String,
+        productId: String
     }]
     
 })

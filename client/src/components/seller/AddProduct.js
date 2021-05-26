@@ -189,6 +189,7 @@ function AddProduct() {
                     <select className="input-2" name="pcategory" id="ProductCat">
                             <option value="Electronics">Electronics</option>
                             <option value="Fashion">Fashion</option>
+                            <option value="Grocery">Grocery</option>
                     </select>
                     
                 </div>
@@ -202,6 +203,7 @@ function AddProduct() {
                             <option value="Mobile">Mobile</option>
                             <option value="Keyboard and Mouse">Keyboard and Mouse</option>
                             <option value="Men T-shirts">Men T-shirts</option>
+                            <option value="Detergent">Detergent</option>
                     </select>
                 </div>
                

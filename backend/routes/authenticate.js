@@ -96,7 +96,7 @@ Router.post("/signup-otp", async (req, res) => {
   } else {
     res.statusCode = 203
     res.json({
-      message: "Timeout."
+      message: "otp Timeout."
     })
   }
 

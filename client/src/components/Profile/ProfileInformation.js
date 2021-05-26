@@ -6,10 +6,41 @@ import {useUserValue} from '../../contexts/UserProvider'
 
 function ProfileInformation() {
     const [user,dispatch] = useUserValue()
-    console.log("user -> profile info :",user)
+    const [name,setName] = useState(user.name)
+    const [editState,setEditState] = useState(false)
+    const form = useRef()
+
+    const changeName = (e)=>{
+        setName(e.target.value)
+    }
 
     const submmitForm = async (e)=>{
         e.preventDefault()
+        if(editState){
+            const result = await fetch("http://localhost:8080/user/edit-name",{
+                method:"post",
+                credentials : 'include',
+                headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                      },
+                body : JSON.stringify({
+                    name : form.current.uname.value
+                })  
+            })
+
+            if(result.status === 200){
+                setEditState(false)
+                form.current.uname.setAttribute('disabled','')
+
+            }
+        }
+        else{
+            form.current.uname.removeAttribute('disabled')
+            console.log(form.current.uname)
+            setEditState(true)
+        }
+        console.log("hey you")
     }
     
     return (
@@ -17,18 +48,21 @@ function ProfileInformation() {
             <div className="p-inf-cont">
                 <p>Profile information</p>
             </div>
-            <form onSubmit={submmitForm}>
+            <form ref={form} onSubmit={submmitForm}>
                 <div className="p-inf-cont">
                    <label>User Name:</label>
-                   <input type="text" className="input-2" value={user.name} disabled name="email"/> 
+                   <input type="text" className="input-2" name="uname" value={name} onChange={changeName} disabled/> 
                 </div>
                 <div className="p-inf-cont">
                    <label>User Email:</label>
                    <input type="text" className="input-2" value = {user.email} disabled/> 
                 </div>
                 <div className="p-inf-cont button">
-                    <button className="btn">Edit</button>
-                    <button className="btn">Update</button>
+                    {
+                    
+                        <button className="btn">{editState ? "UPDATE" : "EDIT"}</button>
+                    
+                    }
                 </div>
             </form>
             

@@ -115,7 +115,7 @@ function Home() {
                  <img src="/Nav-img/Mobile.png" alt=""/>
                  <li>Mobiles</li>
                  </div>
-                 <div onClick={()=>setProductToBeFetched('Fashion')} className={productToBeFetched === "Grocery" ?"btn top-nav-list active":"btn top-nav-list "}>
+                 <div onClick={()=>setProductToBeFetched('Grocery')} className={productToBeFetched === "Grocery" ?"btn top-nav-list active":"btn top-nav-list "}>
                  <img src="/Nav-img/Grocery.png" alt=""/>
                  <li>Grocery</li>
                  </div>
@@ -123,7 +123,7 @@ function Home() {
                  <img src="/Nav-img/Fashion.png" alt=""/>
                  <li>Fashion</li>
                  </div>
-                 <div onClick={()=>setProductToBeFetched('Fashion')} className={productToBeFetched === "Electronics" ?"btn top-nav-list active":"btn top-nav-list "}>
+                 <div onClick={()=>setProductToBeFetched('Electronics')} className={productToBeFetched === "Electronics" ?"btn top-nav-list active":"btn top-nav-list "}>
                  <img src="/Nav-img/Electronincs.png" alt=""/>
                  <li>Electronics</li>
                  </div>
@@ -143,7 +143,7 @@ function Home() {
                             <div id="home-right">
                                 <h4>{product.plabel}</h4>
                                 {product.pofferspan && <p style={{fontWeight:'500',color:'green'}}>{product.pofferspan} % discount</p>}
-                                <p style={{color : "green"}}>available</p>
+                                <p style={{color : product.pstock > 0 ?"green":"red"}}>{product.pstock>0 ? "available" : "not-available"}</p>
                             </div>
                         </div>
                         </Link>):(
@@ -156,7 +156,7 @@ function Home() {
                                  <h4>{product.plabel}</h4>
                                 
                                  {product.pofferspan && <p style={{fontWeight:'500',color:'green'}}>{product.pofferspan} % discount</p>}
-                                 <p style={{color : "green"}}>available</p>
+                                 <p style={{color : product.pstock > 0 ?"green":"red"}}>{product.pstock>0 ? "available" : "not-available"}</p>
                              </div>
                         </div>
                         </Link>

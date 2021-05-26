@@ -32,6 +32,24 @@ Router.post("/deleteaddress",async(req,res)=>{
 })
 
 
+Router.post("/edit-name",async(req,res)=>{
+    try{
+        if(req.session.isAuth){
+            const {name} = req.body
+            const user = await User.findById(req.session._id)
+            user.User.name = name
+            user.save()
+            res.statusCode = 200
+            res.json({
+
+            })
+        }
+    }
+    catch(err){
+        console.log(err)
+    }
+})
+
 
 Router.post("/addaddress",async(req,res)=>{
 

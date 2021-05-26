@@ -14,6 +14,7 @@ function Product() {
     const [product,setProduct] = useState(null)
     const [user] = useUserValue()
     const [isLiked,setIsLiked] = useState(false)
+    const [isRemaind,setIsRemaind] = useState(false)
     const [cartExist,setCartExist] = useState(false)
     // console.log(user._id,product.sellerId)
     
@@ -69,10 +70,38 @@ function Product() {
                 setCartExist(true)
             }
         }
-      
+        const checkRemaindMe = async(id)=>{
+            console.log("calling checkRemaindMe")
+            let RemaindMeData = {
+                productId : id,
+                userId : user._id,
+                userEmail : user.email,
+            }
+            let  result  = await fetch('http://localhost:8080/product/check-remaind-me',{
+                mode:"cors",
+                credentials : "include",
+                method : "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                body : JSON.stringify(RemaindMeData)        
+            })
+
+            if(result.status == 200){
+                setIsRemaind(true)
+                console.log("Checked with remaind me it say yessss")
+            }else{
+                setIsRemaind(false)
+                console.log("Checked with remaind me it say Nooo")
+
+            }
+        }
+
         checkWishlist(id)
         getProductDetials(id)
         checkCartExist()
+        checkRemaindMe(id)
 
     },[])
     
@@ -161,6 +190,44 @@ function Product() {
         }
     }
 
+    //Cloning for remaind me
+    const addRemoveRemaindMe = async ()=>{
+        console.log("Calling  addRemoveRemaindMe")
+        let result
+        let remaindMeData = {
+            productId : id,
+            userId : user._id,
+            userEmail : user.email,
+        }
+        console.log(id,remaindMeData)
+        if(isRemaind){
+            result  = await fetch('http://localhost:8080/product/remove-remaind-me',{
+                mode:"cors",
+                credentials : "include",
+                method : "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                body : JSON.stringify(remaindMeData)        
+            })
+        }else{
+            result  = await fetch('http://localhost:8080/product/add-remaind-me',{
+                mode:"cors",
+                credentials : "include",
+                method : "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                body : JSON.stringify(remaindMeData)        
+            })
+        }
+        if(result.status === 200){
+            setIsRemaind((prev)=>!prev)
+        }
+    }
+
     // console.log(product)
     return (
         product&&
@@ -180,7 +247,7 @@ function Product() {
                             product.sellerId !== user._id &&
                              ( 
                                  <>
-                           { product.pstock > 0 && ( !cartExist ? <button
+                           { product.pstock > 0 ? ( !cartExist ? <button
                              onClick = {addToCart}
                              >Add To Cart</button>:
                              <button>
@@ -188,13 +255,8 @@ function Product() {
                                  check cart
                                  </Link>
                              </button>
-                           )
+                           ) :  <button onClick={addRemoveRemaindMe}>{isRemaind ? "Will Remaind You." : "Remaind Me"}</button>
                            }
-                                {
-                                    product.pstock > 0 ? 
-                            <button>Buy Now</button> :
-                            <button>Remaind Me</button>
-                                }
                                 </>
                              )
                         }

@@ -88,7 +88,7 @@ function Signup() {
                             </div>
                             { 
                             !otp && <div className="row form-group">
-                                <input type="password" min='4' max='8' placeholder="Password" 
+                                <input type="password" minLength='4' maxLength='8' placeholder="Password" 
                                 name="password"
                                 className="input-2" required/>
                             </div>

@@ -32,7 +32,7 @@ Router.get('/', async (req, res) => {
 
 Router.get("/home/search",async (req,res)=>{
     try{
-        console.log("get search request")
+        // console.log("get search request")
 
         let Searchkeys = req.query.Searchkeys
         
@@ -54,7 +54,7 @@ Router.get("/home/search",async (req,res)=>{
 Router.get('/getproductdata', async (req, res) => {
         try {    
             const id = req.query.id
-            console.log(id,'--> need to be fetched.')
+            // console.log(id,'--> need to be fetched.')
             const product = await Product.findById(id)
 
             // console.log(product)
@@ -75,7 +75,7 @@ Router.get('/home', async (req, res) => {
             const perPage = 20
 
             if(productToBeFetched === 'offer'){
-                let totalCount = await Product.find({ pofferspan : { $gt : 0 } }).count()
+                let totalCount = await Product.find({ pofferspan : { $gt : 0 } }).countDocuments()
                 let OfferProduct = await Product.find({ pofferspan : { $gt : 0 } }).sort('-pofferspan')
                 .limit(perPage).skip(skip)
                 .exec()
@@ -85,7 +85,7 @@ Router.get('/home', async (req, res) => {
             }
 
             if(productToBeFetched === 'Fashion'){
-                let totalCount = await Product.find({pcategory:'Fashion'}).count()
+                let totalCount = await Product.find({pcategory:'Fashion'}).countDocuments()
                 let OfferProduct = await Product.find({pcategory:'Fashion'}).sort('-timestamp')
                 .limit(perPage).skip(skip)
                 .exec()
@@ -94,12 +94,32 @@ Router.get('/home', async (req, res) => {
                 return res.json({ message: "Post sent to Frontend", report: true, product: OfferProduct, hasMore: hasMore })
             }
 
+            if(productToBeFetched === 'Grocery'){
+                let totalCount = await Product.find({pcategory:'Grocery'}).countDocuments()
+                let OfferProduct = await Product.find({pcategory:'Grocery'}).sort('-timestamp')
+                .limit(perPage).skip(skip)
+                .exec()
+                // console.log("offer product",OfferProduct)
+                const hasMore = ((skip + perPage) <= totalCount) ? true : false
+                return res.json({ message: "Post sent to Frontend", report: true, product: OfferProduct, hasMore: hasMore })
+            }
+
+            if(productToBeFetched === 'Electronics'){
+                let totalCount = await Product.find({pcategory:'Electronics'}).countDocuments()
+                let OfferProduct = await Product.find({pcategory:'Electronics'}).sort('-timestamp')
+                .limit(perPage).skip(skip)
+                .exec()
+                // console.log("offer product",OfferProduct)
+                const hasMore = ((skip + perPage) <= totalCount) ? true : false
+                return res.json({ message: "Post sent to Frontend", report: true, product: OfferProduct, hasMore: hasMore })
+            }
+
             if(productToBeFetched === 'mobiles'){
-                let totalCount = await Product.find({pitem:'Mobile'}).count()
+                let totalCount = await Product.find({pitem:'Mobile'}).countDocuments()
                 let OfferProduct = await Product.find({pitem:'Mobile'}).sort('-timestamp')
                 .limit(perPage).skip(skip)
                 .exec()
-                console.log("offer product",OfferProduct)
+                // console.log("offer product",OfferProduct)
                 const hasMore = ((skip + perPage) <= totalCount) ? true : false
                 return res.json({ message: "Post sent to Frontend", report: true, product: OfferProduct, hasMore: hasMore })
             }
@@ -123,7 +143,7 @@ Router.get('/home', async (req, res) => {
 
 
 const sendMail = async(wishListData,id)=>{ 
-    console.log(wishListData);
+    // console.log(wishListData);
     if(wishListData.length > 0){
         for(data in wishListData){
             const email = {
@@ -132,6 +152,31 @@ const sendMail = async(wishListData,id)=>{
                 subject: 'Easy-buy Online Shopping ',
                 text: `Your One Time Password is link`,
                 html: `<strong>Your wishList product in EasyBuy got a jaw dropping offer<a href="http://localhost:3000/product/${id}" target="_blank"> Click here to check</a></strong>`,
+              }
+
+            sgMail
+            .send(email)
+            .then(async () => {
+            console.log('Email sent')
+            })
+            .catch((error) => {
+            console.error(error)
+            })
+        }
+    }
+}
+
+//cloneing for remaind me..
+const sendMailForRemaindMe = async(wishListData,id)=>{ 
+    // console.log(wishListData);
+    if(wishListData.length > 0){
+        for(data in wishListData){
+            const email = {
+                to: wishListData[data].userEmail, // Change to your recipient
+                from: '"no-reply@Easy-buy.com"<bhuvaneshwarankumar2000@gmail.com >', // Change to your verified sender
+                subject: 'Easy-buy Online Shopping ',
+                text: `Product you asked us to remaind you.`,
+                html: `<strong>Your RemaindMe product in EasyBuy is back in sale <a href="http://localhost:3000/product/${id}" target="_blank"> Click here to check</a></strong>`,
               }
 
             sgMail
@@ -228,16 +273,22 @@ Router.post('/update',async (req, res) => {
             product.plabel = plabel
             product.pwarrantyspan = pwarrantyspan 
             product.pdescription = pdescription
+            let prevStock = product.pstock
             product.pstock = pstock
             product.pcost = pcost
             let prevOffer = product.pofferspan
             product.pofferspan = pofferspan
 
             if(prevOffer < product.pofferspan){
-                console.log("send mail")
+                // console.log("send mail")
                 setImmediate(()=>sendMail(product.wishList,product._id)
                 )
                 // sendMail(product.wishList,product._id)
+            }
+            console.log(prevStock,product.pstock)
+            if(prevStock <= 0 && product.pstock > 0){
+                console.log("sending mail for user")
+                setImmediate(()=>sendMailForRemaindMe(product.remaindMe,product._id))
             }
 
             await product.save()
@@ -302,6 +353,56 @@ Router.post('/removewishlist',async(req,res)=>{
     res.json({message:"success"})
 
 })
+
+// cloneing for remaind me .
+Router.post('/check-remaind-me',async(req,res)=>{
+
+    // d-structing data from req.
+    const {productId,userId} = req.body
+
+    // fetch product data form product collection using productID
+    const product = await Product.findById(productId)
+
+    //d-structing wishList data from product
+    let {remaindMe} = product
+
+    // check whether user liked the product
+    let hasremaindMe = remaindMe.filter((wish)=>{
+        return wish.userId === userId
+    })
+
+    if(hasremaindMe.length !== 0){
+        res.statusCode = 200
+        res.json({message:"success user already liked the product"})
+    }else{
+        res.statusCode = 201
+        res.json({message:"nope user not liked the product"})
+    }
+})
+
+Router.post('/add-remaind-me',async(req,res)=>{
+    const {productId,userId} = req.body
+    const product = await Product.findById(productId)
+    product.remaindMe = [...product.remaindMe,req.body]
+    product.save()
+    // console.log(product)
+    res.statusCode = 200
+    res.json({message:"success"})
+})
+
+Router.post('/remove-remaind-me',async(req,res)=>{
+    console.log("removed remaind me")
+    const {productId,userId} = req.body
+    const product = await Product.findById(productId)
+    const filteredPeople = product.remaindMe.filter((item) => item.userId !== userId);
+    product.remaindMe = filteredPeople
+    product.save()
+    // console.log('after removing',product)
+    res.statusCode = 200
+    res.json({message:"success"})
+
+})
+
 
 Router.post('/searchproduct',async(req,res)=>{
     try{
