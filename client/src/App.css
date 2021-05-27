@@ -24,3 +24,21 @@
     transform: rotate(360deg);
   }
 }
+.App {
+  position: relative;
+  /* width: 100vw; */
+  overflow-x: hidden;
+}
+.compare-contaier {
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 16%);
+
+  padding: 10px 25px;
+  color: white;
+  font-weight: 500;
+  position: fixed;
+  z-index: 9000000000;
+  color: red;
+  background-color: orange;
+  bottom: 10px;
+  left: 90%;
+}

@@ -16,6 +16,7 @@ function Product() {
     const [isLiked,setIsLiked] = useState(false)
     const [isRemaind,setIsRemaind] = useState(false)
     const [cartExist,setCartExist] = useState(false)
+    const [compare,setCompare] = useState(false)
     // console.log(user._id,product.sellerId)
     
     const [cart,cartDispatch] = useCartValue()
@@ -97,11 +98,27 @@ function Product() {
 
             }
         }
+        const checkCompareExist = async(id)=>{
+            let result = await fetch(`http://localhost:8080/comparelist/get-user-compare-exist/?`+new URLSearchParams({
+               pid : id
+            }),{
+                method:'get',
+                credentials:'include'
+            })
+            if(result.status === 200){
+                console.log("Compare Exist")
+                setCompare(true)
+            }else{
+                console.log("Compare not Exist")
+                setCompare(false)
+            }
+        }
 
         checkWishlist(id)
         getProductDetials(id)
         checkCartExist()
         checkRemaindMe(id)
+        checkCompareExist(id)
 
     },[])
     
@@ -228,6 +245,32 @@ function Product() {
         }
     }
 
+
+    // Add to Compare
+    const AddToCompare = async ()=>{
+        console.log("Calling Add to Compare")
+        let detials = {
+            uid : user._id,
+            item : product?.pitem,
+            pid:id
+        }
+        console.log(detials)
+        const result = await fetch("http://localhost:8080/comparelist/add-user-compare-list",{
+            method :"post",
+            mode:"cors",
+            credentials : "include",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body :JSON.stringify(detials)
+        })
+        if(result.status === 200) {
+            setCompare(true)
+            console.log("Addedd to compareList")
+        }
+    }
+
     // console.log(product)
     return (
         product&&
@@ -257,6 +300,11 @@ function Product() {
                              </button>
                            ) :  <button onClick={addRemoveRemaindMe}>{isRemaind ? "Will Remaind You." : "Remaind Me"}</button>
                            }
+                          {!compare ? <button onClick={AddToCompare}>
+                               Add To Compare
+                           </button> : <button>
+                               Check Compare
+                           </button> }
                                 </>
                              )
                         }

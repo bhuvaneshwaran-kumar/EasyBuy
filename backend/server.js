@@ -17,6 +17,7 @@ const user = require('./routes/user')
 const comment = require('./routes/comment.js')
 const cart = require('./routes/cart.js')
 const placeOrder = require('./routes/placeOrder.js')
+const CompareList = require('./routes/CompareList')
 
 /* Module Importing Section End */
 
@@ -81,6 +82,7 @@ app.use('/user',user)
 app.use('/comment',comment)
 app.use('/cart',cart)
 app.use('/place-order',placeOrder)
+app.use('/comparelist',CompareList)
 app.get("/",(req,res)=>{
         console.log("Everything's looks good to go..!")
 })

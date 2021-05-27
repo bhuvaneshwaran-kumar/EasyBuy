@@ -5,7 +5,8 @@ import Login from "./components/Login.js"
 import {
   Switch,
   Route,
-  Redirect
+  Redirect,
+  Link
 } from 'react-router-dom'
 import Signup from './components/Signup.js'
 import Profile from './components/Profile.js'
@@ -15,7 +16,7 @@ import AddProduct from './components/seller/AddProduct'
 import MyProduct from './components/seller/MyProduct'
 import ShowSearchProducts from './components/search/ShowSearchProducts.js'
 import MyCart from './components/myCart/MyCart'
-
+import CompareList from './components/compare/CompareList'
 import useAuth from '../src/hooks/useAuth' 
 import { useEffect, useState } from 'react';
 import {useUserValue} from '../src/contexts/UserProvider'
@@ -125,9 +126,22 @@ function App() {
             <MyCart/>
           }
         </Route>
+        <Route exact path='/compare'>
+        {
+          !user?.loggedStatus ? 
+            <Login/>  :
+            <CompareList/>
+          }
+        </Route>
+
         
       </Switch>
-       <Footer/>   
+         { user?.loggedStatus && <div className="compare-contaier">
+            <Link to="/compare">
+                Compare
+            </Link>
+          </div>}
+      <Footer/>   
     </>:
     // Loading Spinner
     <div className="container">

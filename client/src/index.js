@@ -11,6 +11,8 @@ from './contexts/ProductProvider.js'
 import {productInitialState,productReducer} from './reducers/ProductReducer'
 import CartProvider from "./contexts/CartProvider"
 import {cartInitialState, cartReducer} from "./reducers/CartReducer"
+import CompareProvider from "./contexts/CompareProvider"
+import {CompareInitialState, CompareReducer} from "./reducers/CompareReducer"
 
 
 ReactDOM.render(
@@ -19,7 +21,11 @@ ReactDOM.render(
     <ProductProvider initialState={productInitialState} reducer={productReducer}>  
       <UserProvider initialState={initialState} reducer={reducer}>
         <CartProvider initialState={cartInitialState} reducer={cartReducer}>
-          <App/>
+
+          <CompareProvider initialState = {CompareInitialState} reducer={CompareReducer}>
+           <App/>
+          </CompareProvider>
+
         </CartProvider>
       </UserProvider>
     </ProductProvider>

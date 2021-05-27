@@ -1,0 +1,86 @@
+.CompareList-outer {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+.CompareList-left li,
+.CompareList-right li {
+  list-style: none;
+  padding: 10px 20px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+.CompareList-left .active {
+  border-left: 5px solid teal;
+}
+.CompareList-left li:hover {
+  background-color: teal;
+  color: white;
+}
+.CompareList-left {
+  display: flex;
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 16%);
+  min-width: 240px;
+  flex-direction: column;
+}
+.CompareList-right {
+  display: flex;
+  overflow-x: scroll;
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 16%);
+  flex-direction: row;
+  flex: 1;
+}
+.CompareList-right-inner {
+  min-width: 300px;
+  max-width: 300px;
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 76%);
+  margin: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  align-items: center;
+  justify-content: space-around;
+}
+.CompareList-right-inner img {
+  width: 150px;
+  height: 200px;
+  object-fit: contain;
+}
+.CompareList-right-inner .warenty-span {
+  text-align: center;
+  font-weight: 500;
+  color: black;
+}
+.CompareList-right-inner .warenty-span span {
+  font-weight: 500;
+  color: teal;
+}
+.CompareList-right-inner .label {
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: 500;
+  color: teal;
+}
+.description-product {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.description-product textarea {
+  resize: none;
+  outline: none;
+  border: none;
+  font-family: inherit;
+}
+.product-link {
+  /* align-items: flex-end; */
+  /* border: 1px solid black; */
+  color: teal;
+}
+.product-link:hover {
+  /* align-items: flex-end; */
+  /* border: 1px solid black; */
+  color: black;
+}
