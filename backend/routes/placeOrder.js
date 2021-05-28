@@ -15,9 +15,9 @@ const decreaseProductCount = async (pid,quantity)=>{
 
     console.log(pid)
     const product = await Product.findById(pid)
-    console.log(product)
+    // console.log(product)
     product.pstock = product.pstock - quantity
-    console.log(product)
+    // console.log(product)
     product.save()
 
 }
@@ -25,7 +25,7 @@ const decreaseProductCount = async (pid,quantity)=>{
 
 
 Router.post("/",async(req,res) => { 
-    console.log(req.body.data)
+    // console.log(req.body.data)
     if(req.session.isAuth){
         let uid = req.session._id
         // console.log("got req")

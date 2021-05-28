@@ -50,7 +50,7 @@ Router.post("/add-cart",async(req,res)=>{
                     })
                     await createUserCart.save()
                     res.statusCode = 200
-                    console.log(createUserCart)
+                  //  console.log(createUserCart)
                 }
                 catch(err){
                     console.log(err)
@@ -78,7 +78,7 @@ Router.get("/get-user-address",async(req,res)=>{
         const user = await User.findById(uid)
         const Address = user.User.address
         res.statusCode = 200
-        res.json({
+        return res.json({
             address : Address
         })
 
@@ -91,10 +91,10 @@ Router.get('/get-price-offer',async(req,res)=>{
     try{
         if(req.session.isAuth){
          let {pid} = req.query
-         console.log(pid)
+        //  console.log(pid)
          const product = await Product.findById(pid)
          let {pcost, pofferspan} = product
-         res.json({
+         return res.json({
              price : pcost,
              offer : pofferspan 
          })
@@ -125,7 +125,7 @@ Router.get('/check-cart-exist',async(req,res)=>{
             for(let data of cartList?.productDetials ){
               
                 if(data.pid === pid){
-                    console.log("match")
+                    // console.log("match")
                     res.statusCode = 200
                     return res.json({
                         match : true
@@ -182,13 +182,13 @@ Router.get('/get-cart',async(req,res)=>{
       
             if(UserCart){
                 res.statusCode = 200
-                res.json({
+                return res.json({
                     userCart : UserCart
                 })
             }
             else{
                 res.statusCode = 201
-                res.json({})
+                return res.json({})
             }
         }
         else{

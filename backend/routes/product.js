@@ -285,7 +285,7 @@ Router.post('/update',async (req, res) => {
                 )
                 // sendMail(product.wishList,product._id)
             }
-            console.log(prevStock,product.pstock)
+            // console.log(prevStock,product.pstock)
             if(prevStock <= 0 && product.pstock > 0){
                 console.log("sending mail for user")
                 setImmediate(()=>sendMailForRemaindMe(product.remaindMe,product._id))

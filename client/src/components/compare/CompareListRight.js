@@ -17,7 +17,6 @@ function CompareListRight({data}) {
         }
         getProductDetials()
     }, [])
-    console.log("product",product)
     return (
         <div className="CompareList-right-inner">
             <img src={product?.pImageDetails[0]?.imageUrl} alt="" />

@@ -119,15 +119,15 @@ Router.post("/islogged", async (req, res) => {
   }
   // CreateLabelCollection()  
 
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header('Access-Control-Allow-Credentials', 'true')
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header('Access-Control-Allow-Credentials', 'true')
 
   if (req.session.isAuth === true) {
     const user = await User.findById(req.session._id)
     console.log(`${user.User.name} -> ${req.session._id} has logged In`)
     // console.log(user.User)
     res.statusCode = 201
-    res.json({
+   return res.json({
       name: user.User.name,
       email: user.User.email,
       _id:req.session._id,
@@ -150,7 +150,7 @@ Router.post("/islogged", async (req, res) => {
 
 Router.post("/login", async (req, res) => {
 
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   try {
     const user = await User.findOne({ "User.email": req.body.email })
     const match = await bcrypt.compare(req.body.password, user.User.password)
@@ -194,8 +194,8 @@ Router.post("/login", async (req, res) => {
 /**  Handles Logouts Routes functionality */
 
 Router.post("/logout", async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header('Access-Control-Allow-Credentials', 'true')
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header('Access-Control-Allow-Credentials', 'true')
   req.session.destroy()
 
 

@@ -4,6 +4,8 @@ const {Schema} = mongoose
 
 const PlaceOrder = {
     uid : String,
+    suid:String,
+    duid:String,
     productDetials : {
         pid : String,
         quantity : Number

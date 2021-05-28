@@ -9,7 +9,7 @@ Router.post("/deleteaddress",async(req,res)=>{
     res.statusCode = 200
     const data =  await User.findById(req.session._id)
     let load = String(req.body.id)
-    console.log("id->to be deleted",load)
+    // console.log("id->to be deleted",load)
 
     let newAddress = data.User.address.filter((add)=>{
         let id = String(add._id)
@@ -17,7 +17,7 @@ Router.post("/deleteaddress",async(req,res)=>{
             return add
         }
     })
-    console.log(newAddress)
+    // console.log(newAddress)
     data.User.address = newAddress
     await data.save()
     res.json({
