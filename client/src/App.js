@@ -14,39 +14,24 @@ import Product from './components/Product.js'
 import Home from './components/home/Home.js'
 import AddProduct from './components/seller/AddProduct'
 import MyProduct from './components/seller/MyProduct'
-import ShowSearchProducts from './components/search/ShowSearchProducts.js'
 import MyCart from './components/myCart/MyCart'
 import CompareList from './components/compare/CompareList'
 import useAuth from '../src/hooks/useAuth' 
 import { useEffect, useState } from 'react';
 import {useUserValue} from '../src/contexts/UserProvider'
-import {useCartValue} from '../src/contexts/CartProvider'
 
 
 function App() {
   const [loader,setLoader] = useState(true)
   const [user,dispatch] = useUserValue()
-  const [,cartDispatch] = useCartValue()
   const {checkLoggedIn} = useAuth() 
   
   
   useEffect(()=>{
     
-// const checkLoggedIn = async ()=>{
-//       const res = await fetch(`${BASE_URL}/authenticate/islogged`,{
-//       method : "post",
-//       credentials : "include"
-//       })
-//       const data = await res.json()
-//       console.log(data,"islogged");
-//       return data
-// }
-
     const makeReq = async ()=>{
-      console.log("calling from app.js")
       let res = await checkLoggedIn()
       
-      console.log("app",res)
       dispatch({
         type : "SET_USER",
         payload : res
@@ -58,7 +43,7 @@ function App() {
     }, 900);
     return ()=>clearTimeout(timer)
 
-  },[])
+  },[dispatch])
   
 
 

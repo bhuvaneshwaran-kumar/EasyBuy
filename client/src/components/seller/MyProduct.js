@@ -14,12 +14,10 @@ function MyProduct(){
     const [loader,setLoader] = useState(true)
     const [hasMore,setHasMore] = useState(false)
     const observer = useRef(null)
-    // const [edit,setEdit] = useState(false)
     const input = useRef()
    const slide = useRef()
 
     const turnOnAndOffEdit = (index,status)=> {
-      console.log("hii",index)
       pDispatch({
         type : "POST_EDIT_STATUS",
         payload : {
@@ -30,7 +28,6 @@ function MyProduct(){
     }
 
     const updateProduct = async (index,flagOneProductBug = false)=>{
-      console.log("hiii-submit",products[index])
       const response = await fetch('http://localhost:8080/product/update',{
         headers: {
           'Accept': 'application/json',
@@ -47,7 +44,6 @@ function MyProduct(){
 
     } 
 
-    // console.log(editProdutsState)
 
     // Handels Adding Observer To The Last Product Element 
     const lastPostRefCallback = useCallback(node => {
@@ -57,7 +53,6 @@ function MyProduct(){
 
       observer.current = new IntersectionObserver(entries => {
           if (entries[0].isIntersecting && hasMore) {
-              console.log(node.textContent, 'is Intersecting', products.length)
               setSkip(products.length)
           }
       })
@@ -131,7 +126,6 @@ function MyProduct(){
         input.current.pofferspan[index].removeAttribute("disabled")
       }
 
-      // input.current.setAttribute("disabled", "");
     }
 
     // Handles Edit post.

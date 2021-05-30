@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 import {useUserValue} from '../../contexts/UserProvider'
 import './styles/ManageAddress.css'
 import {useRef,useState} from 'react'
@@ -6,8 +6,6 @@ import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
 function ManageAddress() {
     const [user,dispatch] = useUserValue()
     const [address,setAddress] = useState(()=>user.address?user.address:[])
-    console.log(address)
-    console.log("user -> profile info :",user)
     const [NewAddress,setNewAddressStatus] = useState(false)
 
     const form = useRef(null)
@@ -41,12 +39,10 @@ function ManageAddress() {
 
         if(result.status === 200){
             const data = await result.json() 
-            console.log("resopnce->",data)
             dispatch({
                 type:"UPDATE_USER_ADDRESS",
                 payload:data.uAddress
             })
-            console.table(user.address)
             setAddress(user.address)
         }
        
@@ -55,7 +51,6 @@ function ManageAddress() {
 
     const deleteAddress = async (id)=>{
         
-        console.log(id+'going to delete..')
         const result = await fetch("http://localhost:8080/user/deleteaddress",{
             method:"post",
             credentials : 'include',
@@ -70,14 +65,11 @@ function ManageAddress() {
                 type:"DELETE_USER_ADDRESS",
                 payload: id
             })
-            console.log(user)
             setAddress(user.address)
         }
     }
     
-    useEffect(()=>{
-        console.table(user.address)
-    },[user])
+
     return (
 
  
@@ -87,7 +79,7 @@ function ManageAddress() {
             </div>
 
             <div className="addNew-address" onClick={()=>setNewAddressStatus(true)}>
-                <p>{ !NewAddress && <p id="add">+</p>} ADD A NEW ADDRESS</p>
+                <p>{ !NewAddress && <span id="add">+</span>} ADD A NEW ADDRESS</p>
     {  NewAddress &&    
         <form onSubmit={submmitForm} ref={form}>
         <div id="addAdd-row">

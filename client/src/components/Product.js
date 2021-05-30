@@ -1,14 +1,14 @@
-import React,{useEffect, useState, useRef, useContext} from 'react'
+import React,{useEffect, useState, useRef} from 'react'
 import { Link, useParams } from 'react-router-dom';
-import {IconButton,Button} from "@material-ui/core" 
+import {Button} from "@material-ui/core" 
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import './styles/Product.css'
 import Comment from '../components/comment/Comment'
-import {Security,SportsKabaddi} from '@material-ui/icons';
+import {Security} from '@material-ui/icons';
 import {useUserValue} from '../contexts/UserProvider'
-import {useCartValue} from '../contexts/CartProvider'
+// import {useCartValue} from '../contexts/CartProvider'
 
 function Product() {
     const [product,setProduct] = useState(null)
@@ -17,9 +17,7 @@ function Product() {
     const [isRemaind,setIsRemaind] = useState(false)
     const [cartExist,setCartExist] = useState(false)
     const [compare,setCompare] = useState(false)
-    // console.log(user._id,product.sellerId)
     
-    const [cart,cartDispatch] = useCartValue()
 
     const {id} = useParams();
     const image = useRef()
@@ -44,7 +42,7 @@ function Product() {
                 body : JSON.stringify(wishlistData)        
             })
 
-            if(result.status == 200){
+            if(result.status === 200){
                 setIsLiked(true)
             }else{
                 setIsLiked(false)
@@ -57,7 +55,6 @@ function Product() {
                 credentials : "include"
               })
             const data = await result.json()
-            console.log(data)
             setProduct(data.result)
         }
         const checkCartExist = async ()=>{
@@ -72,7 +69,6 @@ function Product() {
             }
         }
         const checkRemaindMe = async(id)=>{
-            console.log("calling checkRemaindMe")
             let RemaindMeData = {
                 productId : id,
                 userId : user._id,
@@ -89,12 +85,10 @@ function Product() {
                 body : JSON.stringify(RemaindMeData)        
             })
 
-            if(result.status == 200){
+            if(result.status === 200){
                 setIsRemaind(true)
-                console.log("Checked with remaind me it say yessss")
             }else{
                 setIsRemaind(false)
-                console.log("Checked with remaind me it say Nooo")
 
             }
         }
@@ -106,10 +100,8 @@ function Product() {
                 credentials:'include'
             })
             if(result.status === 200){
-                console.log("Compare Exist")
                 setCompare(true)
             }else{
-                console.log("Compare not Exist")
                 setCompare(false)
             }
         }
@@ -126,9 +118,8 @@ function Product() {
     
 
     const addToCart =  async()=>{
-        console.log("calling add to cart --->")
 
-        const result = await fetch('http://localhost:8080/cart/add-cart/',{
+        await fetch('http://localhost:8080/cart/add-cart/',{
             mode:"cors",
             credentials : "include",
             method : "post",
@@ -144,41 +135,18 @@ function Product() {
             })        
         })
 
-        // if(result.status == 200){
-        //     const data = {
-        //         pid : product._id,
-        //         plabel : product.plabel,
-        //         pImageDetails : product.pImageDetails,
-        //         quantity : 1
-        //     }
-        //    if(cart){
-        //         cartDispatch({
-        //             type : 'PREPANDCART',
-        //             payload : data
-        //         })
-        //    }else{
-        //     cartDispatch({
-        //         type : 'SET_CART',
-        //         payload : data
-        //     })
-        //    }
-        // }
         setCartExist(true)
 
-        const data = await result.json()
-        console.log(data)
     }
 
 
     const addRemoveWishlist = async ()=>{
-        console.log("add rome")
         let result
         let wishlistData = {
             productId : id,
             userId : user._id,
             userEmail : user.email,
         }
-        console.log(id,wishlistData)
         if(isLiked){
             result  = await fetch('http://localhost:8080/product/removewishlist',{
                 mode:"cors",
@@ -209,14 +177,12 @@ function Product() {
 
     //Cloning for remaind me
     const addRemoveRemaindMe = async ()=>{
-        console.log("Calling  addRemoveRemaindMe")
         let result
         let remaindMeData = {
             productId : id,
             userId : user._id,
             userEmail : user.email,
         }
-        console.log(id,remaindMeData)
         if(isRemaind){
             result  = await fetch('http://localhost:8080/product/remove-remaind-me',{
                 mode:"cors",
@@ -248,13 +214,11 @@ function Product() {
 
     // Add to Compare
     const AddToCompare = async ()=>{
-        console.log("Calling Add to Compare")
         let detials = {
             uid : user._id,
             item : product?.pitem,
             pid:id
         }
-        console.log(detials)
         const result = await fetch("http://localhost:8080/comparelist/add-user-compare-list",{
             method :"post",
             mode:"cors",
@@ -267,11 +231,9 @@ function Product() {
         })
         if(result.status === 200) {
             setCompare(true)
-            console.log("Addedd to compareList")
         }
     }
 
-    // console.log(product)
     return (
         product&&
         <div className = "mono-product-outer">
@@ -279,7 +241,7 @@ function Product() {
                 <div className="mono-Pimage-left">
                 {
                     product.pImageDetails.map((image,index)=>(
-                       <img src={image.imageUrl} id={index} onClick={()=>changeMainImage(image.imageUrl)}  id="p-sample-image" alt=""/>
+                       <img key={index} src={image.imageUrl} id={index} onClick={()=>changeMainImage(image.imageUrl)}  id="p-sample-image" alt={image.imageUrl}/>
                     ))
                 }
                 </div>
@@ -360,11 +322,11 @@ function Product() {
                 </div>
                 <div className="col" id="pstatus">
                     <span>Question And Answers :</span>
-                <p>
+                <div>
 
                         <Comment product={product}/>
 
-                </p>
+                </div>
                 </div>
            
            

@@ -1,4 +1,4 @@
-import Reactm,{useRef, useState,useEffect} from 'react'
+import React,{useRef, useState,useEffect} from 'react'
 import './Style/Comment.css'
 import {useUserValue} from '../../contexts/UserProvider'
 import DisplayComment from './DisplayComment.js'
@@ -9,7 +9,6 @@ import '../../../node_modules/rodal/lib/rodal.css';
 
 function Comment({product}) {
     const [show,setShow] = useState(false)
-    // const [hide,setHide] = useState(true)
 
 
     const form = useRef()
@@ -17,7 +16,6 @@ function Comment({product}) {
     const [comments,setComments] = useState([])
     const [showComments,setShowComments] = useState(false)
     let [canUpdate,setCanUpdate] = useState(null)
-    // console.log(product.sellerId,user._id)
 
     const changeShowCommentState = ()=>{
         setShowComments((prev)=>!prev)
@@ -51,7 +49,6 @@ function Comment({product}) {
             body : JSON.stringify(data)
         })
 
-        // console.log(await result.json())
         if(result.status === 200){
             form.current.querry.value = ''
             setCanUpdate((prev)=>prev+1)
@@ -60,7 +57,6 @@ function Comment({product}) {
     }
 
     useEffect((id = product._id) => {
-        // console.log(id)
         const getComments = async (id)=>{
             const result = await fetch('http://localhost:8080/comment/getcomments/?'+ new URLSearchParams({
                 id : id 
@@ -68,12 +64,11 @@ function Comment({product}) {
                 credentials : "include"
               })
             const data = await result.json()
-            // console.log(data)
             setComments(data.data)
         }
         getComments(id)
     }, [showComments,canUpdate])
-    // console.log(comments)
+
     return (
         <div id="comment-outer">
             {
@@ -85,18 +80,18 @@ function Comment({product}) {
                 </form>
             }
             
-            <button id="show-comment" className='btn' style={{marginTop : '10px',backgroundColor:'#3f44e0'}}onClick={()=>{changeShowCommentState();}}>{showComments && comments.length != 0 ? 'Hide' : 'Show'} Queries : {comments.length}</button>
+            <button id="show-comment" className='btn' style={{marginTop : '10px',backgroundColor:'#3f44e0'}}onClick={()=>{changeShowCommentState();}}>{showComments && comments.length !== 0 ? 'Hide' : 'Show'} Queries : {comments.length}</button>
             
             <div >
                 {
                     product.sellerId !== user._id ?
-                    showComments && comments.length != 0 && (
+                    showComments && comments.length !== 0 && (
                         <DisplayComment 
                         setComments = {setComments}
                         comments = {comments}
                         />
                     
-                    ) : showComments && comments.length != 0 && (
+                    ) : showComments && comments.length !== 0 && (
                         <div id="DisplayComment">
                         {comments.map((data,index)=>(
                             

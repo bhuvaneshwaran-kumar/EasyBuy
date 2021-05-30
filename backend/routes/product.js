@@ -19,7 +19,7 @@ Router.get('/', async (req, res) => {
 
             const hasMore = ((skip + perPage) <= totalCount) ? true : false
 
-            res.json({ message: "Post sent to Frontend", report: true, product: product, hasMore: hasMore })
+            return res.json({ message: "Post sent to Frontend", report: true, product: product, hasMore: hasMore })
         } catch (error) {
             console.log(error)
             res.status(500).json({ message: "Server Error", report: false })
@@ -59,7 +59,7 @@ Router.get('/getproductdata', async (req, res) => {
 
             // console.log(product)
 
-            res.json({ message: "Post sent to Frontend", result : product})
+            return res.json({ message: "Post sent to Frontend", result : product})
         } catch (error) {
             console.log(error)
             res.status(500).json({ message: "Server Error", report: false })
@@ -69,12 +69,14 @@ Router.get('/getproductdata', async (req, res) => {
 
 Router.get('/home', async (req, res) => {
         try {
-            // console.log("user getting post")
+            console.log("user getting post")
             const productToBeFetched = req.query.productToBeFetched
             const skip = parseInt(req.query.skip) || 0
             const perPage = 20
 
             if(productToBeFetched === 'offer'){
+                console.log('sending offer')
+
                 let totalCount = await Product.find({ pofferspan : { $gt : 0 } }).countDocuments()
                 let OfferProduct = await Product.find({ pofferspan : { $gt : 0 } }).sort('-pofferspan')
                 .limit(perPage).skip(skip)
@@ -85,6 +87,8 @@ Router.get('/home', async (req, res) => {
             }
 
             if(productToBeFetched === 'Fashion'){
+                console.log('sending fashion')
+
                 let totalCount = await Product.find({pcategory:'Fashion'}).countDocuments()
                 let OfferProduct = await Product.find({pcategory:'Fashion'}).sort('-timestamp')
                 .limit(perPage).skip(skip)
@@ -95,6 +99,8 @@ Router.get('/home', async (req, res) => {
             }
 
             if(productToBeFetched === 'Grocery'){
+                console.log('sending grocery')
+
                 let totalCount = await Product.find({pcategory:'Grocery'}).countDocuments()
                 let OfferProduct = await Product.find({pcategory:'Grocery'}).sort('-timestamp')
                 .limit(perPage).skip(skip)
@@ -105,6 +111,8 @@ Router.get('/home', async (req, res) => {
             }
 
             if(productToBeFetched === 'Electronics'){
+                console.log('sending electronics')
+
                 let totalCount = await Product.find({pcategory:'Electronics'}).countDocuments()
                 let OfferProduct = await Product.find({pcategory:'Electronics'}).sort('-timestamp')
                 .limit(perPage).skip(skip)
@@ -115,6 +123,8 @@ Router.get('/home', async (req, res) => {
             }
 
             if(productToBeFetched === 'mobiles'){
+                console.log('sending mobiles')
+
                 let totalCount = await Product.find({pitem:'Mobile'}).countDocuments()
                 let OfferProduct = await Product.find({pitem:'Mobile'}).sort('-timestamp')
                 .limit(perPage).skip(skip)
@@ -125,6 +135,7 @@ Router.get('/home', async (req, res) => {
             }
             
             if(productToBeFetched === 'all'){
+                console.log('sending all')
                 const totalCount = await Product.countDocuments()
                 const product = await Product.find().sort('-timestamp')
                     .limit(perPage).skip(skip)
@@ -241,7 +252,7 @@ Router.post('/add',async (req, res) => {
             await product.save()
             res.status = 200
             // console.log("User product detials",product)
-            res.json({message:"GOt IMage",product : product})
+            return res.json({message:"GOt IMage",product : product})
         }catch(err){
             console.log("error while we save the data of product ",err)
         }
@@ -249,7 +260,7 @@ Router.post('/add',async (req, res) => {
 
     }
     else {
-        res.status(401).json({ message: "Unauthorized Access", report: false })
+        return res.status(401).json({ message: "Unauthorized Access", report: false })
     }
 })
 
@@ -294,7 +305,7 @@ Router.post('/update',async (req, res) => {
             await product.save()
             res.status = 200
             // console.log("User updated product detials",product)
-            res.json({message:"updated product",product : product})
+            return res.json({message:"updated product",product : product})
         }catch(err){
             console.log("error while we save the data of product ",err)
         }
@@ -325,10 +336,10 @@ Router.post('/checkwishlist',async(req,res)=>{
 
     if(hasWishlist.length !== 0){
         res.statusCode = 200
-        res.json({message:"success user already liked the product"})
+        return res.json({message:"success user already liked the product"})
     }else{
         res.statusCode = 201
-        res.json({message:"nope user not liked the product"})
+        return res.json({message:"nope user not liked the product"})
     }
 })
 
@@ -339,7 +350,7 @@ Router.post('/addwishlist',async(req,res)=>{
     product.save()
     // console.log(product)
     res.statusCode = 200
-    res.json({message:"success"})
+    return res.json({message:"success"})
 })
 
 Router.post('/removewishlist',async(req,res)=>{
@@ -350,7 +361,7 @@ Router.post('/removewishlist',async(req,res)=>{
     product.save()
     // console.log('after removing',product)
     res.statusCode = 200
-    res.json({message:"success"})
+    return res.json({message:"success"})
 
 })
 
@@ -373,10 +384,10 @@ Router.post('/check-remaind-me',async(req,res)=>{
 
     if(hasremaindMe.length !== 0){
         res.statusCode = 200
-        res.json({message:"success user already liked the product"})
+        return res.json({message:"success user already liked the product"})
     }else{
         res.statusCode = 201
-        res.json({message:"nope user not liked the product"})
+        return res.json({message:"nope user not liked the product"})
     }
 })
 
@@ -387,7 +398,7 @@ Router.post('/add-remaind-me',async(req,res)=>{
     product.save()
     // console.log(product)
     res.statusCode = 200
-    res.json({message:"success"})
+    return res.json({message:"success"})
 })
 
 Router.post('/remove-remaind-me',async(req,res)=>{
@@ -399,7 +410,7 @@ Router.post('/remove-remaind-me',async(req,res)=>{
     product.save()
     // console.log('after removing',product)
     res.statusCode = 200
-    res.json({message:"success"})
+    return res.json({message:"success"})
 
 })
 
@@ -407,7 +418,7 @@ Router.post('/remove-remaind-me',async(req,res)=>{
 Router.post('/searchproduct',async(req,res)=>{
     try{
         const labels = await Label.find()
-        res.json({
+        return res.json({
             labelName : labels[0].labelName
         }) 
     }

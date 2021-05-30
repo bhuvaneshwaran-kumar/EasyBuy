@@ -5,7 +5,7 @@ import {useUserValue} from '../../contexts/UserProvider'
 
 
 function ProfileInformation() {
-    const [user,dispatch] = useUserValue()
+    const [user] = useUserValue()
     const [name,setName] = useState(user.name)
     const [editState,setEditState] = useState(false)
     const form = useRef()
@@ -37,10 +37,8 @@ function ProfileInformation() {
         }
         else{
             form.current.uname.removeAttribute('disabled')
-            console.log(form.current.uname)
             setEditState(true)
         }
-        console.log("hey you")
     }
     
     return (

@@ -9,7 +9,7 @@ Router.get("/getcomments",async (req,res)=>{
         const data = await Comment.find({productId})
         // console.log(data)
         res.statusCode = 200
-        res.json({  
+        return res.json({  
             message : 'Success.',
             data : data            
         })
@@ -30,7 +30,7 @@ Router.post("/addcomment",async(req,res)=>{
         // console.log('get req',comment)
         comment.save()
         res.statusCode = 200
-        res.json({
+        return res.json({
             message : 'Comment added successfully'
         })
 
@@ -39,7 +39,6 @@ Router.post("/addcomment",async(req,res)=>{
         console.log(e)
 
     }
-    res.json({})
 })
 
 Router.post("/comment-answer",async(req,res)=>{
@@ -59,7 +58,7 @@ Router.post("/update",async(req,res)=>{
         await comment.save()
         // console.log(comment)
         res.statusCode = 200
-        res.json({
+        return res.json({
             message : 'success',
             data : comment
         })

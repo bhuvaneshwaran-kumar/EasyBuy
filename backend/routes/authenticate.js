@@ -138,7 +138,7 @@ Router.post("/islogged", async (req, res) => {
     })
   } else {
     res.statusCode = 202
-    res.json({
+    return res.json({
       loggedStatus: false,
       message: "you're not signed in"
     })
@@ -160,7 +160,7 @@ Router.post("/login", async (req, res) => {
       req.session._id = user._id
       console.log("check session")
       res.statusCode = 201
-      res.json({
+      return res.json({
         name: user.User.name,
         email: user.User.email,
         loggedStatus: true,
@@ -172,7 +172,7 @@ Router.post("/login", async (req, res) => {
       console.log(`${user.User.name} has logged In`)
     } else {
       res.statusCode = 202
-      res.json({
+      return res.json({
         loggedStatus: false,
         message: "password incorrect"
       })
@@ -180,7 +180,7 @@ Router.post("/login", async (req, res) => {
   }
   catch (err) {
     res.statusCode = 202
-    res.json({
+    return res.json({
       loggedStatus: false,
       message: "User not Exist or You're not an valid user .."
     })
@@ -200,7 +200,7 @@ Router.post("/logout", async (req, res) => {
 
 
 
-  res.json({
+  return res.json({
     value: true
   })
 
@@ -220,7 +220,7 @@ Router.post('/switchtoseller', async (req, res) => {
     await user.save()
     console.log('After adding shop address User :',user)
     res.statusCode = 200
-    res.json({
+    return res.json({
       address : [...user.User.address],
       isSeller : user.User.isSeller
     })
@@ -242,7 +242,7 @@ Router.post('/forgotpwd', async (req, res) => {
 
   if (!existuser) {
     res.statusCode = 201
-    res.json({
+    return res.json({
       message: "User email is Not valid"
     })
     return
@@ -272,7 +272,7 @@ Router.post('/forgotpwd', async (req, res) => {
 
         console.log('done')
         res.statusCode = 202
-        res.json({
+        return res.json({
           message: 'OTP has been sent to the email account verify it'
         })
       })
@@ -293,12 +293,12 @@ Router.post('/resetpwd', async (req, res) => {
       existuser.User.password = await bcrypt.hash(req.body.password, 10)
       existuser.save()
       res.statusCode = 201
-      res.json({
+      return res.json({
         message: 'Password updation was successfull.. Please login to continue'
       })
     } else {
       res.statusCode = 202
-      res.json({
+      return  res.json({
         message: 'User email is not valid...'
       })
     }

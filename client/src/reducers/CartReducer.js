@@ -1,6 +1,5 @@
 export const cartInitialState = []
 
-console.log('cartreducer is calling')
 
 export const cartReducer = (state=cartInitialState,action)=>{
     switch(action.type){
@@ -21,14 +20,11 @@ export const cartReducer = (state=cartInitialState,action)=>{
         case 'DELETECART':
 
             const newDelState = {...state}
-            console.log(action.payload,"need to be deleted")
             newDelState.productDetials = state.productDetials.filter((data)=>(data.pid !== action.payload) && data)
-            console.log(newDelState)
             return newDelState
         
         case 'PREPANDCART':
 
-            console.log(state?.productDetials)
 
             if(state?.productDetials?.length > 0){
 
@@ -44,7 +40,6 @@ export const cartReducer = (state=cartInitialState,action)=>{
 
         case 'ADDPRICE':
             state.productDetials[action.payload.index] = {...action.payload.data}
-            // console.log(state)
             return {...state}
 
 

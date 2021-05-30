@@ -5,7 +5,6 @@ import {useParams} from 'react-router-dom'
 function ShowSearchProducts() {
     const {Searchkeys} = useParams()
 
-    console.log(Searchkeys)
     return (
         <div className="ShowSearchProducts">
             hellow !...

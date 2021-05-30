@@ -2,9 +2,7 @@ import React,{useEffect, useState} from 'react'
 
 function IndividualOrderDetials({data}) {
     const [product,setProduct] = useState()
-    const [date,setDate] = useState(new Date(data?.orderPlacedTimeStamp))
-    console.log(typeof date)
-    console.log(data)
+    const [date] = useState(new Date(data?.orderPlacedTimeStamp))
     useEffect(()=>{
         const getProductsDetials = async ()=>{
 
@@ -22,7 +20,6 @@ function IndividualOrderDetials({data}) {
                 body : JSON.stringify(Data)        
             })
             let datum = await result.json()
-            // console.log(datum.result)
             setProduct(datum.result)
 
         }

@@ -14,9 +14,7 @@ function MyCart() {
     const [totalPrice,setTotalPrice] = useState()
     const [savePrice,setsavePrice] = useState()
     const [checked,setChecked] = useState(false)
-    console.log(cart)
 
-    // setPrice(prev => console.log(prev))
   useEffect(()=>{
 
         const checkCartExist = async ()=>{
@@ -40,7 +38,6 @@ function MyCart() {
 
     const addTotalValue = ( )=>{
       let result = cart?.productDetials?.reduce((acc,data,index)=>{
-        console.log(index,"->>>",typeof data?.offer)    
         if(data?.offer){
           return acc + ( data?.quantity * (data?.price - (data?.price * data?.offer/100 ) ))
         }else{
@@ -48,11 +45,9 @@ function MyCart() {
         }
       },0)
 
-      // console.log("total value : ",result)
       setTotalPrice(result)
 
       let result2 = cart?.productDetials?.reduce((acc,data,index)=>{
-        console.log(index,"->>>",typeof data?.offer)    
         if(data?.offer){
           return acc + ( data?.quantity * (data?.price * data?.offer/100 ))
         }else{
@@ -60,14 +55,13 @@ function MyCart() {
         }
       },0)
 
-      // console.log("total value : ",result)
       setsavePrice(result2)
 
     }
 
 
     return (
-      <div style={{height:'90vh'}}>
+      <div style={{minHeight:'90vh'}}>
      { checked &&  
       <div className="my-cart-outer" style = { showOrderDetials ? { background : "rgba(1,1,1,0.1)"}:{}}>
        {
@@ -103,7 +97,7 @@ function MyCart() {
               
              
             <div className="order-iteam" key={index}>
-               <img src={data.pImageDetails[0].imageUrl}></img>
+               <img src={data.pImageDetails[0].imageUrl} alt="this is the pic"></img>
                <li className="fuk-width">
                  {data?.plabel}
                </li>

@@ -1,7 +1,9 @@
 .my-cart-outer {
   min-height: 90vh;
+  max-height: auto;
+  /* border: 1px solid black; */
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 .cart-grid {
   display: grid;

@@ -28,7 +28,7 @@ function useAuth() {
                     "message" :  message.message
                 }
                 return await response
-            }
+            } 
         }
         catch(err){
             console.warn(err)
@@ -48,7 +48,6 @@ function useAuth() {
             })  
             if(res.status === 201){
                 const data = await res.json()
-                console.log(data.message)
                 let response = {
                     status : true,
                     message : data.message
@@ -107,7 +106,6 @@ function useAuth() {
             credentials : "include"
         })
         const data = await res.json()
-        console.log(data,"islogged");
         return data
     }
 

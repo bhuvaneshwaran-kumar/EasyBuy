@@ -48,7 +48,6 @@ function AddProduct() {
             setError(true)
             setMessage("Don't switch tab's or don't navigate to any other page's")
 
-            console.log("form data",form.current)
 
             const {pcategory, pitem,
                    plabel, pbrand,
@@ -71,7 +70,6 @@ function AddProduct() {
                 pcost : pcost.value ,
                 pImageDetails : [...selectedImage]
             }
-            console.log(data)
             
             const response = await fetch(`http://localhost:8080/product/add`,{
                 headers: {
@@ -82,9 +80,7 @@ function AddProduct() {
                 credentials : "include",
                 body : JSON.stringify(data)
             })
-            // console.log("from -> uploadin images..",await response.json())
             let productData = await response.json()
-            console.log("from -> uploadin images..",data)
             if(response.status === 200){
                 setError(false)
                 setLoader(false)
@@ -135,15 +131,12 @@ function AddProduct() {
     }   
     
     const removeImage = (index)=>{
-        console.log(index,'index is removed')
         const updatedImage = [...selectedImage]
         updatedImage.splice(index,1)
         setSelectedImage([...updatedImage])
     }
 
-    // selectedImage.forEach((id,elm)=>console.log(id,'->',elm))
 
-    // console.log(selectedImage[0])
 
     useEffect(() => {
         for(let i=1;i<3;i++){
@@ -152,7 +145,6 @@ function AddProduct() {
         let timer = setInterval(()=>{
             plusSlides(1);
         },4000)
-        console.log(slides.current[0])
         return ()=>clearInterval(timer)
     }, [])
 
@@ -162,7 +154,7 @@ function AddProduct() {
             <div className="addproduct-left">
                {
                    [0,0,0].map((val,index)=>(
-                       <img src={`/addproduct/0${index+1}.png`} alt=""
+                       <img key={index} src={`/addproduct/0${index+1}.png`} alt=""
                        ref = {(ref)=>slides.current.push(ref)} />
                    ))
                }

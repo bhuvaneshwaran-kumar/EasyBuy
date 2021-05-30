@@ -16,7 +16,6 @@ function Signup() {
 
         if(otp){
             setLoader(true)
-            console.log(event.target)
             const userData = {
                 email : formRef.current.email.value,
                 otp : formRef.current.otp.value

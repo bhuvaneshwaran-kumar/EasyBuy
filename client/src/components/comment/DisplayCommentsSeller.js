@@ -1,7 +1,6 @@
 import React,{useRef, useState} from 'react'
 
 function DisplayCommentsSeller({data,setComments,index}) {
-    // console.log(data.comment.Answer)
     const form = useRef()
     const [comment,setComment] = useState(data)
     
@@ -11,7 +10,6 @@ function DisplayCommentsSeller({data,setComments,index}) {
             commentId : data._id,
             Answer : form.current.Answer.value
         }
-        // console.table(updateData)
         const response = await fetch(`http://localhost:8080/comment/update`,{
             mode:"cors",
             credentials : "include",

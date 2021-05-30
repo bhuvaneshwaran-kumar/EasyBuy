@@ -6,10 +6,13 @@
   flex-direction: row;
   justify-content: space-around;
 }
-.my-product .my-product-left {
+/* .my-product .my-product-left {
   width: 45%;
-  /* border: 1px solid black; */
-}
+  position: ;
+  top: 0;
+  border: 1px solid salmon;
+  /* border: 1px solid black;
+} */
 
 .my-product .my-product-left {
   align-self: flex-start;
@@ -48,6 +51,8 @@
 .my-product .my-product-right {
   /* border: 1px solid black; */
   width: 45%;
+  max-height: 100%;
+  overflow-y: scroll;
 }
 .my-product .prodact {
   width: 100%;

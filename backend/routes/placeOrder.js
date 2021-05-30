@@ -53,7 +53,7 @@ Router.post("/",async(req,res) => {
             })
             await flushUserCart(uid)
             res.statusCode = 200
-            return res.send({
+            return res.json({
                 message :"ok"
             })
         }
@@ -77,7 +77,7 @@ Router.post("/get-product-detials",async(req,res)=>{
             pimage : product.pImageDetails[0].imageUrl
         }
         res.statusCode = 200
-        res.json({
+        return res.json({
             result : result
         })
 
@@ -96,7 +96,7 @@ Router.get("/get-user-order-detials",async(req,res)=>{
         const orderDetials = await PlaceOrder.find({uid:req.session._id})
         // console.log(orderDetials.length)
         res.statusCode = 200   
-        res.json({
+        return res.json({
             data : orderDetials
         })
     }

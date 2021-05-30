@@ -1,7 +1,6 @@
 import React,{useRef,useCallback,useEffect,useState} from 'react'
-// import { useState } from 'react'
 import './homeStyles/Home.css'
-import { useHistory,Link,useParams } from 'react-router-dom';
+import { Link,useParams } from 'react-router-dom';
 import Slider from './Slider.js'
 
 
@@ -9,14 +8,9 @@ import Slider from './Slider.js'
 function Home() {
     const {Searchkeys} = useParams()
 
-    console.log(Searchkeys)
 
     const [productToBeFetched,setProductToBeFetched] = useState('')
-    const scrollTo = (element)=>{
-        // const y = window.pageYOffset + 20;
-        // element.current.scrollIntoView({ behavior: 'smooth',  block: "start" })
-        element.current.scrollTop -= 10;
-    }
+  
     
     const productsDiv = useRef()
     const top = useRef()
@@ -27,7 +21,7 @@ function Home() {
     const [searchProducts, setSearchProducts] = useState([]) 
     const [loader,setLoader] = useState(false)
 
-    
+   
  
     
 
@@ -50,6 +44,7 @@ function Home() {
 
 
           const productDetials = async (skip)=>{
+
             const response = await fetch('http://localhost:8080/product/home/?'+ new URLSearchParams({
                 skip : skip ,
                 productToBeFetched : productToBeFetched
@@ -65,6 +60,7 @@ function Home() {
             }   
 
         useEffect(()=>{
+
             setProducts([])
             setLoader(true)  
             productDetials(0)
@@ -87,7 +83,6 @@ function Home() {
                         credentials : "include"
                       })      
                       const data = await response.json()
-                      console.log(data)
                       setSearchProducts((prev)=>{
                           return [...prev,...data.products]
                       })
@@ -99,7 +94,6 @@ function Home() {
         },[Searchkeys])
 
 
-          console.log(products)
     return (
         <div ref={top} className="home-container" style={{minHeight:'50vw'}}>
              <div className="home-row home-top-nav" >
@@ -135,7 +129,7 @@ function Home() {
                 {
                   !Searchkeys ?  products.map((product,index)=>(
                         (index === products.length-1) ? (
-                        <Link to={`/product/${product._id}`} target="_blank" className="product-outer">
+                        <Link key={product._id} to={`/product/${product._id}`} target="_blank" className="product-outer">
                         <div ref={lastPostRefCallback} key={product._id} id="home-outer">
                             <div className="left">
                             <img src={product.pImageDetails[0].imageUrl} alt=""/>
@@ -147,7 +141,7 @@ function Home() {
                             </div>
                         </div>
                         </Link>):(
-                        <Link key={product._id} to={`/product/${product._id}`} target="_blank" className="product-outer">
+                        <Link key={product._id} target="_blank" to={`/product/${product._id}`}  className="product-outer">
                         <div key={product._id} id="outer" >
                              <div className="left">
                              <img src={product.pImageDetails[0].imageUrl} alt=""/>

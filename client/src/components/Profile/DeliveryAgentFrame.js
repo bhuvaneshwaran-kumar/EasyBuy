@@ -4,11 +4,12 @@ import useAuth from '../../hooks/useAuth'
 import {useUserValue} from '../../contexts/UserProvider'
 import { useHistory } from 'react-router'
 
-function SellerFrame() {
+function DeliveryAgentFrame() {
     const form = useRef()
-    const [,dispatch] = useUserValue()
+    const [value,dispatch] = useUserValue()
     let history = useHistory()
-    const {switchToSellerAccount} = useAuth()
+    const {switchToDeliveryAgentAccount} = useAuth()
+    
     const onSubmitForm = async (event)=>{
         event.preventDefault()
 
@@ -27,8 +28,7 @@ function SellerFrame() {
         "uAddType":uAddType.value
         }
 
-        let result = await switchToSellerAccount(data)
-
+        let result = await switchToDeliveryAgentAccount(data)
         dispatch({
             type : "UPDATE_USER",
             payload : result
@@ -41,11 +41,11 @@ function SellerFrame() {
         <div className="container">
             <div className="top">
                 <li>Read the Terms and Conditions.</li>
-                <li>We provide Easybuy fulfilment services through which you can ensure faster delivery of your items, quality check by our experts and a delightful packaging. Combine these with the fastest payments in the industry and you get an excellent seller portal. No wonder Easybuy is India’s favourite place to sell online </li>
-                <li>Selling on easybuy.com is easy and absolutely free. All you need is to register, list your catalog and start selling your products.
+                <li>We provide Easybuy fulfilment services through which you can ensure faster delivery of your items, quality check by our experts and a delightful packaging. Combine these with the fastest payments in the industry and you get an excellent Delivery Agent portal. No wonder Easybuy is India’s favourite place to sell online </li>
+                <li>Delivering on easybuy.com is easy and pay's you Money from Buyer. All you need is to register, list your catalog and start Delivering your products.
                 </li>
-                <li>Easybuy seller membership are subjected to market risks please read all scheme related documents carefully before signing</li>
-                <li>Fill Your Shop Address.</li>
+                <li>Easybuy Delivery Agent membership are subjected to market risks please read all scheme related documents carefully before signing</li>
+                <li>Fill Your Permenent Address Address.</li>
             </div>
             <form  ref={form} onSubmit={onSubmitForm}>
         <div id="addAdd-row">
@@ -103,7 +103,7 @@ function SellerFrame() {
         </div>
         <div id="radio-btn">
             <label htmlFor="uAddType">Address Type :</label> <br/>
-            <input value="Shop Address" type="radio" id= "Home" name="uAddType" defaultChecked/> <label htmlFor="Home">Shop Address</label>
+            <input value="Permenent Address" type="radio" id= "Home" name="uAddType" defaultChecked/> <label htmlFor="Home">Permanent Address</label>
             
         </div>
         
@@ -113,7 +113,7 @@ function SellerFrame() {
                     <label htmlFor="agreed"> Accept & Agree </label>
                     <input type="checkbox" name="agreed" id="agreed" required/>
                     </div>
-                    <button className="btn btn-blue">Switch to seller Account</button>
+                    <button className="btn btn-blue">Switch to Delivery Agent Account</button>
                
             </div>
             </form>
@@ -121,4 +121,4 @@ function SellerFrame() {
     )
 }
 
-export default SellerFrame
+export default DeliveryAgentFrame

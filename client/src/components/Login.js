@@ -23,8 +23,6 @@ function Login() {
         setLoader(true)
         let email = formRef.current.email.value
         
-        console.log(email)
-
         const result = await forgotPassword(email)
 
         if(result.status === 201){
@@ -85,13 +83,11 @@ function Login() {
                 setError(true)
                 setLoader(false)
             }
-            console.log(result)
         }else{
             const user = {
                 email : formRef.current.email.value,
                 password : formRef.current.password.value
             }
-            console.log(user)
             const response = await login(user)
             setLoader(false)
             if(response.loggedStatus){
@@ -182,7 +178,7 @@ function Login() {
                     {
                                 loader && 
                                 <div className=" row form-group">
-                                    <div class="loader"></div>
+                                    <div className="loader"></div>
                                 </div>
                                 }
                 </form>

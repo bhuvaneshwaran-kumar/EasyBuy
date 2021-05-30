@@ -20,7 +20,7 @@ Router.post("/deleteaddress",async(req,res)=>{
     // console.log(newAddress)
     data.User.address = newAddress
     await data.save()
-    res.json({
+    return res.json({
         "message" :"goot it ..🚀🚀🚀",
         "uAddress" : req.body        
     })
@@ -40,7 +40,7 @@ Router.post("/edit-name",async(req,res)=>{
             user.User.name = name
             user.save()
             res.statusCode = 200
-            res.json({
+            return res.json({
 
             })
         }
@@ -58,7 +58,7 @@ Router.post("/addaddress",async(req,res)=>{
     const data =  await User.findById(req.session._id)
     data.User.address = [req.body,...data.User.address]
     data.save()
-    res.json({
+    return res.json({
         "message" :"goot it ..🚀🚀🚀",
         "uAddress" : data.User.address[0]       
     })

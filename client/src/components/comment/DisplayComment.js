@@ -2,7 +2,6 @@ import './Style/DisplayComment.css'
 import React from 'react'
 
 function DisplayComment({comments,setComments}) {
-    // console.log(comments)
     return (
         <div id="DisplayComment">
             {

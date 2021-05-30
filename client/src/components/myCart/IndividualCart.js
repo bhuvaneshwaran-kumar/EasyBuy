@@ -1,12 +1,11 @@
-import React, { useState,useMemo, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Delete,LinkTwoTone} from '@material-ui/icons'
-import {Link,useHistory} from "react-router-dom"
+import {Link} from "react-router-dom"
 import {useCartValue} from '../../contexts/CartProvider'
 
 
 function IndividualCart({data,index}) {
 
-    // console.log("individual data",data)
 
     const [,dispatch] = useCartValue()
 
@@ -64,9 +63,6 @@ function IndividualCart({data,index}) {
     }
 
     useEffect(() => {
-        // console.log(cart._id)
-        // console.log(data._id)
-        console.log('giving req')
         const getPriceAndOffer = async()=>{
             let result =await fetch(`http://localhost:8080/cart/get-price-offer/?`+new URLSearchParams({
                pid : data.pid
@@ -75,7 +71,6 @@ function IndividualCart({data,index}) {
                 credentials:'include'
             })
             result = await result.json()
-            console.log(result)
             setPrice(result.price)
             setOffer(result?.offer || 0)
             

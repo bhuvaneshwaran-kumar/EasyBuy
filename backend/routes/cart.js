@@ -154,13 +154,18 @@ Router.get('/delete-cart',async(req,res)=>{
          const cartList = await Cartlist.findOne({
              uid : uid
          })
-         cartList.productDetials = cartList.productDetials.filter((data)=> data.pid !== pid) 
-         cartList.save()
-         res.statusCode = 200
-        //  console.log(pid)
-        res.json({
-            message:"ok"
-        })
+         try{
+            cartList.productDetials = cartList.productDetials.filter((data)=> data.pid !== pid) 
+            cartList.save()
+            res.statusCode = 200
+           //  console.log(pid)
+           return  res.json({
+               message:"ok"
+           })
+         }catch(e){
+             console.log("i'm the one only one from cart")
+         }
+         
         
         }
         else{

@@ -23,7 +23,6 @@ export const productReducer = (state = productInitialState,action) => {
             let i = action.payload.index
             let status = action.payload.status
             state[i].EditStatus = status
-            console.log( state[i] )
             return [...state]
 
         default : 

@@ -13,12 +13,10 @@ function OrderDetials() {
             })
             const result_data = await result.json() 
             setData(result_data)
-            // console.log(data)
         }
         getOrderDetials()
     },[])
 
-    console.log(data)
 
     return (
         <div className="OrderDetials">

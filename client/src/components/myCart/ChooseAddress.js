@@ -16,7 +16,6 @@ function ChooseAddress() {
             })
             const data = await result.json() 
             setAddress(data.address)
-            console.log(data)
         }
         getAddress()
     },[])
@@ -28,8 +27,6 @@ function ChooseAddress() {
     let i = 0 
     const formSubmit = async(e)=>{
         e.preventDefault()
-        console.log("calling")
-        // console.log(form.current.Address.value)
 
         const placeOrder = async ()=>{
             
@@ -57,12 +54,10 @@ function ChooseAddress() {
                     type : "SET_CART",
                     payload : undefined
                 })
-                console.log("added successfully")
             }
         }
 
         if(i===0){
-            console.log("calling")
             placeOrder()
         }
 

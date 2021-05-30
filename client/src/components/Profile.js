@@ -14,7 +14,9 @@ function Profile() {
   const {logout} = useAuth()
   const [value,dispatch] = useUserValue()
 
-  useEffect(()=>{setDisplay('my orders')},[value])
+  useEffect(()=>{
+    setDisplay('my orders')
+  },[value])
 
   const Logout = async()=>{
       let res = await logout(value.email)
