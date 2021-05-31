@@ -5,6 +5,7 @@ import {useProductValue} from '../../contexts/ProductProvider'
 import {useUserValue} from '../../contexts/UserProvider'
 import { Edit, CheckCircleOutline} from '@material-ui/icons'
 import {Link} from 'react-router-dom'
+import BASE_URL from '../../utils/BASE_URL'
 
 function MyProduct(){
     
@@ -28,7 +29,7 @@ function MyProduct(){
     }
 
     const updateProduct = async (index,flagOneProductBug = false)=>{
-      const response = await fetch('http://localhost:8080/product/update',{
+      const response = await fetch(`${BASE_URL}/product/update`,{
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -66,7 +67,7 @@ function MyProduct(){
       setLoader(true)
       const getUserPost = async ()=>{  
         if(user.isSeller){            
-              const response = await fetch('http://localhost:8080/product/?'+ new URLSearchParams({
+              const response = await fetch(`${BASE_URL}/product/?`+ new URLSearchParams({
                 skip : skip 
               }),{
                 credentials : "include"

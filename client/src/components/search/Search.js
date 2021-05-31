@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import './Search.css'
 import SearchIcon from '@material-ui/icons/Search'
 import {useHistory} from 'react-router-dom'
+import BASE_URL from '../../utils/BASE_URL'
 function Search() {
     const form = useRef()
     const [productLabel,setProductLabel] = useState(null)
@@ -17,7 +18,7 @@ function Search() {
 
     const checkLabelExist = async(e)=>{
        if(!productLabel){
-        const result = await fetch('http://localhost:8080/product/searchproduct',{
+        const result = await fetch(`${BASE_URL}/product/searchproduct`,{
             mode:"cors",
             method : "post",
             credentials: "include",
@@ -36,7 +37,7 @@ function Search() {
     return (
         <div className="Search-div">
             <form autoComplete="off" ref={form} onSubmit={formSubmit}>
-                <input type="text" className="input-2" name="search" list="search" style={{ borderTopRightRadius: '0px'}} onChange={checkLabelExist}/>
+                <input type="text" className="input-2" name="search" list="search" style={{ borderTopRightRadius: '0px'}} onChange={checkLabelExist} required/>
                 <datalist id="search">
                     {
                         productLabel && (

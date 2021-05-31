@@ -1,11 +1,11 @@
-const BASE_URL = 'http://localhost:8080'
+import BASE_URL from '../utils/BASE_URL'
 
 function useAuth() {
     
     const signup = async (user) => {
         
         try{
-            const res = await fetch(`http://localhost:8080/authenticate/signup`,{
+            const res = await fetch(`${BASE_URL}/authenticate/signup`,{
                 method : "post",
                 headers: {
                     'Accept': 'application/json',
@@ -38,7 +38,7 @@ function useAuth() {
 
     const verifyOtp = async (user) =>{
         try{
-            const res = await fetch("http://localhost:8080/authenticate/signup-otp",{
+            const res = await fetch(`${BASE_URL}/authenticate/signup-otp`,{
                 method : "post",
                 headers: {
                     'Accept': 'application/json',

@@ -1,6 +1,7 @@
 // import { get } from 'mongoose'
 import React, { useEffect, useRef, useState } from 'react'
 import {useCartValue} from '../../contexts/CartProvider'
+import BASE_URL from '../../utils/BASE_URL'
 
 
 
@@ -10,7 +11,7 @@ function ChooseAddress() {
     const [Address,setAddress] = useState()
     useEffect(()=>{
         const getAddress = async()=>{
-            const result = await fetch('http://localhost:8080/cart/get-user-address',{
+            const result = await fetch(`${BASE_URL}/cart/get-user-address`,{
             mode:'cors',
             credentials:'include'
             })
@@ -37,7 +38,7 @@ function ChooseAddress() {
                 address : form.current.Address.value
             }
             
-            const result =  await fetch(`http://localhost:8080/place-order/`,{
+            const result =  await fetch(`${BASE_URL}/place-order/`,{
                 mode:"cors",
                 credentials : "include",
                 method : "post",

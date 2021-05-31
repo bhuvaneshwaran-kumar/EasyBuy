@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
+import BASE_URL from '../../utils/BASE_URL'
+
 function CompareListRight({data}) {
     const [product,setProduct] = useState()
     useEffect(() => {
         const getProductDetials = async ()=>{
-            let result = await fetch(`http://localhost:8080/comparelist/get-product-data/?`+new URLSearchParams({
+            let result = await fetch(`${BASE_URL}/comparelist/get-product-data/?`+new URLSearchParams({
                pid : data.pid
             }),{
                 method:'get',

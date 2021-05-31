@@ -1,4 +1,6 @@
 import React,{useRef, useState} from 'react'
+import BASE_URL from '../../utils/BASE_URL'
+
 
 function DisplayCommentsSeller({data,setComments,index}) {
     const form = useRef()
@@ -10,7 +12,7 @@ function DisplayCommentsSeller({data,setComments,index}) {
             commentId : data._id,
             Answer : form.current.Answer.value
         }
-        const response = await fetch(`http://localhost:8080/comment/update`,{
+        const response = await fetch(`${BASE_URL}/comment/update`,{
             mode:"cors",
             credentials : "include",
             method : "post",

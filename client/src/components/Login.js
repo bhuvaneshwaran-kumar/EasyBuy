@@ -98,7 +98,8 @@ function Login() {
                 setError(false)
                 setMessage(response.message)
                 localStorage.setItem("email",response.email)
-                setRedirectToLogin(true)
+                // setRedirectToLogin(true)
+                history.push('/')
             }else{
                 setMessage(response.message)
                 setError(true)

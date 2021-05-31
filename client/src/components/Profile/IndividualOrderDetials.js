@@ -1,4 +1,5 @@
 import React,{useEffect, useState} from 'react'
+import BASE_URL from '../../utils/BASE_URL'
 
 function IndividualOrderDetials({data}) {
     const [product,setProduct] = useState()
@@ -9,7 +10,7 @@ function IndividualOrderDetials({data}) {
             let Data = {
                 pid : data.productDetials.pid
             }
-            const result =  await fetch(`http://localhost:8080/place-order/get-product-detials`,{
+            const result =  await fetch(`${BASE_URL}/place-order/get-product-detials`,{
                 method : "post",
                 mode:"cors",
                 credentials : "include",

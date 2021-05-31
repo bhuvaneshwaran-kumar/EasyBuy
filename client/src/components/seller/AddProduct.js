@@ -2,6 +2,7 @@ import React,{useState,useRef,useEffect} from 'react'
 import './AddProduct.css'
 import {Delete} from '@material-ui/icons'
 import {useProductValue} from '../../contexts/ProductProvider'
+import BASE_URL from '../../utils/BASE_URL'
 function AddProduct() {
     let slides = useRef([])
     let slideIndex = 0;
@@ -71,7 +72,7 @@ function AddProduct() {
                 pImageDetails : [...selectedImage]
             }
             
-            const response = await fetch(`http://localhost:8080/product/add`,{
+            const response = await fetch(`${BASE_URL}/product/add`,{
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'

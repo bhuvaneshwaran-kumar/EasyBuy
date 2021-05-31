@@ -5,6 +5,8 @@ import IndividualCart from './IndividualCart'
 import PlaceOrder from "./PlaceOrder"
 import ChooseAddress from "./ChooseAddress"
 import {Cancel} from "@material-ui/icons"
+import BASE_URL from '../../utils/BASE_URL'
+
 
 function MyCart() {
 
@@ -18,7 +20,7 @@ function MyCart() {
   useEffect(()=>{
 
         const checkCartExist = async ()=>{
-        const result = await fetch('http://localhost:8080/cart/get-cart',{
+        const result = await fetch(`${BASE_URL}/cart/get-cart`,{
           mode:'cors',
           credentials:'include'
         })

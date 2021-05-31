@@ -3,6 +3,7 @@ import {useUserValue} from '../../contexts/UserProvider'
 import './styles/ManageAddress.css'
 import {useRef,useState} from 'react'
 import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
+import BASE_URL from '../../utils/BASE_URL';
 function ManageAddress() {
     const [user,dispatch] = useUserValue()
     const [address,setAddress] = useState(()=>user.address?user.address:[])
@@ -27,7 +28,7 @@ function ManageAddress() {
         "uAddType":uAddType.value
         }
 
-        const result = await fetch("http://localhost:8080/user/addaddress",{
+        const result = await fetch(`${BASE_URL}/user/addaddress`,{
             method:"post",
             credentials : 'include',
             headers: {
@@ -51,7 +52,7 @@ function ManageAddress() {
 
     const deleteAddress = async (id)=>{
         
-        const result = await fetch("http://localhost:8080/user/deleteaddress",{
+        const result = await fetch(`${BASE_URL}/user/deleteaddress`,{
             method:"post",
             credentials : 'include',
             headers: {

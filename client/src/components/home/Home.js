@@ -2,6 +2,8 @@ import React,{useRef,useCallback,useEffect,useState} from 'react'
 import './homeStyles/Home.css'
 import { Link,useParams } from 'react-router-dom';
 import Slider from './Slider.js'
+import BASE_URL from '../../utils/BASE_URL'
+
 
 
 
@@ -45,7 +47,7 @@ function Home() {
 
           const productDetials = async (skip)=>{
 
-            const response = await fetch('http://localhost:8080/product/home/?'+ new URLSearchParams({
+            const response = await fetch(`${BASE_URL}/product/home/?`+ new URLSearchParams({
                 skip : skip ,
                 productToBeFetched : productToBeFetched
               }),{
@@ -77,7 +79,7 @@ function Home() {
             if(Searchkeys){
                 const getSearchData = async()=>{
                     setSearchProducts([])
-                    const response = await fetch('http://localhost:8080/product/home/search/?'+ new URLSearchParams({
+                    const response = await fetch(`${BASE_URL}/product/home/search/?`+ new URLSearchParams({
                         Searchkeys : Searchkeys ,
                       }),{
                         credentials : "include"

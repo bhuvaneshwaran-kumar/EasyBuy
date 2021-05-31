@@ -2,6 +2,7 @@ import React from 'react'
 import './styles/ProfileInformation.css'
 import {useRef,useState} from 'react'
 import {useUserValue} from '../../contexts/UserProvider'
+import BASE_URL from '../../utils/BASE_URL'
 
 
 function ProfileInformation() {
@@ -17,7 +18,7 @@ function ProfileInformation() {
     const submmitForm = async (e)=>{
         e.preventDefault()
         if(editState){
-            const result = await fetch("http://localhost:8080/user/edit-name",{
+            const result = await fetch(`${BASE_URL}/user/edit-name`,{
                 method:"post",
                 credentials : 'include',
                 headers: {

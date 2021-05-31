@@ -5,6 +5,7 @@ import DisplayComment from './DisplayComment.js'
 import DisplayCommentsSeller from './DisplayCommentsSeller.js'
 import Rodal from 'rodal'
 import '../../../node_modules/rodal/lib/rodal.css';
+import BASE_URL from '../../utils/BASE_URL'
 
 
 function Comment({product}) {
@@ -38,7 +39,7 @@ function Comment({product}) {
             timestamp : Date.now()
         }
 
-        const result = await fetch("http://localhost:8080/comment/addcomment/",{
+        const result = await fetch(`${BASE_URL}/comment/addcomment/`,{
             credentials : "include",
             mode:"cors",
             method : "post",
@@ -58,7 +59,7 @@ function Comment({product}) {
 
     useEffect((id = product._id) => {
         const getComments = async (id)=>{
-            const result = await fetch('http://localhost:8080/comment/getcomments/?'+ new URLSearchParams({
+            const result = await fetch(`${BASE_URL}/comment/getcomments/?`+ new URLSearchParams({
                 id : id 
               }),{
                 credentials : "include"

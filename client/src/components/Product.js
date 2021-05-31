@@ -8,6 +8,7 @@ import './styles/Product.css'
 import Comment from '../components/comment/Comment'
 import {Security} from '@material-ui/icons';
 import {useUserValue} from '../contexts/UserProvider'
+import BASE_URL from '../utils/BASE_URL';
 // import {useCartValue} from '../contexts/CartProvider'
 
 function Product() {
@@ -31,7 +32,7 @@ function Product() {
                 userId : user._id,
                 userEmail : user.email,
             }
-            let  result  = await fetch('http://localhost:8080/product/checkwishlist',{
+            let  result  = await fetch(`${BASE_URL}/product/checkwishlist`,{
                 mode:"cors",
                 credentials : "include",
                 method : "post",
@@ -49,7 +50,7 @@ function Product() {
             }
         }
         const getProductDetials = async (id)=>{
-            const result = await fetch('http://localhost:8080/product/getproductdata/?'+ new URLSearchParams({
+            const result = await fetch(`${BASE_URL}/product/getproductdata/?`+ new URLSearchParams({
                 id : id 
               }),{
                 credentials : "include"
@@ -58,7 +59,7 @@ function Product() {
             setProduct(data.result)
         }
         const checkCartExist = async ()=>{
-            let result = await fetch(`http://localhost:8080/cart/check-cart-exist/?`+new URLSearchParams({
+            let result = await fetch(`${BASE_URL}/cart/check-cart-exist/?`+new URLSearchParams({
                pid : id
             }),{
                 method:'get',
@@ -66,6 +67,8 @@ function Product() {
             })
             if(result.status === 200){
                 setCartExist(true)
+            }else{
+                setCartExist(false)
             }
         }
         const checkRemaindMe = async(id)=>{
@@ -74,7 +77,7 @@ function Product() {
                 userId : user._id,
                 userEmail : user.email,
             }
-            let  result  = await fetch('http://localhost:8080/product/check-remaind-me',{
+            let  result  = await fetch(`${BASE_URL}/product/check-remaind-me`,{
                 mode:"cors",
                 credentials : "include",
                 method : "post",
@@ -93,7 +96,7 @@ function Product() {
             }
         }
         const checkCompareExist = async(id)=>{
-            let result = await fetch(`http://localhost:8080/comparelist/get-user-compare-exist/?`+new URLSearchParams({
+            let result = await fetch(`${BASE_URL}/comparelist/get-user-compare-exist/?`+new URLSearchParams({
                pid : id
             }),{
                 method:'get',
@@ -119,7 +122,7 @@ function Product() {
 
     const addToCart =  async()=>{
 
-        await fetch('http://localhost:8080/cart/add-cart/',{
+        await fetch(`${BASE_URL}/cart/add-cart/`,{
             mode:"cors",
             credentials : "include",
             method : "post",
@@ -148,7 +151,7 @@ function Product() {
             userEmail : user.email,
         }
         if(isLiked){
-            result  = await fetch('http://localhost:8080/product/removewishlist',{
+            result  = await fetch(`${BASE_URL}/product/removewishlist`,{
                 mode:"cors",
                 credentials : "include",
                 method : "post",
@@ -159,7 +162,7 @@ function Product() {
                 body : JSON.stringify(wishlistData)        
             })
         }else{
-            result  = await fetch('http://localhost:8080/product/addwishlist',{
+            result  = await fetch(`${BASE_URL}/product/addwishlist`,{
                 mode:"cors",
                 credentials : "include",
                 method : "post",
@@ -184,7 +187,7 @@ function Product() {
             userEmail : user.email,
         }
         if(isRemaind){
-            result  = await fetch('http://localhost:8080/product/remove-remaind-me',{
+            result  = await fetch(`${BASE_URL}/product/remove-remaind-me`,{
                 mode:"cors",
                 credentials : "include",
                 method : "post",
@@ -195,7 +198,7 @@ function Product() {
                 body : JSON.stringify(remaindMeData)        
             })
         }else{
-            result  = await fetch('http://localhost:8080/product/add-remaind-me',{
+            result  = await fetch(`${BASE_URL}/product/add-remaind-me`,{
                 mode:"cors",
                 credentials : "include",
                 method : "post",
@@ -219,7 +222,7 @@ function Product() {
             item : product?.pitem,
             pid:id
         }
-        const result = await fetch("http://localhost:8080/comparelist/add-user-compare-list",{
+        const result = await fetch(`${BASE_URL}/comparelist/add-user-compare-list`,{
             method :"post",
             mode:"cors",
             credentials : "include",

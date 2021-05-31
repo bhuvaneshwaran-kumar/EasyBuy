@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {Delete,LinkTwoTone} from '@material-ui/icons'
 import {Link} from "react-router-dom"
 import {useCartValue} from '../../contexts/CartProvider'
+import BASE_URL from '../../utils/BASE_URL'
 
 
 function IndividualCart({data,index}) {
@@ -43,7 +44,7 @@ function IndividualCart({data,index}) {
     const deleteCart = ()=>{
 
         const deleteBackend  =  async()=>{
-            let result =await fetch(`http://localhost:8080/cart/delete-cart/?`+new URLSearchParams({
+            let result =await fetch(`${BASE_URL}/cart/delete-cart/?`+new URLSearchParams({
                 pid : data.pid
              }),{
                  method:'get',
@@ -64,7 +65,7 @@ function IndividualCart({data,index}) {
 
     useEffect(() => {
         const getPriceAndOffer = async()=>{
-            let result =await fetch(`http://localhost:8080/cart/get-price-offer/?`+new URLSearchParams({
+            let result =await fetch(`${BASE_URL}/cart/get-price-offer/?`+new URLSearchParams({
                pid : data.pid
             }),{
                 method:'get',

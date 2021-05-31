@@ -1,6 +1,8 @@
 import React, { useEffect,useState } from 'react'
 import "./CompareList.css"
 import CompareListRight from "./CompareListRight";
+import BASE_URL from '../../utils/BASE_URL'
+
 function CompareList() {
     const [compareList,setCompareList] = useState()
     const [category,setCategory] = useState()
@@ -16,7 +18,7 @@ function CompareList() {
 
     useEffect(()=>{
         const getUserCompareList = async()=>{
-            let result = await fetch(`http://localhost:8080/comparelist/get-user-compare-list/`,{
+            let result = await fetch(`${BASE_URL}/comparelist/get-user-compare-list/`,{
                 method:'get',
                 credentials:'include'
             })
@@ -37,7 +39,7 @@ function CompareList() {
  
 
     const DeleteCompare = async(id)=>{
-        const result = await fetch('http://localhost:8080/comparelist/alter-user-compare-list',{
+        const result = await fetch(`${BASE_URL}/comparelist/alter-user-compare-list`,{
                     method:"get",
                     credentials:"include"
         })

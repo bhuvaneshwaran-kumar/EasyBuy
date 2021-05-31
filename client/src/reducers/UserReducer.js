@@ -19,7 +19,6 @@ export const reducer = (state = initialState, action)=>{
                 
                 let id = String(add._id)
                 let load = String(action.payload)
-            
                 if(id !== load){
                     return add
                 }
