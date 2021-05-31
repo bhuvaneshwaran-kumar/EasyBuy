@@ -119,12 +119,15 @@ Router.get('/check-cart-exist',async(req,res)=>{
             uid : uid
          })
 
+         console.log("user cart exist ->")
+
          if(cartList){
 
 
             for(let data of cartList?.productDetials ){
               
                 if(data.pid === pid){
+                    console.log("user cart exist with product->",data.pid)
                     // console.log("match")
                     res.statusCode = 200
                     return res.json({
@@ -134,6 +137,8 @@ Router.get('/check-cart-exist',async(req,res)=>{
 
             }
          }
+        console.log("user cart exist without product->")
+
         res.statusCode = 201
         return  res.json({})
         }

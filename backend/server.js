@@ -58,7 +58,7 @@ mongoose.connect(process.env.DATABASE_URL,{
         /* Middlewares Starts */
 // Third-party middleware
 app.use(cors({
-        origin : "http://localhost:3000",
+        origin : process.env.CORS_ORIGIN,
         methods : ['GET','POST','PUT','DELETE'],
         credentials : true
 }))
@@ -92,7 +92,7 @@ app.get("/",(req,res)=>{
 
 
 // Initiate the Server
-app.listen(8080,()=>{
+app.listen(process.env.PORT,()=>{
     console.log('Server is listeing 8080')
 })
 
