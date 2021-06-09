@@ -6,12 +6,13 @@ const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 
+// SEND USER'S OWN PRODUCT
 Router.get('/', async (req, res) => {
     if (req.session.isAuth) {
         try {
             // console.log("user getting post")
             const skip = parseInt(req.query.skip) || 0
-            const perPage = 50
+            const perPage = 30
             const totalCount = await Product.countDocuments()
             const product = await Product.find({sellerId : req.session._id}).sort('-timestamp')
                 .limit(perPage).skip(skip)
@@ -30,18 +31,26 @@ Router.get('/', async (req, res) => {
     }
 })
 
-Router.get("/home/search",async (req,res)=>{
+// SEND USER'S SEARCH PRODUCT
+Router.get("/home/search", async(req,res)=>{
     try{
         // console.log("get search request")
 
         let Searchkeys = req.query.Searchkeys
         
-        const product = await Product.find({'plabel':Searchkeys})
-
-        res.statusCode = 200
-        return res.json({
-            products : product
-        })
+        let product = await Product.find({'plabel':Searchkeys})
+        res.statusCode = 200  
+        if(product.length === 1){
+            return res.json({
+                products : product
+            })
+        }else{
+            product =  await Product.find({pcategory:'Grocery'}).sort('-timestamp')
+            return res.json({
+                products : product
+            })
+        }
+        
 
 
 
@@ -51,6 +60,8 @@ Router.get("/home/search",async (req,res)=>{
     }
 })
 
+
+// SEND INDIVIDUAL PRODUCT DATA
 Router.get('/getproductdata', async (req, res) => {
         try {    
             const id = req.query.id
@@ -344,7 +355,7 @@ Router.post('/checkwishlist',async(req,res)=>{
 })
 
 Router.post('/addwishlist',async(req,res)=>{
-    const {productId,userId} = req.body
+    const {productId} = req.body
     const product = await Product.findById(productId)
     product.wishList = [...product.wishList,req.body]
     product.save()

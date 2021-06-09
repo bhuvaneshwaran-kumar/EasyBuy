@@ -90,7 +90,7 @@ function Login() {
             }
             const response = await login(user)
             setLoader(false)
-            if(response.loggedStatus){
+            if(response?.loggedStatus){
                 await dispatch({
                     type : "SET_USER",
                     payload : response
@@ -101,7 +101,7 @@ function Login() {
                 // setRedirectToLogin(true)
                 history.push('/')
             }else{
-                setMessage(response.message)
+                setMessage(response?.message)
                 setError(true)
             }    
         }

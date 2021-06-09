@@ -72,11 +72,11 @@ Router.post("/signup-otp", async (req, res) => {
 
   const user = await User.findOne({ "User.email": req.body.email })
 
-  if (Date.now() < user.User.verify.timespan) {
+  if (Date.now() <= user.User.verify.timespan) {
     const otp = parseInt(req.body.otp)
     const dbOtp = parseInt(user.User.verify.otp)
 
-    console.log("verified...")
+    console.log("verifying .......")
     console.log(otp, "----", dbOtp)
 
     if (otp === dbOtp) {
@@ -84,12 +84,12 @@ Router.post("/signup-otp", async (req, res) => {
       await User.updateOne({ "User.email": user.User.email }, { $set: { "User.verify.status": true } })
 
       res.statusCode = 201
-      res.json({
+      return res.json({
         message: "OTP has been verified successfully.."
       })
     } else {
       res.statusCode = 202
-      res.json({
+      return res.json({
         message: "OTP not matched.."
       })
     }
@@ -243,9 +243,9 @@ Router.post('/forgotpwd', async (req, res) => {
   if (!existuser) {
     res.statusCode = 201
     return res.json({
-      message: "User email is Not valid"
+      message: "User email is Not valid or not exist"
     })
-    return
+    
   } else {
 
     //  Create a random 6 digit number

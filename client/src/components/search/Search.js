@@ -11,7 +11,7 @@ function Search() {
     const formSubmit = (e)=>{
         e.preventDefault()
         history.push(`/search/${form.current.search.value}`)
-       
+        form.current.search.value = ""
         
 
     }

@@ -3,7 +3,7 @@ import BASE_URL from '../utils/BASE_URL'
 function useAuth() {
     
     const signup = async (user) => {
-        
+
         try{
             const res = await fetch(`${BASE_URL}/authenticate/signup`,{
                 method : "post",
@@ -11,7 +11,7 @@ function useAuth() {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                   },
-                body : JSON.stringify(user)
+                body : JSON.stringify(user) 
             })
             if(res.status === 201){
                 let message = await res.json()

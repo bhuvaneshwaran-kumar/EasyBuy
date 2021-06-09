@@ -150,7 +150,7 @@ function MyProduct(){
         num+=1
       },3000)
       return ()=> clearInterval(timer) 
-    })
+    },[])
 
     return(
         <div className="my-product">

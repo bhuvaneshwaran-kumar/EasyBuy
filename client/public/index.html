@@ -223,7 +223,20 @@
     padding: 0;
     cursor: pointer;
 }
-
+  /* apply CSS to the select tag of 
+         .dropdown-container div*/
+  
+         .dropdown-container select {
+        /* for Firefox */
+        -moz-appearance: none;
+        /* for Safari, Chrome, Opera */
+        -webkit-appearance: none;
+      }
+  
+      /* for IE10 */
+      .dropdown-container select::-ms-expand {
+        display: none;
+      }
     </style>
     <title>Easy Buy</title>
   </head>

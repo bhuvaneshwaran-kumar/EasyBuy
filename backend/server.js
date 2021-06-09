@@ -30,7 +30,7 @@ const app = express()
 
 
 const store = new MongoStore({
-        uri :process.env.DATABASE_URL ,
+        uri :process.env.DATABASE_URL,
         collection : 'mySession',
         expires: 1000 * 60 * 60 * 24 * 30
     })
@@ -92,9 +92,7 @@ app.get("/",(req,res)=>{
 
 
 // Initiate the Server
-app.listen(process.env.PORT,()=>{
-    console.log('Server is listeing 8080')
-})
+app.listen(process.env.PORT,()=> console.log('Server is listening 8080'))
 
 // Export section
 
