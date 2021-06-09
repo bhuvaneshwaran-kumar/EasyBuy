@@ -4,7 +4,7 @@
 
 > By **we** I meant :
 
-| Contributer      | Contribution In                     |
+| Contributor      | Contribution In                     |
 | ---------------- | ----------------------------------- |
 | Bhuvaneshwaran.k | MongoDb, ExpressJs, ReactJS, NodeJS |
 | Kaviya.s         | ReactJS, NodeJS                     |
@@ -16,8 +16,8 @@
 
 > ### Feature's covered :
 
-    * A complite login,signup and forgot password Authentication.
-    * Session and cookies are maintained to achive the percistance user login state.
+    * A complete login,signup and forgot password Authentication.
+    * Session and cookies are maintained to Achieve the Persistence user login state.
     * switch to seller Account.
     * Add products and Edit products detials.
     * add to cart and add compare
