@@ -23,8 +23,8 @@
     * add to cart and add compare
 
 ```
-I know that you alreday judjed that this is going to be a typical e-commerce website. But that is not the case here.
-we do have a unique feature that actully goona speads up the Buyer's Add to compare section.
+I know that you already judged that this is going to be a typical e-commerce website. But that is not the case here.
+we do have a unique feature that actually goona speads up the Buyer's Add to compare section.
 ```
 
 #### if you see **FLIPKART** does not allow user compare products in a different category at same time. As a user we personally feel that this needs to be improvised.
