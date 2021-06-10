@@ -24,7 +24,7 @@
 
 ```
 I know that you already judged that this is going to be a typical e-commerce website. But that is not the case here.
-we do have a unique feature that actually goona speads up the Buyer's Add to compare section.
+we do have a unique feature that actually gonna speeds up the Buyer's Add to compare section.
 ```
 
 #### if you see **FLIPKART** does not allow user compare products in a different category at same time. As a user we personally feel that this needs to be improvised.
@@ -37,6 +37,10 @@ we do have a unique feature that actually goona speads up the Buyer's Add to com
 
 ---
 
+<details>
+<summary> Click here to see the feature we added. </summary>
+<pre>
+
 <img src="./images/Detergent.PNG">
 
 ---
@@ -46,6 +50,9 @@ we do have a unique feature that actually goona speads up the Buyer's Add to com
 ---
 
 <img src="./images/keyboard.PNG">
+
+</pre>
+</details>
 
 ---
 
